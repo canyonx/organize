@@ -115,4 +115,9 @@ class Activity
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return ucwords($this->name);
+    }
 }
