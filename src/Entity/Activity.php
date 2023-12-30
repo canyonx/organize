@@ -22,14 +22,14 @@ class Activity
     private ?string $color = null;
 
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'activities')]
-    private Collection $users;
+    private Collection $members;
 
     #[ORM\OneToMany(mappedBy: 'activity', targetEntity: Trip::class, orphanRemoval: true)]
     private Collection $trips;
 
     public function __construct()
     {
-        $this->users = new ArrayCollection();
+        $this->members = new ArrayCollection();
         $this->trips = new ArrayCollection();
     }
 
@@ -65,23 +65,23 @@ class Activity
     /**
      * @return Collection<int, User>
      */
-    public function getUsers(): Collection
+    public function getMembers(): Collection
     {
-        return $this->users;
+        return $this->members;
     }
 
-    public function addUser(User $user): static
+    public function addMember(User $member): static
     {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
+        if (!$this->members->contains($member)) {
+            $this->members->add($member);
         }
 
         return $this;
     }
 
-    public function removeUser(User $user): static
+    public function removeMember(User $member): static
     {
-        $this->users->removeElement($user);
+        $this->members->removeElement($member);
 
         return $this;
     }

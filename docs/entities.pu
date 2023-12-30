@@ -16,8 +16,8 @@ entity User {
   + about: text
   + isVerfied: bool
   + resetToken: string
-  + createdAt: datetime
-  + lastConnAt: datetime
+  + createdAt: datetime notNull
+  + lastConnAt: datetime notNull
 
   -- encrypted --
   + password: string
@@ -36,38 +36,37 @@ entity User {
 }
 
 entity Friend {
-  + Following: UserId
-  + Status: string 10
+  + status: string 10 notNull
   
   -- const --
   + FRIEND
   + BLOCKED
   
   -- relations --
-  + user: User myFriends
+  + member: User myFriends
   + friend: User friendsWithMe
 }
 
 entity Trip {
-  + title: string
-  + dateAt: datetime
+  + title: string notNull
+  + dateAt: datetime notNull
   + description: text
-  + lat: string 10
-  + lng: string 10
+  + lat: string 10 notNull
+  + lng: string 10 notNull
   
   -- relations --
-  + user: User trips
+  + member: User trips
   + activity: Activity trips
   + tripRequests: TripRequest collection
 }
 
 entity Message {
-  + createdAt: datetime
-  + content: text
-  + isRead: bool
+  + createdAt: datetime notNull
+  + content: text notNull
+  + isRead: bool notNull
   
   -- relations --
-  + user: User messages
+  + member: User messages
   + tripRequest: TripRequest messages
 }
 
@@ -77,11 +76,11 @@ entity Activity {
   
   -- relations --
   + trips: Trip collection
-  + users: User collection
+  + members: User collection
 }
 
 entity TripRequest {
-  + status: string
+  + status: string notNull
   
   -- const --
   + PENDING
@@ -90,18 +89,18 @@ entity TripRequest {
         
   -- relations --
   + trip: Trip tripRequests
-  + user: User tripRequests
+  + member: User tripRequests
   + messages: Message collection
 }
 
 entity Setting {
-  + isNewTripRequest: bool
-  + isNewMessage: bool
-  + isTripRequestStatusChange: bool
-  + isFriendNewTrip: bool
+  + isNewTripRequest: bool notNull
+  + isNewMessage: bool notNull
+  + isTripRequestStatusChange: bool notNull
+  + isFriendNewTrip: bool notNull
   
   -- relations --
-  + user: User settings
+  + member: User settings
 }
 
 User        "1" -- "m"      Friend : has

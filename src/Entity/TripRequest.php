@@ -10,6 +10,10 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: TripRequestRepository::class)]
 class TripRequest
 {
+    public const PENDING = 'PENDING';
+    public const ACCEPTED = 'ACCEPTED';
+    public const REFUSED = 'REFUSED';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

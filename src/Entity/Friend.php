@@ -8,6 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: FriendRepository::class)]
 class Friend
 {
+    public const FRIEND = 'FRIEND';
+    public const BLOCKED = 'BLOCKED';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
