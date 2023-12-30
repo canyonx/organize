@@ -1,0 +1,119 @@
+@startuml entities
+
+entity User {
+  + pseudo: string notNull isUnique
+  + email: string notNull isUnique
+  + firstname: string 
+  + lastname: string
+  + birthday: datetime
+  + address: string
+  + zipcode: string
+  + city: string
+  + lat: string 10
+  + lng: string 10
+  + phone: string 
+  + avatar: string
+  + about: text
+  + isVerfied: bool
+  + resetToken: string
+  + createdAt: datetime
+  + lastConnAt: datetime
+
+  -- encrypted --
+  + password: string
+    
+  -- not mapped --
+  + plainPassword: string
+  
+  -- relations --
+  + activities: Activity collection
+  + myFriends: Friend collection 
+  + friendsWithMe: Friend collection 
+  + trips: Trip collection 
+  + tripRequests: TripRequest collection
+  + messages: Message collection
+  + settings: Setting user
+}
+
+entity Friend {
+  + Following: UserId
+  + Status: string 10
+  
+  -- const --
+  + FRIEND
+  + BLOCKED
+  
+  -- relations --
+  + user: User myFriends
+  + friend: User friendsWithMe
+}
+
+entity Trip {
+  + title: string
+  + dateAt: datetime
+  + description: text
+  + lat: string 10
+  + lng: string 10
+  
+  -- relations --
+  + user: User trips
+  + activity: Activity trips
+  + tripRequests: TripRequest collection
+}
+
+entity Message {
+  + createdAt: datetime
+  + content: text
+  + isRead: bool
+  
+  -- relations --
+  + user: User messages
+  + tripRequest: TripRequest messages
+}
+
+entity Activity {
+  + name: string notNull
+  + color: string
+  
+  -- relations --
+  + trips: Trip collection
+  + users: User collection
+}
+
+entity TripRequest {
+  + status: string
+  
+  -- const --
+  + PENDING
+  + ACCEPTED
+  + REFUSED
+        
+  -- relations --
+  + trip: Trip tripRequests
+  + user: User tripRequests
+  + messages: Message collection
+}
+
+entity Setting {
+  + isNewTripRequest: bool
+  + isNewMessage: bool
+  + isTripRequestStatusChange: bool
+  + isFriendNewTrip: bool
+  
+  -- relations --
+  + user: User settings
+}
+
+User        "1" -- "m"      Friend : has
+User        "1" -- "m"      Friend : is
+User        "1" -- "m"      Trip : create
+User        "1" -- "m"      TripRequest : create
+User        "1" -- "m"      Message : write
+User        "1" -- "1"      Setting : adjust his
+User        "m" -- "m"      Activity : list his
+
+Activity    "1" -- "m"      Trip : can have
+Trip        "1" -- "m"      TripRequest : can have
+TripRequest "1" -- "m"      Message : can have
+
+@enduml
