@@ -7,11 +7,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['pseudo'], message: 'There is already an account with this pseudo')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -31,7 +34,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 50, unique: true)]
     private ?string $pseudo = null;
 
     #[ORM\Column(length: 50, nullable: true)]
@@ -87,6 +90,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToOne(mappedBy: 'member', cascade: ['persist', 'remove'])]
     private ?Setting $setting = null;
+
+    #[ORM\Column(type: 'boolean')]
+    private $isVerified = false;
 
     public function __construct()
     {
@@ -384,7 +390,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->activities->contains($activity)) {
             $this->activities->add($activity);
-            $activity->addUser($this);
+            $activity->addMember($this);
         }
 
         return $this;
@@ -393,7 +399,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeActivity(Activity $activity): static
     {
         if ($this->activities->removeElement($activity)) {
-            $activity->removeUser($this);
+            $activity->removeMember($this);
         }
 
         return $this;
@@ -504,5 +510,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->setting = $setting;
 
         return $this;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): static
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->pseudo;
     }
 }

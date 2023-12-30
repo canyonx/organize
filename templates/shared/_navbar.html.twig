@@ -1,0 +1,31 @@
+<div class="container sticky-top bg-white">
+	<header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+		<a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+			<svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+			<span class="fs-4">Sport Partners</span>
+		</a>
+		<ul class="nav nav-pills">
+			{% if is_granted('ROLE_USER') %}
+				{# <li class="nav-item">
+					<a href="{{ path('app_planning_index') }}" class="nav-link">Planning</a>
+				</li>
+				<li class="nav-item">
+					<a href="{{ path('app_search_index') }}" class="nav-link">Search</a>
+				</li>
+				<li class="nav-item">
+					<a href="{{ path('app_profile_index') }}" class="nav-link">{{ app.user.userName }}</a>
+				</li> #}
+				<li class="nav-item">
+					<a href="{{ path('app_logout') }}" class="nav-link">Logout</a>
+				</li>
+			{% else %}
+				<li class="nav-item">
+					<a href="{{ path('app_register') }}" class="nav-link">Sign In</a>
+				</li>
+				<li class="nav-item">
+					<a href="{{ path('app_login') }}" class="nav-link">Login</a>
+				</li>
+			{% endif %}
+		</ul>
+	</header>
+</div>

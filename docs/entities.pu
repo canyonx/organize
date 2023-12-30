@@ -14,7 +14,7 @@ entity User {
   + phone: string 
   + avatar: string
   + about: text
-  + isVerfied: bool
+  + isVerified: bool
   + resetToken: string
   + createdAt: datetime notNull
   + lastConnAt: datetime notNull
@@ -33,6 +33,16 @@ entity User {
   + tripRequests: TripRequest collection
   + messages: Message collection
   + settings: Setting user
+}
+
+entity Setting {
+  + isNewTripRequest: bool notNull
+  + isNewMessage: bool notNull
+  + isTripRequestStatusChange: bool notNull
+  + isFriendNewTrip: bool notNull
+  
+  -- relations --
+  + member: User settings
 }
 
 entity Friend {
@@ -91,16 +101,6 @@ entity TripRequest {
   + trip: Trip tripRequests
   + member: User tripRequests
   + messages: Message collection
-}
-
-entity Setting {
-  + isNewTripRequest: bool notNull
-  + isNewMessage: bool notNull
-  + isTripRequestStatusChange: bool notNull
-  + isFriendNewTrip: bool notNull
-  
-  -- relations --
-  + member: User settings
 }
 
 User        "1" -- "m"      Friend : has
