@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\FriendRepository;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -322,12 +323,46 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Friend>
+     * @return array<int, User>
      */
-    public function getMyFriends(): Collection
+    public function getMyFriends(): array
     {
-        return $this->myFriends;
+        $friends = $this->myFriends->matching(FriendRepository::friendCriteria());
+        $myFriends = [];
+        foreach ($friends as $f) {
+            $myFriends[] = $f->getFriend();
+        }
+        return $myFriends;
     }
+
+    /**
+     * @return array<int, User>
+     */
+    public function getMyBlocked(): array
+    {
+        $blocked = $this->myFriends->matching(FriendRepository::blockedCriteria());
+        $myBlocked = [];
+        foreach ($blocked as $f) {
+            $myBlocked[] = $f->getFriend();
+        }
+        return $myBlocked;
+    }
+
+    // /**
+    //  * @return Collection<int, Friend>
+    //  */
+    // public function getMyFriends(): Collection
+    // {
+    //     return $this->myFriends->matching(FriendRepository::blockedCriteria());
+    // }
+
+    // /**
+    //  * @return Collection<int, Friend>
+    //  */
+    // public function getMyBlocked(): Collection
+    // {
+    //     return $this->myFriends->matching(FriendRepository::blockedCriteria());
+    // }
 
     public function addMyFriend(Friend $myFriend): static
     {
@@ -356,7 +391,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getFriendsWithMe(): Collection
     {
-        return $this->friendsWithMe;
+        return $this->friendsWithMe->matching(FriendRepository::friendCriteria());
+    }
+
+    /**
+     * @return Collection<int, Friend>
+     */
+    public function getBlockedWithMe(): Collection
+    {
+        return $this->friendsWithMe->matching(FriendRepository::blockedCriteria());
     }
 
     public function addFriendsWithMe(Friend $friendsWithMe): static

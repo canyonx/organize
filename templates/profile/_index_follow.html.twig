@@ -1,0 +1,14 @@
+<section class="col-md-10 mx-auto p-3 border border-3 rounded-5 bg-white m-4">
+    <h2>Suivis ({{ user.getMyFriends|length }})</h2>
+    
+    <div class="row d-flex flex-row p-3">
+        {% for friend in user.getMyFriends %}
+            {% set profile = friend %}
+            <div class="col-4">
+                {% include "profile/_public_user_card.html.twig" %}
+            </div>
+        {% else %}
+            Aucun utilisateur suivi !
+        {% endfor %}
+    </div>
+</section>
