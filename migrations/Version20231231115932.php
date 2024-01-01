@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20231230141747 extends AbstractMigration
+final class Version20231231115932 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -47,8 +47,9 @@ final class Version20231230141747 extends AbstractMigration
         $this->addSql('CREATE TABLE trip_request (id INT NOT NULL, trip_id INT NOT NULL, member_id INT NOT NULL, status VARCHAR(10) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_D7BCA32A5BC2E0E ON trip_request (trip_id)');
         $this->addSql('CREATE INDEX IDX_D7BCA327597D3FE ON trip_request (member_id)');
-        $this->addSql('CREATE TABLE "user" (id INT NOT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, pseudo VARCHAR(50) NOT NULL, firstname VARCHAR(50) DEFAULT NULL, lastname VARCHAR(50) DEFAULT NULL, birth_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, address VARCHAR(255) DEFAULT NULL, zipcode VARCHAR(10) DEFAULT NULL, city VARCHAR(50) DEFAULT NULL, phone VARCHAR(20) DEFAULT NULL, avatar VARCHAR(255) DEFAULT NULL, about TEXT DEFAULT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, last_conn_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE "user" (id INT NOT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, pseudo VARCHAR(50) NOT NULL, firstname VARCHAR(50) DEFAULT NULL, lastname VARCHAR(50) DEFAULT NULL, birth_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, address VARCHAR(255) DEFAULT NULL, zipcode VARCHAR(10) DEFAULT NULL, city VARCHAR(50) DEFAULT NULL, phone VARCHAR(20) DEFAULT NULL, avatar VARCHAR(255) DEFAULT NULL, about TEXT DEFAULT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, last_conn_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, is_verified BOOLEAN NOT NULL, slug VARCHAR(50) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_8D93D649E7927C74 ON "user" (email)');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_8D93D64986CC499D ON "user" (pseudo)');
         $this->addSql('COMMENT ON COLUMN "user".birth_at IS \'(DC2Type:datetime_immutable)\'');
         $this->addSql('COMMENT ON COLUMN "user".created_at IS \'(DC2Type:datetime_immutable)\'');
         $this->addSql('COMMENT ON COLUMN "user".last_conn_at IS \'(DC2Type:datetime_immutable)\'');

@@ -5,12 +5,14 @@ namespace App\DataFixtures;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class UserFixtures
 {
     public function __construct(
         private EntityManagerInterface $em,
-        private UserPasswordHasherInterface $userPasswordHasherInterface
+        private UserPasswordHasherInterface $userPasswordHasherInterface,
+        private SluggerInterface $slugger
     ) {
     }
 
@@ -22,7 +24,8 @@ class UserFixtures
             ->setPassword($this->userPasswordHasherInterface->hashPassword($admin, 'admin'))
             ->setRoles(['ROLE_ADMIN'])
             ->setCreatedAt(new \DateTimeImmutable())
-            ->setLastConnAt(new \DateTimeImmutable());
+            ->setLastConnAt(new \DateTimeImmutable())
+            ->setSlug(strtolower($this->slugger->slug($admin->getPseudo(), '_')));
 
         $this->em->persist($admin);
     }
@@ -35,7 +38,8 @@ class UserFixtures
                 ->setPseudo('user' . $i)
                 ->setPassword($this->userPasswordHasherInterface->hashPassword($user, 'user'))
                 ->setCreatedAt(new \DateTimeImmutable())
-                ->setLastConnAt(new \DateTimeImmutable());
+                ->setLastConnAt(new \DateTimeImmutable())
+                ->setSlug(strtolower($this->slugger->slug($user->getPseudo(), '_')));
 
             $this->em->persist($user);
         }

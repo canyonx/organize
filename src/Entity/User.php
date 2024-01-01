@@ -76,7 +76,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'friend', targetEntity: Friend::class, orphanRemoval: true)]
     private Collection $friendsWithMe;
 
-    #[ORM\ManyToMany(targetEntity: Activity::class, mappedBy: 'users')]
+    #[ORM\ManyToMany(targetEntity: Activity::class, mappedBy: 'members')]
     private Collection $activities;
 
     #[ORM\OneToMany(mappedBy: 'member', targetEntity: Trip::class, orphanRemoval: true)]
@@ -93,6 +93,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
+
+    #[ORM\Column(length: 50)]
+    private ?string $slug = null;
 
     public function __construct()
     {
@@ -527,5 +530,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __toString()
     {
         return ucfirst($this->pseudo);
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 }

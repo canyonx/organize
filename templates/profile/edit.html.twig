@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editer mon profil{% endblock %}
+
+{% block body %}
+    <section class="col-10 mx-auto m-4">
+        <div class="card border-3 rounded-5 ">
+            <div class="card-header rounded-top-5 p-3">
+                <h1>Editer mon profil</h1>
+                <a href="{{ path('app_profile_index') }}" class="btn btn-primary rounded-pill">Retour</a>
+            </div>
+            <div class="card-body">
+                {{ include('profile/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+
+               
+            </div>
+        </div>
+	</section>
+{% endblock %}

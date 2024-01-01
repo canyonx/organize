@@ -1,0 +1,57 @@
+{{ form_start(form) }}
+    <div class="row">
+        <div class="col-md-4">
+            <h2 class="h5">Profil</h2>
+            <p class="text-muted">This information will be displayed publicly so be careful what you share.</p>
+        </div>
+        <div class="col-md-8">
+            {{ form_row(form.avatar) }}
+            {{ form_row(form.about) }}
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-4">
+            <h2 class="h5">Informations personnelles</h2>
+            <p class="text-muted">This information will be displayed publicly so be careful what you share.</p>
+        </div>
+        <div class="col-md-8 row">
+            <div class="col-md-6">
+                {{ form_row(form.firstname) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.lastname) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.birthAt) }}
+            </div>
+            <div class="">
+                {{ form_row(form.address) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.zipcode) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.city) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.phone) }}
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+         <div class="col-md-4">
+            <h2 class="h5">Activités</h2>
+            <p class="text-muted">This information will be displayed publicly so be careful what you share.</p>
+        </div>
+        <div class="col-md-8">
+            {{ form_row(form.activities) }}
+        </div>
+    </div>
+    <hr>
+    <div class="d-flex justify-content-between">
+    <button class="btn btn-primary rounded-pill">{{ button_label|default('Save') }}</button>
+     {{ include('profile/_delete_form.html.twig') }}
+    </div>
+{{ form_end(form) }}

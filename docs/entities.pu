@@ -18,6 +18,7 @@ entity User {
   + resetToken: string
   + createdAt: datetime notNull
   + lastConnAt: datetime notNull
+  + slug: string notNull isUnique
 
   -- encrypted --
   + password: string
