@@ -364,65 +364,91 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     //     return $this->myFriends->matching(FriendRepository::blockedCriteria());
     // }
 
-    public function addMyFriend(Friend $myFriend): static
+    // public function addMyFriend(Friend $myFriend): static
+    // {
+    //     if (!$this->myFriends->contains($myFriend)) {
+    //         $this->myFriends->add($myFriend);
+    //         $myFriend->setMember($this);
+    //     }
+
+    //     return $this;
+    // }
+
+    // public function removeMyFriend(Friend $myFriend): static
+    // {
+    //     if ($this->myFriends->removeElement($myFriend)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($myFriend->getMember() === $this) {
+    //             $myFriend->setMember(null);
+    //         }
+    //     }
+
+    //     return $this;
+    // }
+
+    /**
+     * @return array<int, User>
+     */
+    public function getFriendsWithMe(): array
     {
-        if (!$this->myFriends->contains($myFriend)) {
-            $this->myFriends->add($myFriend);
-            $myFriend->setMember($this);
+        $friends = $this->myFriends->matching(FriendRepository::friendCriteria());
+        $friendsWithMe = [];
+        foreach ($friends as $f) {
+            $friendsWithMe[] = $f->getFriend();
         }
-
-        return $this;
-    }
-
-    public function removeMyFriend(Friend $myFriend): static
-    {
-        if ($this->myFriends->removeElement($myFriend)) {
-            // set the owning side to null (unless already changed)
-            if ($myFriend->getMember() === $this) {
-                $myFriend->setMember(null);
-            }
-        }
-
-        return $this;
+        return $friendsWithMe;
     }
 
     /**
-     * @return Collection<int, Friend>
+     * @return array<int, User>
      */
-    public function getFriendsWithMe(): Collection
+    public function getBlockedWithMe(): array
     {
-        return $this->friendsWithMe->matching(FriendRepository::friendCriteria());
-    }
-
-    /**
-     * @return Collection<int, Friend>
-     */
-    public function getBlockedWithMe(): Collection
-    {
-        return $this->friendsWithMe->matching(FriendRepository::blockedCriteria());
-    }
-
-    public function addFriendsWithMe(Friend $friendsWithMe): static
-    {
-        if (!$this->friendsWithMe->contains($friendsWithMe)) {
-            $this->friendsWithMe->add($friendsWithMe);
-            $friendsWithMe->setFriend($this);
+        $blocked = $this->myFriends->matching(FriendRepository::blockedCriteria());
+        $blockedWithMe = [];
+        foreach ($blocked as $f) {
+            $blockedWithMe[] = $f->getFriend();
         }
-
-        return $this;
+        return $blockedWithMe;
     }
 
-    public function removeFriendsWithMe(Friend $friendsWithMe): static
-    {
-        if ($this->friendsWithMe->removeElement($friendsWithMe)) {
-            // set the owning side to null (unless already changed)
-            if ($friendsWithMe->getFriend() === $this) {
-                $friendsWithMe->setFriend(null);
-            }
-        }
+    // /**
+    //  * @return Collection<int, Friend>
+    //  */
+    // public function getFriendsWithMe(): Collection
+    // {
+    //     return $this->friendsWithMe->matching(FriendRepository::friendCriteria());
+    // }
 
-        return $this;
-    }
+    // /**
+    //  * @return Collection<int, Friend>
+    //  */
+    // public function getBlockedWithMe(): Collection
+    // {
+    //     return $this->friendsWithMe->matching(FriendRepository::blockedCriteria());
+    // }
+
+    // public function addFriendsWithMe(Friend $friendsWithMe): static
+    // {
+    //     if (!$this->friendsWithMe->contains($friendsWithMe)) {
+    //         $this->friendsWithMe->add($friendsWithMe);
+    //         $friendsWithMe->setFriend($this);
+    //     }
+
+    //     return $this;
+    // }
+
+    // public function removeFriendsWithMe(Friend $friendsWithMe): static
+    // {
+    //     if ($this->friendsWithMe->removeElement($friendsWithMe)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($friendsWithMe->getFriend() === $this) {
+    //             $friendsWithMe->setFriend(null);
+    //         }
+    //     }
+
+    //     return $this;
+    // }
 
     /**
      * @return Collection<int, Activity>

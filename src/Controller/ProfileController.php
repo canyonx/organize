@@ -70,6 +70,8 @@ class ProfileController extends AbstractController
     #[Route('/{slug}', name: 'app_profile_show', methods: ['GET'])]
     public function show(User $user): Response
     {
+        $this->denyAccessUnlessGranted('USER_VIEW', $user);
+
         return $this->render('profile/show.html.twig', [
             'user' => $user,
         ]);
