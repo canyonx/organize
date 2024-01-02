@@ -2,12 +2,12 @@
     <div class="d-flex align-items-center justify-content-center" style="height: 50vh">
         <div class="text-center">
             <h1>OrganiZe</h1>
-            <p>Trouve des amis pour partir à l'aventure</p>
+            <p>Partenaires d'aventures</p>
         </div>
     </div>
     <div>
         <hr>
-        <h2 class="h1">Trouve des amis dans <span class="text-muted">{{ activities|length }} activités</span></h2>
+        <h2 class="h1">Trouve des partenaires dans <span class="text-muted">{{ activities|length }} activités</span></h2>
         {% for activity in activities %}
             <button class="m-2 btn btn-light">{{ activity.name|title }}</button>
         {% endfor %}

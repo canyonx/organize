@@ -21,16 +21,16 @@ class Activity
     #[ORM\Column(length: 10, nullable: true)]
     private ?string $color = null;
 
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'activities')]
-    private Collection $members;
-
     #[ORM\OneToMany(mappedBy: 'activity', targetEntity: Trip::class, orphanRemoval: true)]
     private Collection $trips;
 
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'activities')]
+    private Collection $members;
+
     public function __construct()
     {
-        $this->members = new ArrayCollection();
         $this->trips = new ArrayCollection();
+        $this->members = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -58,30 +58,6 @@ class Activity
     public function setColor(?string $color): static
     {
         $this->color = $color;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, User>
-     */
-    public function getMembers(): Collection
-    {
-        return $this->members;
-    }
-
-    public function addMember(User $member): static
-    {
-        if (!$this->members->contains($member)) {
-            $this->members->add($member);
-        }
-
-        return $this;
-    }
-
-    public function removeMember(User $member): static
-    {
-        $this->members->removeElement($member);
 
         return $this;
     }
@@ -119,5 +95,32 @@ class Activity
     public function __toString()
     {
         return ucwords($this->name);
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getMembers(): Collection
+    {
+        return $this->members;
+    }
+
+    public function addMember(User $member): static
+    {
+        if (!$this->members->contains($member)) {
+            $this->members->add($member);
+            $member->addActivity($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMember(User $member): static
+    {
+        if ($this->members->removeElement($member)) {
+            $member->removeActivity($this);
+        }
+
+        return $this;
     }
 }

@@ -77,9 +77,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'friend', targetEntity: Friend::class, orphanRemoval: true)]
     private Collection $friendsWithMe;
 
-    #[ORM\ManyToMany(targetEntity: Activity::class, mappedBy: 'members')]
-    private Collection $activities;
-
     #[ORM\OneToMany(mappedBy: 'member', targetEntity: Trip::class, orphanRemoval: true)]
     private Collection $trips;
 
@@ -98,14 +95,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 50)]
     private ?string $slug = null;
 
+    #[ORM\ManyToMany(targetEntity: Activity::class, inversedBy: 'members')]
+    private Collection $activities;
+
     public function __construct()
     {
         $this->myFriends = new ArrayCollection();
         $this->friendsWithMe = new ArrayCollection();
-        $this->activities = new ArrayCollection();
         $this->trips = new ArrayCollection();
         $this->tripRequests = new ArrayCollection();
         $this->messages = new ArrayCollection();
+        $this->activities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -353,7 +353,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     //  */
     // public function getMyFriends(): Collection
     // {
-    //     return $this->myFriends->matching(FriendRepository::blockedCriteria());
+    //     return $this->myFriends->matching(FriendRepository::friendCriteria());
     // }
 
     // /**
@@ -391,7 +391,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getFriendsWithMe(): array
     {
-        $friends = $this->myFriends->matching(FriendRepository::friendCriteria());
+        $friends = $this->friendsWithMe->matching(FriendRepository::friendCriteria());
         $friendsWithMe = [];
         foreach ($friends as $f) {
             $friendsWithMe[] = $f->getFriend();
@@ -404,7 +404,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getBlockedWithMe(): array
     {
-        $blocked = $this->myFriends->matching(FriendRepository::blockedCriteria());
+        $blocked = $this->friendsWithMe->matching(FriendRepository::blockedCriteria());
         $blockedWithMe = [];
         foreach ($blocked as $f) {
             $blockedWithMe[] = $f->getFriend();
@@ -449,33 +449,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     //     return $this;
     // }
-
-    /**
-     * @return Collection<int, Activity>
-     */
-    public function getActivities(): Collection
-    {
-        return $this->activities;
-    }
-
-    public function addActivity(Activity $activity): static
-    {
-        if (!$this->activities->contains($activity)) {
-            $this->activities->add($activity);
-            $activity->addMember($this);
-        }
-
-        return $this;
-    }
-
-    public function removeActivity(Activity $activity): static
-    {
-        if ($this->activities->removeElement($activity)) {
-            $activity->removeMember($this);
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Trip>
@@ -609,6 +582,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setSlug(string $slug): static
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Activity>
+     */
+    public function getActivities(): Collection
+    {
+        return $this->activities;
+    }
+
+    public function addActivity(Activity $activity): static
+    {
+        if (!$this->activities->contains($activity)) {
+            $this->activities->add($activity);
+        }
+
+        return $this;
+    }
+
+    public function removeActivity(Activity $activity): static
+    {
+        $this->activities->removeElement($activity);
 
         return $this;
     }

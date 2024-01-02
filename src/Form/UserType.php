@@ -2,12 +2,14 @@
 
 namespace App\Form;
 
-use App\Entity\Activity;
-use App\Entity\Setting;
 use App\Entity\User;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Setting;
+use App\Entity\Activity;
+use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserType extends AbstractType
@@ -26,6 +28,10 @@ class UserType extends AbstractType
             ->add('about')
             ->add('activities', EntityType::class, [
                 'class' => Activity::class,
+                // 'query_builder' => function (EntityRepository $er): QueryBuilder {
+                //     return $er->createQueryBuilder('a')
+                //         ->orderBy('a.name', 'ASC');
+                // },
                 // 'choice_label' => 'name',
                 'multiple' => true,
                 'expanded' => true

@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Friend index{% endblock %}
+
+{% block body %}
+    <h1>Friend index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Status</th>
+                <th>Member</th>
+                <th>Friend</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for friend in friends %}
+            <tr>
+                <td>{{ friend.id }}</td>
+                <td>{{ friend.status }}</td>
+                <td>{{ friend.member }}</td>
+                <td>{{ friend.friend }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

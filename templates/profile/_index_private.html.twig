@@ -18,13 +18,13 @@
                     <tr>
                         <th>Activités</th>
                         <td>
-                            {% if user.activities|length > 0 %}
                             <ul>
                                 {% for activity in user.activities %}
-                                    <li>{{ activity }}</li>
+                                    <li>
+                                        {{ activity }}
+                                    </li>
                                 {% endfor %}
                             </ul>
-                            {% endif %}
                         </td>
                     </tr>
                     <tr>
