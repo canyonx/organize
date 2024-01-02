@@ -1,0 +1,21 @@
+{{ form_start(form) }}
+    <div class="row">
+        <div class="col-md-6">
+            {{ form_row(form.activity) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(form.dateAt) }}
+        </div>
+    </div>
+    {{ form_row(form.title) }}
+    {{ form_row(form.description) }}
+    <div class="row">
+        <div class="col-md-6">
+            {{ form_row(form.lat) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(form.lng) }}
+        </div>
+    </div>
+    <button class="btn btn-primary rounded-pill">{{ button_label|default('Enregistrer') }}</button>
+{{ form_end(form) }}

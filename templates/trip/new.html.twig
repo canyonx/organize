@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Trip{% endblock %}
+
+{% block body %}
+    <section class="col-10 mx-auto m-4">
+        <div class="card border-3 rounded-5">
+            <div class="card-header rounded-top-5 p-3">
+                <h1>Create new Trip</h1>
+                <a href="{{ path('app_trip_index') }}">back to list</a>
+            </div>
+            <div class="car-body p-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ include('trip/_form.html.twig') }}
+                    </div>
+                    <div class="col-md-6">
+                        <img src="https://placehold.co/500x400" alt="" class="rounded">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

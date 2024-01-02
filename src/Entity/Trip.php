@@ -42,6 +42,9 @@ class Trip
     #[ORM\OneToMany(mappedBy: 'trip', targetEntity: TripRequest::class, orphanRemoval: true)]
     private Collection $tripRequests;
 
+    #[ORM\Column]
+    private ?bool $isAvailable = null;
+
     public function __construct()
     {
         $this->tripRequests = new ArrayCollection();
@@ -162,6 +165,18 @@ class Trip
                 $tripRequest->setTrip(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isIsAvailable(): ?bool
+    {
+        return $this->isAvailable;
+    }
+
+    public function setIsAvailable(bool $isAvailable): static
+    {
+        $this->isAvailable = $isAvailable;
 
         return $this;
     }

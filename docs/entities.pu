@@ -64,6 +64,7 @@ entity Trip {
   + description: text
   + lat: string 10 notNull
   + lng: string 10 notNull
+  + isAvailable: bool
   
   -- relations --
   + member: User trips
