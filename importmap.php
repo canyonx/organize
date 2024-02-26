@@ -40,4 +40,11 @@ return [
     'axios' => [
         'version' => '1.6.3',
     ],
+    'tom-select' => [
+        'version' => '2.3.1',
+    ],
+    'tom-select/dist/css/tom-select.bootstrap5.css' => [
+        'version' => '2.3.1',
+        'type' => 'css',
+    ],
 ];

@@ -27,14 +27,17 @@ class UserType extends AbstractType
             ->add('avatar')
             ->add('about')
             ->add('activities', EntityType::class, [
+                // 'label' => false,
                 'class' => Activity::class,
-                // 'query_builder' => function (EntityRepository $er): QueryBuilder {
-                //     return $er->createQueryBuilder('a')
-                //         ->orderBy('a.name', 'ASC');
-                // },
-                // 'choice_label' => 'name',
+                'choice_label' => function (Activity $activity): string {
+                    return ucfirst($activity->getName());
+                },
                 'multiple' => true,
-                'expanded' => true
+                'autocomplete' => true, // Symfony-ux Autocomplete
+                'query_builder' => function (EntityRepository $er): QueryBuilder {
+                    return $er->createQueryBuilder('a')
+                        ->orderBy('a.name', 'ASC');
+                },
             ]);
     }
 

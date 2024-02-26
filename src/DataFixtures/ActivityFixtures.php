@@ -15,9 +15,9 @@ class ActivityFixtures
     public function createActivity(): void
     {
         $activities = [
-            'VTT', 'Kayak', 'Ski', 'Escalade', 'canyoning',
+            'vtt', 'kayak', 'ski', 'escalade', 'canyoning',
             'parapente', 'randonnée', 'balade', 'trail', 'vélo de route',
-            'DH', 'ski de randonnée', 'alpinisme', 'tennis', 'natation',
+            'mécanique', 'ski de randonnée', 'alpinisme', 'tennis', 'natation',
             'belotte', 'jeux de société', 'musique'
         ];
 
