@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\User;
-use App\Entity\Setting;
 use App\Entity\Activity;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\EntityRepository;
@@ -11,6 +10,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -22,11 +22,37 @@ class UserType extends AbstractType
             ->add('pseudo', TextType::class, [
                 'disabled' => true
             ])
-            ->add('birthAt', DateType::class, [])
+            ->add('birthAt', DateType::class, [
+                'label' => 'Date de naissance'
+            ])
+            ->add('city', TextType::class, [
+                'label' => false,
+                'attr' => [
+                    'inert' => true,
+                    'style' => 'background-color:#e9ecef',
+                    'hidden' => true
+                ],
+            ])
+            ->add('lat', NumberType::class, [
+                'label' => false,
+                'attr' => [
+                    'inert' => true,
+                    'style' => 'background-color:#e9ecef',
+                    'hidden' => true
+                ],
+            ])
+            ->add('lng', NumberType::class, [
+                'label' => false,
+                'attr' => [
+                    'inert' => true,
+                    'style' => 'background-color:#e9ecef',
+                    'hidden' => true
+                ],
+            ])
             ->add('avatar')
             ->add('about')
             ->add('activities', EntityType::class, [
-                // 'label' => false,
+                'label' => 'Activités',
                 'class' => Activity::class,
                 'choice_label' => function (Activity $activity): string {
                     return ucfirst($activity->getName());

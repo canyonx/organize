@@ -11,6 +11,15 @@
             <div class="col-md-6">
                 {{ form_row(form.birthAt) }}
             </div>
+            <div class="">
+                <label for="searchAddress" class="form-label">Ville</label>
+                <div id="searchAddress" data-controller="searchAddress"></div>
+            </div>
+            <div class="row">
+                <div class="col-4">{{ form_row(form.city) }}</div>
+                <div class="col-4">{{ form_row(form.lat) }}</div>
+                <div class="col-4">{{ form_row(form.lng) }}</div>
+            </div>
             {{ form_row(form.avatar) }}
             {{ form_row(form.about) }}
     </div>
@@ -22,9 +31,12 @@
             <p class="text-muted">This information will be displayed publicly so be careful what you share.</p>
         </div>
         <div class="col-md-8">
+            {{ form_label(form.activities) }}
             {{ form_widget(form.activities) }}
         </div>
     </div>
     <hr>
-    <button class="btn btn-primary rounded-pill">{{ button_label|default('Save') }}</button>
+    <div class="p-3">
+        <button class="btn btn-primary rounded-pill w-100">{{ button_label|default('Save') }}</button>
+    </div>
 {{ form_end(form) }}

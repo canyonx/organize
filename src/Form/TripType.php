@@ -21,6 +21,7 @@ class TripType extends AbstractType
             ->add('lng')
             ->add('activity', EntityType::class, [
                 'class' => Activity::class,
+                'autocomplete' => true, // Symfony-ux Autocomplete
                 // 'choice_label' => 'id',
             ]);
     }

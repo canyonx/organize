@@ -3,19 +3,25 @@
 {% block title %}Editer mon profil{% endblock %}
 
 {% block body %}
-    <section class="col-10 mx-auto m-4">
-        <div class="card border-3 rounded-5">
-            <div class="card-header rounded-top-5 p-3">
-                <h1>Editer mon profil</h1>
-                
-                <div class="d-flex justify-content-between">
-                    <a href="{{ path('app_profile_index') }}" class="btn btn-primary rounded-pill">Retour</a>
-                    {{ include('profile/_delete_form.html.twig') }}
-                </div>
-            </div>
-            <div class="card-body">
-                {{ include('profile/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+    <section class="card col-10 mx-auto m-4">
+        <div class="card-header">
+            <h1>Editer mon profil</h1>
+            
+            <div class="d-flex justify-content-between">
+                <a href="{{ path('app_profile_index') }}" class="btn btn-primary rounded-pill">Retour</a>
+                {{ include('profile/_delete_form.html.twig') }}
             </div>
         </div>
+        <div class="card-body">
+            {{ include('profile/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+        </div>
 	</section>
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://unpkg.com/@webgeodatavore/photon-geocoder-autocomplete@2.0.1/dist/photon-geocoder-autocomplete.min.css" type="text/css">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://unpkg.com/@webgeodatavore/photon-geocoder-autocomplete@2.0.1/dist/photon-geocoder-autocomplete.min.js"></script>
 {% endblock %}

@@ -1,0 +1,35 @@
+      /* Normalize box-sizing */
+      div, ul, li {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+      }
+      ol, ul {
+          list-style: outside none none;
+      }      
+      small {
+          font-size: smaller;
+      }
+      /* Style input */
+     input[type="search"], input[type="search"]:focus {
+          /* border: none; */
+          background-color: white;
+          border: 1px solid #cccccc;
+          border-radius: 6px;
+          color: rgba(0, 0, 0, 0.75);
+          display: block;
+          padding: 7px;
+          width: 100%; 
+      }
+
+      input[type="search"]:focus {
+        outline: 6px solid #0d6dfd49;
+      }
+      /* body, input, textarea {
+          color: rgba(0, 0, 0, 0.75);
+          font: 15px/20px "open_sansregular",sans-serif;
+      } */
+      /* Set parameters on controls (geocoder and reverse)*/
+      input.photon-input {
+          width: 100%;
+      }
