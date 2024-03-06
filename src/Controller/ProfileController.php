@@ -4,8 +4,11 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Entity\Setting;
+use App\Form\SettingType;
 use App\Form\ChangePasswordType;
 use App\Repository\UserRepository;
+use App\Repository\SettingRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,14 +31,30 @@ class ProfileController extends AbstractController
     /**
      * Personal profile of connected user
      */
-    #[Route('/', name: 'app_profile_index', methods: ['GET'])]
-    public function index(): Response
-    {
+    #[Route('/', name: 'app_profile_index', methods: ['GET', 'POST'])]
+    public function index(
+        Request $request,
+        EntityManagerInterface $em
+    ): Response {
         /** @var User */
         $user = $this->getUser();
 
+        $setting = $user->getSetting() ?: new Setting();
+        $form = $this->createForm(SettingType::class, $setting);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $setting->setMember($user);
+            $em->persist($setting);
+            $em->flush();
+
+            return $this->redirectToRoute('app_profile_index', [], Response::HTTP_SEE_OTHER);
+        }
+
         return $this->render('profile/index.html.twig', [
-            'user' => $user
+            'user' => $user,
+            'formSetting' => $form
         ]);
     }
 
