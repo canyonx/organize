@@ -47,4 +47,7 @@ return [
         'version' => '2.3.1',
         'type' => 'css',
     ],
+    '@webgeodatavore/photon-geocoder-autocomplete' => [
+        'version' => '2.0.2',
+    ],
 ];
