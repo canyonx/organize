@@ -13,10 +13,23 @@
         {% endblock %}
     </head>
     <body>
+        {# Navbar #}
         {% include "shared/_navbar.html.twig" %}
-        <div class="container">
+
+        {# Main container #}
+        <div class="container my-4" style="min-height:88vh">
+            {# Flash messages #}
+            {% for type, messages in app.flashes %}
+                {% for message in messages %}
+                    {{ component('Alert', { type:type, message:message }) }}
+                {% endfor %}
+            {% endfor %}
+
+            {# Body #}
             {% block body %}{% endblock %}
         </div>
+
+        {# Footer #}
         {% include "shared/_footer.html.twig" %}
     </body>
 </html>

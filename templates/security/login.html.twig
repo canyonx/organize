@@ -3,9 +3,11 @@
 {% block title %}Connexion{% endblock %}
 
 {% block body %}
-    <section class="d-flex align-items-center" style="min-height: 70vh">
-        <div class="col-lg-4 col-md-6 mx-auto">
+    <section class="card col-md-6 mx-auto">
+        <div class="card-header">
             <form method="post">
+                <h1 class="mb-4 font-weight-normal">Se connecter</h1>
+
                 {% if error %}
                     <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                 {% endif %}
@@ -15,23 +17,22 @@
                         Connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Déconnexion</a>
                     </div>
                 {% endif %}
-
-                <h1 class="mb-4 font-weight-normal">Se connecter</h1>
-
+        </div>
+        <div class="card-body">
                 <label class="mb-1" for="inputEmail">Adresse email</label>
                 <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control mb-4" autocomplete="email" required autofocus>
 
-                <div class="d-flex justify-content-between mb-1">
-                <label for="inputPassword">Mot de passe</label>
-                <a class="text-decoration-none" href="">Mot de passe oublié ?</a>
-                </div>
+                <label class="mb-1" for="inputPassword">Mot de passe</label>
                 <input type="password" name="password" id="inputPassword" class="form-control mb-4" autocomplete="current-password" required>
 
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-                <button class="btn btn-primary rounded-pill p-2" type="submit">
-                    Se connecter
-                </button>
+                <div class="d-flex justify-content-between align-items-baseline">
+                    <button class="btn btn-primary rounded-pill p-2" type="submit">
+                        Se connecter
+                    </button>
+                     <a class="text-decoration-none" href="{{ path("app_password_lost") }}">Mot de passe oublié ?</a>
+                </div>
             </form>
         </div>
     </section>

@@ -38,26 +38,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 50, unique: true)]
     private ?string $pseudo = null;
 
-    #[ORM\Column(length: 50, nullable: true)]
-    private ?string $firstname = null;
-
-    #[ORM\Column(length: 50, nullable: true)]
-    private ?string $lastname = null;
-
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $birthAt = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $address = null;
-
-    #[ORM\Column(length: 10, nullable: true)]
-    private ?string $zipcode = null;
-
-    #[ORM\Column(length: 50, nullable: true)]
-    private ?string $city = null;
-
-    #[ORM\Column(length: 20, nullable: true)]
-    private ?string $phone = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $avatar = null;
@@ -97,6 +79,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\ManyToMany(targetEntity: Activity::class, inversedBy: 'members')]
     private Collection $activities;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $resetToken = null;
 
     public function __construct()
     {
@@ -190,30 +175,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getFirstname(): ?string
-    {
-        return $this->firstname;
-    }
-
-    public function setFirstname(?string $firstname): static
-    {
-        $this->firstname = $firstname;
-
-        return $this;
-    }
-
-    public function getLastname(): ?string
-    {
-        return $this->lastname;
-    }
-
-    public function setLastname(?string $lastname): static
-    {
-        $this->lastname = $lastname;
-
-        return $this;
-    }
-
     public function getBirthAt(): ?\DateTimeImmutable
     {
         return $this->birthAt;
@@ -222,54 +183,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setBirthAt(?\DateTimeImmutable $birthAt): static
     {
         $this->birthAt = $birthAt;
-
-        return $this;
-    }
-
-    public function getAddress(): ?string
-    {
-        return $this->address;
-    }
-
-    public function setAddress(?string $address): static
-    {
-        $this->address = $address;
-
-        return $this;
-    }
-
-    public function getZipcode(): ?string
-    {
-        return $this->zipcode;
-    }
-
-    public function setZipcode(?string $zipcode): static
-    {
-        $this->zipcode = $zipcode;
-
-        return $this;
-    }
-
-    public function getCity(): ?string
-    {
-        return $this->city;
-    }
-
-    public function setCity(?string $city): static
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    public function getPhone(): ?string
-    {
-        return $this->phone;
-    }
-
-    public function setPhone(?string $phone): static
-    {
-        $this->phone = $phone;
 
         return $this;
     }
@@ -606,6 +519,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeActivity(Activity $activity): static
     {
         $this->activities->removeElement($activity);
+
+        return $this;
+    }
+
+    public function getAge()
+    {
+        $age = $this->getBirthAt()->diff(new \DateTimeImmutable());
+
+        return $age->y;
+    }
+
+    public function getResetToken(): ?string
+    {
+        return $this->resetToken;
+    }
+
+    public function setResetToken(?string $resetToken): static
+    {
+        $this->resetToken = $resetToken;
 
         return $this;
     }

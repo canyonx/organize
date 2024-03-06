@@ -2,7 +2,9 @@ import { Controller } from '@hotwired/stimulus';
 import axios from 'axios';
 
 /*
- * Actions for friend relation, add, block, remove, reload buttons
+ * Actions for friend relation,
+ * add, block, remove, reload buttons
+ * interact with Api Controllers
  */
 export default class extends Controller {
     add(){
