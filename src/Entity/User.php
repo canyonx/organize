@@ -523,10 +523,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getAge()
+    public function getAge(): string
     {
+        if (!$this->getBirthAt()) {
+            return 'xx';
+        }
         $age = $this->getBirthAt()->diff(new \DateTimeImmutable());
-
         return $age->y;
     }
 

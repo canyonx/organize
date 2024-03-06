@@ -2,10 +2,9 @@
     <h2>Bloqués ({{ user.getMyBlocked|length }})</h2>
     
     <div class="row d-flex flex-row p-3">
-        {% for friend in user.getMyBlocked %}
-            {% set profile = friend %}
+        {% for blocked in user.getMyBlocked %}
             <div class="col-4">
-                {% include "profile/_public_user_card.html.twig" %}
+                {{ component('UserCard', { user: blocked }) }}
             </div>
         {% else %}
             Aucun utilisateur bloqué !

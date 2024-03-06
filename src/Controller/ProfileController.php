@@ -4,12 +4,14 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Form\ChangePasswordType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 #[Route('/profil')]
 class ProfileController extends AbstractController
@@ -25,9 +27,6 @@ class ProfileController extends AbstractController
 
     /**
      * Personal profile of connected user
-     *
-     * @param UserRepository $userRepository
-     * @return Response
      */
     #[Route('/', name: 'app_profile_index', methods: ['GET'])]
     public function index(): Response
@@ -62,6 +61,37 @@ class ProfileController extends AbstractController
         return $this->render('profile/edit.html.twig', [
             'user' => $user,
             'form' => $form,
+        ]);
+    }
+
+    /**
+     * User Edit Password
+     */
+    #[Route(path: '/edit-password', name: 'app_profile_edit_password')]
+    public function editPassword(
+        Request $request,
+        EntityManagerInterface $em,
+        UserPasswordHasherInterface $hasher
+    ) {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        /** @var User */
+        $user = $this->getUser();
+        $form = $this->createForm(ChangePasswordType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $password = $form["newPassword"]->getData();
+            $hash = $hasher->hashPassword($user, $password);
+            $user->setPassword($hash);
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash('success', 'Le mot de passe à été changé');
+            return $this->redirectToRoute('app_profile_index');
+        }
+
+        return $this->render('profile/change_password.html.twig', [
+            'form' => $form
         ]);
     }
 

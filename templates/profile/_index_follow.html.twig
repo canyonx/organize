@@ -3,9 +3,8 @@
     
     <div class="row d-flex flex-row p-3">
         {% for friend in user.myFriends %}
-            {% set profile = friend %}
             <div class="col-4">
-                {% include "profile/_public_user_card.html.twig" %}
+                {{ component('UserCard', { user: friend }) }}
             </div>
         {% else %}
             Aucun utilisateur suivi !
