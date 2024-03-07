@@ -1,0 +1,51 @@
+<table class="table">
+	<thead>
+		<tr>
+			<th>Date</th>
+			<th></th>
+			<th>Location</th>
+			<th>Activity</th>
+			<th>Title</th>
+			<th>Request 
+			{# {% if pending > 0 %}<span class="badge bg-danger">{{ pending }}</span>{% endif %} #}
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for date, trips in calendar %}
+			{% for trip in trips %}
+				<tr>
+					{% if loop.first %}
+						<td {% if trips|length > 1 %}rowspan="{{ trips|length }}"{% endif %}>
+							{{ date|date('d.m') }}
+						</td>
+					{% endif %}
+					<td>{{ trip.dateAt|date('H\\hi')}}</td>
+					<td>
+						{{ trip.location }}
+					</td>
+					<td>
+						{{ trip.sport }}
+					</td>
+					<td>
+						<a href="{{ path('app_trip_show', {'id': trip.id}) }}" class="btn btn-primary position-relative">
+							{{ trip.title|capitalize }}
+							{% include "table/_notif.html.twig" %}
+						</a>
+						{# <a href="{{ path('app_trip_show', {'id': trip.id}) }}">{{ trip.title }}</a> #}
+					</td>
+					<td>
+						{% include "table/_table_status.html.twig" %}
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td>
+						{{ date|date('d.m') }}
+					</td>
+					<td colspan="100%"></td>
+				</tr>
+			{% endfor %}
+		{% endfor %}
+	</tbody>
+</table>

@@ -4,14 +4,12 @@
 
 {% block body %}
     <section class="card m-3">
-            <div class="card-header">
-                <h1>Créer une sortie</h1>
-                <a href="{{ path('app_trip_index') }}">Retour</a>
-            </div>
-            <div class="card-body">
-                {{ include('trip/_form.html.twig') }}
-            </div>
+        <div class="card-header">
+            <h1>Créer une sortie</h1>
+            <a href="{{ path('app_trip_index') }}">Retour</a>
+        </div>
+        <div class="card-body">
+            {{ include('trip/_form.html.twig') }}
         </div>
     </section>
-
 {% endblock %}

@@ -27,6 +27,9 @@ class TripType extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => 'Description'
             ])
+            ->add('location', TextType::class, [
+                'label' => 'Ville'
+            ])
             ->add('lat', NumberType::class, [
                 'label' => 'Latitude',
                 // 'disabled' => true

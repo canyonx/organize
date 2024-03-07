@@ -16,11 +16,14 @@
                 <div id="city_trip" data-controller="city-trip"></div>
             </div>
             <div class="row">
-                <div class="col-md-6">
-                    {{ form_row(form.lat, {value: app.user.lat}) }}
+                <div class="col-md-4">
+                    {{ form_row(form.location, {value: trip.location ?: app.user.city}) }}
                 </div>
-                <div class="col-md-6">
-                    {{ form_row(form.lng, {value: app.user.lng}) }}
+                <div class="col-md-4">
+                    {{ form_row(form.lat, {value: trip.lat ?: app.user.lat}) }}
+                </div>
+                <div class="col-md-4">
+                    {{ form_row(form.lng, {value: trip.lng ?: app.user.lng}) }}
                 </div>
             </div>
         </div>
@@ -30,5 +33,7 @@
             </div>
         </div>
     </div>
-    <button class="btn btn-primary rounded-pill">{{ button_label|default('Enregistrer') }}</button>
+    <div class="d-flex justify-content-between">
+        <button class="btn btn-primary rounded-pill">{{ button_label|default('Enregistrer') }}</button>
+    </div>
 {{ form_end(form) }}

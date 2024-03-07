@@ -7,6 +7,9 @@
 		<ul class="nav nav-pills">
 			{% if is_granted('ROLE_USER') %}
 				<li class="nav-item">
+					<a href="{{ path('app_planning_index') }}" class="nav-link">Planning</a>
+				</li>
+				<li class="nav-item">
 					<a href="{{ path('app_trip_index') }}" class="nav-link">Trips</a>
 				</li>
 				{# <li class="nav-item">

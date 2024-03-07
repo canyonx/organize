@@ -45,6 +45,9 @@ class Trip
     #[ORM\Column]
     private ?bool $isAvailable = null;
 
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $location = null;
+
     public function __construct()
     {
         $this->tripRequests = new ArrayCollection();
@@ -177,6 +180,18 @@ class Trip
     public function setIsAvailable(bool $isAvailable): static
     {
         $this->isAvailable = $isAvailable;
+
+        return $this;
+    }
+
+    public function getLocation(): ?string
+    {
+        return $this->location;
+    }
+
+    public function setLocation(string $location): static
+    {
+        $this->location = $location;
 
         return $this;
     }

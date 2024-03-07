@@ -1,0 +1,16 @@
+{# On recherche les demandes lieés aux trip #}
+{% for join in trip.joins %}
+	{# Si user et le créateur du trip ou de la demande #}
+	{% if app.user == trip.user or app.user == join.user %}
+		{# On recherche les messages lieés aux demandes #}
+		{% for message in join.messages %}
+			{# Si le message n'est pas lu #}
+			{# Si le message n'est pas écrit par user #}
+			{% if message.user != app.user and message.isRead == false %}
+				<span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
+					<span class="visually-hidden">New message</span>
+				</span>	
+			{% endif %}
+		{% endfor %}
+	{% endif %}
+{% endfor %}

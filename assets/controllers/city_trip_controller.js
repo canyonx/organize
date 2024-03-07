@@ -40,7 +40,7 @@ export default class extends Controller {
         // Create marker
         var marker = L.marker([lat, lng], {icon: defaultMarker, draggable: true})
             .addTo(map)
-            .bindPopup('Drag marker to set the Meeting Point')
+            .bindPopup('Déplacer le marqueur pour choisir un point de RDV')
             .openPopup();
 
         // Marker drag function
@@ -93,6 +93,7 @@ export default class extends Controller {
             var lat = feature.geometry.coordinates[1].toFixed(4);
             var lng = feature.geometry.coordinates[0].toFixed(4);
             // Set form fields
+            document.getElementById('trip_location').value = feature.properties.city;
             document.getElementById('trip_lat').value = lat;
             document.getElementById('trip_lng').value = lng;
             // Center map

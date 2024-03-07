@@ -9,11 +9,13 @@
             
             <div class="d-flex justify-content-between">
                 <a href="{{ path('app_profile_index') }}" class="btn btn-primary rounded-pill">Retour</a>
-                {{ include('profile/_delete_form.html.twig') }}
             </div>
         </div>
         <div class="card-body">
             {{ include('profile/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+        </div>
+        <div class="card-footer text-end">
+            {{ include('profile/_delete_form.html.twig') }}
         </div>
 	</section>
 {% endblock %}
