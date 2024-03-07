@@ -1,5 +1,5 @@
-<section class="card col-lg-10 mx-auto p-3 m-3">
-    <div class="row">
+<section class="card m-3">
+    <div class="card-body row">
         <div class="col-md-6 text-center">
             <img src="https://placehold.co/300" alt="" class="rounded-circle border border-3 p-2">
         </div>
@@ -49,10 +49,10 @@
                     </tr> #}
                 </tbody>
             </table>
-            <div class="text-end">
-                <a href="{{ path('app_profile_edit_password') }}" class="btn btn-primary rounded-pill">Changer de mot de passe</a>
-                <a href="{{ path('app_profile_edit') }}" class="btn btn-primary rounded-pill">Editer mon profil</a>
-            </div>
         </div>
+    <div class="text-end">
+        <a href="{{ path('app_profile_edit_password') }}" class="btn btn-primary rounded-pill">Changer de mot de passe</a>
+        <a href="{{ path('app_profile_edit') }}" class="btn btn-primary rounded-pill">Editer mon profil</a>
+    </div>
     </div>
 </section>

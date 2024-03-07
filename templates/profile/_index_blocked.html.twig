@@ -1,13 +1,15 @@
-<section class="card col-md-10 mx-auto p-3 m-3">
-    <h2>Bloqués ({{ user.getMyBlocked|length }})</h2>
-    
-    <div class="row d-flex flex-row p-3">
-        {% for blocked in user.getMyBlocked %}
-            <div class="col-4">
-                {{ component('UserCard', { user: blocked }) }}
-            </div>
-        {% else %}
-            Aucun utilisateur bloqué !
-        {% endfor %}
+<section class="card m-3">
+    <div class="card-body">
+        <h2>Bloqués ({{ user.getMyBlocked|length }})</h2>
+        
+        <div class="row d-flex flex-row p-3">
+            {% for blocked in user.getMyBlocked %}
+                <div class="col-4">
+                    {{ component('UserCard', { user: blocked }) }}
+                </div>
+            {% else %}
+                Aucun utilisateur bloqué !
+            {% endfor %}
+        </div>
     </div>
 </section>

@@ -1,20 +1,33 @@
 {{ form_start(form) }}
     <div class="row">
         <div class="col-md-6">
-            {{ form_row(form.activity) }}
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(form.activity) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.dateAt) }}
+                </div>
+            </div>
+            {{ form_row(form.title) }}
+            {{ form_row(form.description) }}
+            <div class="mb-3">
+                <label for="city_trip" class="form-label">Ville</label>
+                <div id="city_trip" data-controller="city-trip"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(form.lat, {value: app.user.lat}) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.lng, {value: app.user.lng}) }}
+                </div>
+            </div>
         </div>
         <div class="col-md-6">
-            {{ form_row(form.dateAt) }}
-        </div>
-    </div>
-    {{ form_row(form.title) }}
-    {{ form_row(form.description) }}
-    <div class="row">
-        <div class="col-md-6">
-            {{ form_row(form.lat) }}
-        </div>
-        <div class="col-md-6">
-            {{ form_row(form.lng) }}
+            <div class="mb-3">
+                <div id="map_form" class="rounded my-2" style="height:360px"></div>
+            </div>
         </div>
     </div>
     <button class="btn btn-primary rounded-pill">{{ button_label|default('Enregistrer') }}</button>

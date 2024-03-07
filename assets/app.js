@@ -1,4 +1,7 @@
 import './bootstrap.js';
+// import './vendor/leaflet/leaflet.index.js';
+// import './vendor/@webgeodatavore/photon-geocoder-autocomplete/photon-geocoder-autocomplete.index.js';
+
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -8,6 +11,7 @@ import './bootstrap.js';
  
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './vendor/@webgeodatavore/photon-geocoder-autocomplete/dist/photon-geocoder-autocomplete.min.css';
+import './vendor/leaflet/dist/leaflet.min.css';
 import './styles/app.css';
 import './styles/photon-no-map.css';
 

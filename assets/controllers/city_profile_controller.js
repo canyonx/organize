@@ -63,11 +63,10 @@ export default class extends Controller {
             element.appendChild(container);
 
         // Where to show search field
-        document.getElementById('searchAddress').appendChild(element);
+        document.getElementById('city_profile').appendChild(element);
 
-        // add class from-input
+        // Add class from-control to search field
         var inputAddress = document.getElementsByClassName('photon-input');
-        // console.log(inputAddress);
         inputAddress[0].classList.add("form-control");
         
     }
