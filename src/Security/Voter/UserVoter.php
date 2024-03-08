@@ -33,7 +33,7 @@ class UserVoter extends Voter
         switch ($attribute) {
             case self::VIEW:
                 // logic to determine if the user can VIEW
-                return !in_array($user, $subject->getMyBlocked());
+                return !$subject->getMyBlocked()->contains($user);
                 // return true or false
                 break;
         }

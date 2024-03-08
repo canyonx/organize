@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Activity;
 use App\Entity\Trip;
 use App\Entity\User;
 use App\Repository\TripUtil;
+use App\Service\DistanceService;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
@@ -34,11 +36,78 @@ class TripRepository extends ServiceEntityRepository
         \DateTimeImmutable $dateTo = null
     ): array {
         $qb = $this->createQueryBuilder('t');
-        TripUtil::ByUser($qb, $user);
-        TripUtil::ByDateBetween($qb, $dateFrom, $dateTo);
-        TripUtil::OrderByDate($qb);
+        TripUtil::byUser($qb, $user);
+        TripUtil::byDateBetween($qb, $dateFrom, $dateTo);
+        TripUtil::orderByDate($qb);
         return $qb->getQuery()
             ->getResult();
+    }
+
+    /**
+     * Search in Trip with fields of Search page
+     * Used in : search
+     * @return Trip[] Returns an array of Trip objects
+     */
+    public function findBySearchFields(
+        User $user,
+        Activity $activity = null,
+        \DateTimeImmutable $dateFrom = new \DateTimeImmutable('today'),
+        string $location = null,
+        ?int $distance = 30,
+        bool $isFriend = false,
+    ): array {
+        // Create Query builder
+        $qb = $this->createQueryBuilder('t');
+        // Different from the user
+        TripUtil::isNotUser($qb, $user);
+        // Different from blocked users
+        TripUtil::isNotBlockedUsers($qb, $user);
+        // Is available
+        TripUtil::isAvailable($qb, true);
+        // Between dates
+        TripUtil::byDateBetween($qb, $dateFrom);
+        // In friends
+        if ($isFriend) {
+            TripUtil::isFriendUsers($qb, $user);
+        }
+        // Equal to activity
+        if ($activity) {
+            TripUtil::byActivity($qb, $activity);
+        }
+        // Locations, single or square
+        if ($location) {
+            // TripUtil::byLocation($qb, $location, $lat, $lng, $distance);
+        }
+        // Orderby Date
+        TripUtil::orderByDate($qb);
+
+        $results = $qb->getQuery()
+            ->getResult();
+        // Delete results in corners if square search
+        // if ($location && $distance) {
+        //     return  DistanceService::checkDistance($results, $lat, $lng, $distance);
+        // }
+        return $results;
+    }
+
+    /**
+     * Count total number of trip
+     * Used in : homepage, search
+     * @return int Returns an integer
+     */
+    public function countTotalTrips(User $user = null): int
+    {
+        $qb = $this->createQueryBuilder('t');
+        if ($user) {
+            TripUtil::isNotUser($qb, $user);
+        }
+        TripUtil::byDateBetween($qb);
+
+        $result = $qb->select('count(t.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        return (int) $result;
     }
 
     //    /**

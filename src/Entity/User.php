@@ -244,47 +244,47 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return array<int, User>
-     */
-    public function getMyFriends(): array
-    {
-        $friends = $this->myFriends->matching(FriendRepository::friendCriteria());
-        $myFriends = [];
-        foreach ($friends as $f) {
-            $myFriends[] = $f->getFriend();
-        }
-        return $myFriends;
-    }
-
-    /**
-     * @return array<int, User>
-     */
-    public function getMyBlocked(): array
-    {
-        $blocked = $this->myFriends->matching(FriendRepository::blockedCriteria());
-        $myBlocked = [];
-        foreach ($blocked as $f) {
-            $myBlocked[] = $f->getFriend();
-        }
-        return $myBlocked;
-    }
-
     // /**
-    //  * @return Collection<int, Friend>
+    //  * @return array<int, User>
     //  */
-    // public function getMyFriends(): Collection
+    // public function getMyFriends(): array
     // {
-    //     return $this->myFriends->matching(FriendRepository::friendCriteria());
+    //     $friends = $this->myFriends->matching(FriendRepository::friendCriteria());
+    //     $myFriends = [];
+    //     foreach ($friends as $f) {
+    //         $myFriends[] = $f->getFriend();
+    //     }
+    //     return $myFriends;
     // }
 
     // /**
-    //  * @return Collection<int, Friend>
+    //  * @return array<int, User>
     //  */
-    // public function getMyBlocked(): Collection
+    // public function getMyBlocked(): array
     // {
-    //     return $this->myFriends->matching(FriendRepository::blockedCriteria());
+    //     $blocked = $this->myFriends->matching(FriendRepository::blockedCriteria());
+    //     $myBlocked = [];
+    //     foreach ($blocked as $f) {
+    //         $myBlocked[] = $f->getFriend();
+    //     }
+    //     return $myBlocked;
     // }
+
+    /**
+     * @return Collection<int, Friend>
+     */
+    public function getMyFriends(): Collection
+    {
+        return $this->myFriends->matching(FriendRepository::friendCriteria());
+    }
+
+    /**
+     * @return Collection<int, Friend>
+     */
+    public function getMyBlocked(): Collection
+    {
+        return $this->myFriends->matching(FriendRepository::blockedCriteria());
+    }
 
     // public function addMyFriend(Friend $myFriend): static
     // {
@@ -308,57 +308,57 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     //     return $this;
     // }
 
-    /**
-     * @return array<int, User>
-     */
-    public function getFriendsWithMe(): array
-    {
-        $friends = $this->friendsWithMe->matching(FriendRepository::friendCriteria());
-        $friendsWithMe = [];
-        foreach ($friends as $f) {
-            $friendsWithMe[] = $f->getFriend();
-        }
-        return $friendsWithMe;
-    }
-
-    /**
-     * @return array<int, User>
-     */
-    public function getBlockedWithMe(): array
-    {
-        $blocked = $this->friendsWithMe->matching(FriendRepository::blockedCriteria());
-        $blockedWithMe = [];
-        foreach ($blocked as $f) {
-            $blockedWithMe[] = $f->getFriend();
-        }
-        return $blockedWithMe;
-    }
-
     // /**
-    //  * @return Collection<int, Friend>
+    //  * @return array<int, User>
     //  */
-    // public function getFriendsWithMe(): Collection
+    // public function getFriendsWithMe(): array
     // {
-    //     return $this->friendsWithMe->matching(FriendRepository::friendCriteria());
-    // }
-
-    // /**
-    //  * @return Collection<int, Friend>
-    //  */
-    // public function getBlockedWithMe(): Collection
-    // {
-    //     return $this->friendsWithMe->matching(FriendRepository::blockedCriteria());
-    // }
-
-    // public function addFriendsWithMe(Friend $friendsWithMe): static
-    // {
-    //     if (!$this->friendsWithMe->contains($friendsWithMe)) {
-    //         $this->friendsWithMe->add($friendsWithMe);
-    //         $friendsWithMe->setFriend($this);
+    //     $friends = $this->friendsWithMe->matching(FriendRepository::friendCriteria());
+    //     $friendsWithMe = [];
+    //     foreach ($friends as $f) {
+    //         $friendsWithMe[] = $f->getFriend();
     //     }
-
-    //     return $this;
+    //     return $friendsWithMe;
     // }
+
+    // /**
+    //  * @return array<int, User>
+    //  */
+    // public function getBlockedWithMe(): array
+    // {
+    //     $blocked = $this->friendsWithMe->matching(FriendRepository::blockedCriteria());
+    //     $blockedWithMe = [];
+    //     foreach ($blocked as $f) {
+    //         $blockedWithMe[] = $f->getFriend();
+    //     }
+    //     return $blockedWithMe;
+    // }
+
+    /**
+     * @return Collection<int, Friend>
+     */
+    public function getFriendsWithMe(): Collection
+    {
+        return $this->friendsWithMe->matching(FriendRepository::friendCriteria());
+    }
+
+    /**
+     * @return Collection<int, Friend>
+     */
+    public function getBlockedWithMe(): Collection
+    {
+        return $this->friendsWithMe->matching(FriendRepository::blockedCriteria());
+    }
+
+    public function addFriendsWithMe(Friend $friendsWithMe): static
+    {
+        if (!$this->friendsWithMe->contains($friendsWithMe)) {
+            $this->friendsWithMe->add($friendsWithMe);
+            $friendsWithMe->setFriend($this);
+        }
+
+        return $this;
+    }
 
     // public function removeFriendsWithMe(Friend $friendsWithMe): static
     // {

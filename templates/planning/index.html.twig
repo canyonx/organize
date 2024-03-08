@@ -4,35 +4,35 @@
 {% endblock %}
 
 {% block body %}
-	<section class="my-2">
-    	<h1>Mon planning</h1>
-		<div class="">
-			
-		</div>
-		<div class="row justify-content-between">
-			<div class="col-md-auto me-auto my-2">
+	<section class="card">
+		<div class="card-header">
+			<h1>Mon planning</h1>
+			<div class="row justify-content-between">
+				<div class="col-md-auto me-auto my-2">
 
-				<button class="disabled btn">
-					Filter trips
-				</button>
-				<a href="{{ path('app_planning_index')}}" class="btn btn-primary">
-					All
-				</a>
-				<a href="{{ path('app_planning_index', {'f': 'created'})}}" class="btn btn-primary">
-					Created
-				</a>
-				<a href="{{ path('app_planning_index', {'f': 'requests'})}}" class="btn btn-primary">
-					Requested
-				</a>
-			</div>
-			<div class="col-md-auto my-2">
-				<a href="{{ path('app_trip_new') }}" class="btn btn-primary">
-					Create new trip
-				</a>
+					<button class="disabled btn">
+						Filter trips
+					</button>
+					<a href="{{ path('app_planning_index')}}" class="btn btn-primary">
+						All
+					</a>
+					<a href="{{ path('app_planning_index', {'f': 'created'})}}" class="btn btn-primary">
+						Created
+					</a>
+					<a href="{{ path('app_planning_index', {'f': 'requests'})}}" class="btn btn-primary">
+						Requested
+					</a>
+				</div>
+				<div class="col-md-auto my-2">
+					<a href="{{ path('app_trip_new') }}" class="btn btn-primary">
+						Create new trip
+					</a>
+				</div>
 			</div>
 		</div>
-		<hr>
-		{% include "table/_table.html.twig" %}
+		<div class="card-body">
+			{% include "table/_table.html.twig" %}
+		</div>
 	</section>
 
 {% endblock %}

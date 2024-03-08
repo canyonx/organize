@@ -38,9 +38,9 @@
 					</td>
 					<td>
 						{% if trip.member != app.user %}
-							<a href="{{ path('app_profile_show', {'id': trip.user.id}) }}" class="">
-								{{ trip.user }}
-								{% if trip.user in app.user.friendsUsers %} <i class="fa-solid fa-star"></i> {% endif %}
+							<a href="{{ path('app_profile_show', {'slug': trip.member.slug}) }}" class="">
+								{{ trip.member }}
+								{% if trip.member in app.user.myFriends %} <i class="fa-solid fa-star"></i> {% endif %}
 							</a>
 						{% endif %}
 					</td>

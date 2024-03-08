@@ -1,0 +1,35 @@
+{# {{ form_start(form) }} #}
+    {# {{ form_widget(form) }} #}
+    {# <button class="btn btn-primary">{{ button_label|default('Search') }}</button> #}
+{# {{ form_end(form) }} #}
+
+{{ form_start(form) }}
+    <div class="text-danger">
+        {{ form_errors(form) }}
+    </div>
+
+    <div class="row">
+        <div class="col">
+            {# {{ form_row(form.location) }} #}
+        </div>
+        <div class="col">
+            {{ form_row(form.distance, {attr: {'data-controller': 'search-distance'}, disabled: true}) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.activity) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.dateAt) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3 d-flex justify-content-center align-items-baseline">
+            <div class="form-check form-switch">
+                {{ form_widget(form.isFriend, {label: 'Followed users', attr: {'class': 'form-check-input'}}) }}
+            </div>
+        </div>
+        <div class="col">
+            <button type="submit" class="btn btn-primary w-100">Search in {{ totalTrips }} trips</button>
+        </div>
+    </div>
+{{ form_end(form) }}
