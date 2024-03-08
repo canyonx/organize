@@ -40,8 +40,8 @@ export default class extends Controller {
             input[0].setAttribute('placeholder', feature.properties.city);
             
             document.getElementById('user_city').setAttribute('value', feature.properties.city);
-            document.getElementById('user_lat').setAttribute('value', feature.geometry.coordinates[1]);
-            document.getElementById('user_lng').setAttribute('value', feature.geometry.coordinates[0]);
+            document.getElementById('user_lat').setAttribute('value', feature.geometry.coordinates[1].toFixed(4));
+            document.getElementById('user_lng').setAttribute('value', feature.geometry.coordinates[0].toFixed(4));
             
             console.log(feature);
         }

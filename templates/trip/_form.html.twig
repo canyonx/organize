@@ -4,7 +4,7 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <input id="trip_id" value="{{ trip.id }}" class="visually-hidden" disabled></input>
+            <input id="trip_id" value="{{ trip.id ?: false }}" class="visually-hidden" disabled></input>
             {{ form_row(form.activity) }}
             {{ form_row(form.dateAt.children.date, {attr: {"data-controller": 'trip-date', "data-action": 'change->trip-date#check' } }) }}
             {{ form_row(form.dateAt.children.time) }}

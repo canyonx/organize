@@ -15,8 +15,12 @@ export default class extends Controller {
         //  Get date from field
         var id = document.getElementById('trip_id').value;
         var date = document.getElementById('trip_dateAt_date').value;
+console.log(id,date);
 
-        axios.get('/api/istripthatday/' + id + '/' + date)
+        axios.post('/api/istripthatday', {
+                id: id,
+                date: date
+            })
             .then(function (response) {
                 // handle success
                 console.log(response.data);
