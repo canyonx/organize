@@ -111,8 +111,8 @@ class TripUtil
     public static function byLocation(
         QueryBuilder $qb,
         string $location,
-        float $lat,
-        float $lng,
+        // float $lat,
+        // float $lng,
         int $distance = null
     ): QueryBuilder {
         // Single location search
@@ -120,20 +120,20 @@ class TripUtil
             return $qb->andWhere('t.location = :location')
                 ->setParameter('location', $location);
         }
-
-        // Calculate square search
-        $coords = DistanceService::cardinalCoordonatesDistanceFromPoint(
-            $lat,
-            $lng,
-            $distance
-        );
-        // Square location search
-        return $qb->leftJoin('t.location', 'location')
-            ->addSelect('location')
-            ->andWhere($qb->expr()->andX(
-                $qb->expr()->between('location.latitude', $coords['S']['latitude'], $coords['N']['latitude']),
-                $qb->expr()->between('location.longitude', $coords['W']['longitude'], $coords['E']['longitude'])
-            ));
+        return $qb;
+        // // Calculate square search
+        // $coords = DistanceService::cardinalCoordonatesDistanceFromPoint(
+        //     $lat,
+        //     $lng,
+        //     $distance
+        // );
+        // // Square location search
+        // return $qb->leftJoin('t.location', 'location')
+        //     ->addSelect('location')
+        //     ->andWhere($qb->expr()->andX(
+        //         $qb->expr()->between('location.latitude', $coords['S']['latitude'], $coords['N']['latitude']),
+        //         $qb->expr()->between('location.longitude', $coords['W']['longitude'], $coords['E']['longitude'])
+        //     ));
     }
 
     /**

@@ -77,9 +77,9 @@ class TripRepository extends ServiceEntityRepository
             TripUtil::byActivity($qb, $activity);
         }
         // Locations, single or square
-        // if ($location) {
-        //     TripUtil::byLocation($qb, $location, $lat, $lng, $distance);
-        // }
+        if ($location) {
+            TripUtil::byLocation($qb, $location, $distance);
+        }
         // Orderby Date
         TripUtil::orderByDate($qb);
 

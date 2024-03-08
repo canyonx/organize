@@ -13,6 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class SearchType extends AbstractType
 {
@@ -35,9 +36,9 @@ class SearchType extends AbstractType
                     'min' => date('d/m/Y')
                 ]
             ])
-            // ->add('location', CitiesAutocompleteField::class, [
-            //     'required' => false
-            // ])
+            ->add('location', TextType::class, [
+                'required' => false
+            ])
             ->add('distance', ChoiceType::class, [
                 'mapped' => false,
                 'required' => false,
