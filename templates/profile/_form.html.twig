@@ -6,7 +6,7 @@
         </div>
         <div class="col-md-8 row">
             <div class="col-md-6">
-                {{ form_row(form.pseudo) }}
+                {# {{ form_row(form.pseudo) }} #}
             </div>
             <div class="col-md-6">
                 {{ form_row(form.birthAt) }}
@@ -15,10 +15,10 @@
                 <label for="city_profile" class="form-label">Ville</label>
                 <div id="city_profile" data-controller="city-profile"></div>
             </div>
-            <div class="row" style="display:none">
-                <div class="col-4">{{ form_row(form.city) }}</div>
-                <div class="col-4">{{ form_row(form.lat) }}</div>
-                <div class="col-4">{{ form_row(form.lng) }}</div>
+            <div class="row" class="visually-hidden">
+                <div class="col-4 visually-hidden">{{ form_row(form.city) }}</div>
+                <div class="col-4 visually-hidden">{{ form_row(form.lat) }}</div>
+                <div class="col-4 visually-hidden">{{ form_row(form.lng) }}</div>
             </div>
             {{ form_row(form.avatar) }}
             {{ form_row(form.about) }}

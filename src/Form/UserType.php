@@ -21,9 +21,9 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('pseudo', TextType::class, [
-                'disabled' => true
-            ])
+            // ->add('pseudo', TextType::class, [
+            //     'disabled' => true
+            // ])
             ->add('birthAt', DateType::class, [
                 'label' => 'Date de naissance'
             ])

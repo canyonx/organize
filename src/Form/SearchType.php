@@ -50,16 +50,17 @@ class SearchType extends AbstractType
                 'choice_label' => function (Activity $activity): string {
                     return ucfirst($activity->getName());
                 },
-                'multiple' => true,
+                // 'multiple' => true,
                 'autocomplete' => true, // Symfony-ux Autocomplete
                 'query_builder' => function (EntityRepository $er): QueryBuilder {
                     return $er->createQueryBuilder('a')
                         ->orderBy('a.name', 'ASC');
                 },
+                'required' => false
             ])
             ->add('isFriend', CheckboxType::class, [
                 'mapped' => false,
-                'label' => 'Friend\'s trips',
+                'label' => 'Utilisateurs suivis',
                 'required' => false
             ]);
     }

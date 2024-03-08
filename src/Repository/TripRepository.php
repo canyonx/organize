@@ -66,18 +66,20 @@ class TripRepository extends ServiceEntityRepository
         TripUtil::isAvailable($qb, true);
         // Between dates
         TripUtil::byDateBetween($qb, $dateFrom);
-        // In friends
-        if ($isFriend) {
-            TripUtil::isFriendUsers($qb, $user);
+        // In Followed users
+
+        // dd($isFriend);
+        if ($isFriend == true) {
+            TripUtil::byFriendUsers($qb, $user);
         }
         // Equal to activity
         if ($activity) {
             TripUtil::byActivity($qb, $activity);
         }
         // Locations, single or square
-        if ($location) {
-            // TripUtil::byLocation($qb, $location, $lat, $lng, $distance);
-        }
+        // if ($location) {
+        //     TripUtil::byLocation($qb, $location, $lat, $lng, $distance);
+        // }
         // Orderby Date
         TripUtil::orderByDate($qb);
 

@@ -34,13 +34,14 @@
 							{{ trip.title|capitalize }}
 							{# {% include "table/_notif.html.twig" %} #}
 						</a>
-						{# <a href="{{ path('app_trip_show', {'id': trip.id}) }}">{{ trip.title }}</a> #}
 					</td>
 					<td>
 						{% if trip.member != app.user %}
-							<a href="{{ path('app_profile_show', {'slug': trip.member.slug}) }}" class="">
+							<a href="{{ path('app_profile_show', {'slug': trip.member.slug}) }}" 
+								class=""
+								data-turbo-frame="_top">
 								{{ trip.member }}
-								{% if trip.member in app.user.myFriends %} <i class="fa-solid fa-star"></i> {% endif %}
+								{% if trip.member in app.user.myFriendUsers %} *<i class="fa-solid fa-star"></i> {% endif %}
 							</a>
 						{% endif %}
 					</td>

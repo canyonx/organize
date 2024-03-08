@@ -4,19 +4,19 @@
 {% endblock %}
 
 {% block body %}
-	<section class="card my-3">
-		<div class="card-body">
-			{% include "search/_form.html.twig" %}
-		</div>
-	</section>
-	<section class="card">
-		<div class="card-header">
-			<h1>{{ trips|length }} {{ search.activity }} 
-				<span class="text-muted">Sorties</span>
-			</h1>
-		</div>
-		<div class="card-body">
-			{% include "table/_table.html.twig" %}
-		</div>
-	</section>
+	<turbo-frame id="searchForm">
+		<section class="card my-3">
+			<div class="card-body">
+				{% include "search/_form.html.twig" %}
+			</div>
+		</section>
+		<section class="card">
+			<div class="card-header">
+				<h1>{{ trips|length }} <span class="text-muted">Sorties</span></h1>
+			</div>
+			<div class="card-body">
+				{% include "table/_table.html.twig" %}
+			</div>
+		</section>
+	</turbo-frame>
 {% endblock %}

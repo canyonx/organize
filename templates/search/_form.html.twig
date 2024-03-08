@@ -2,7 +2,6 @@
     {# {{ form_widget(form) }} #}
     {# <button class="btn btn-primary">{{ button_label|default('Search') }}</button> #}
 {# {{ form_end(form) }} #}
-
 {{ form_start(form) }}
     <div class="text-danger">
         {{ form_errors(form) }}
@@ -25,7 +24,7 @@
     <div class="row">
         <div class="col-3 d-flex justify-content-center align-items-baseline">
             <div class="form-check form-switch">
-                {{ form_widget(form.isFriend, {label: 'Followed users', attr: {'class': 'form-check-input'}}) }}
+                {{ form_widget(form.isFriend, {attr: {'class': 'form-check-input'}}) }}
             </div>
         </div>
         <div class="col">

@@ -14,6 +14,12 @@
 
 				<table class="table">
 					<tbody>
+						<tr class="visually-hidden">
+							<th>Id</th>
+							<td id="userId">
+								{{ user.id }}
+							</td>
+						</tr>
 						<tr>
 							<th>Age</th>
 							<td>
@@ -51,9 +57,9 @@
 				{% if user is not same as app.user %}
 				 
 					<div id="friendAction" class="text-end">
-						{% if user in app.user.myFriends %}
+						{% if user in app.user.myFriendUsers %}
 							<button class="btn btn-secondary rounded-pill" data-controller="friend" data-action="click->friend#remove">Ne plus suivre</button>
-						{% elseif user in app.user.myBlocked %}
+						{% elseif user in app.user.myBlockedUsers %}
 							<button class="btn btn-secondary rounded-pill" data-controller="friend" data-action="click->friend#remove">Débloquer</button>
 						{% else %}
 							<button class="btn btn-primary rounded-pill" data-controller="friend" data-action="click->friend#add">Suivre</button>

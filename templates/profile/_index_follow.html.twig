@@ -1,9 +1,9 @@
 <section class="card m-3">
     <div class="card-body">
-        <h2>Suivis ({{ user.myFriends|length }})</h2>
+        <h2>Suivis ({{ user.myFriendUsers|length }})</h2>
         
         <div class="row d-flex flex-row p-3">
-            {% for friend in user.myFriends %}
+            {% for friend in user.myFriendUsers %}
                 <div class="col-4">
                     {{ component('UserCard', { user: friend }) }}
                 </div>

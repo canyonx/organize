@@ -186,7 +186,7 @@ class TripUtil
      * @param User $user
      * @return QueryBuilder
      */
-    public static function isFriendUsers(QueryBuilder $qb, User $user): QueryBuilder
+    public static function byFriendUsers(QueryBuilder $qb, User $user): QueryBuilder
     {
         $friends = [];
         $friendUsers = $user->getMyFriends();
@@ -199,7 +199,7 @@ class TripUtil
         }
 
         return $qb->andWhere(
-            $qb->expr()->in('t.user', ':friends')
+            $qb->expr()->in('t.member', ':friends')
         )
             ->setParameter('friends', $friends);
     }

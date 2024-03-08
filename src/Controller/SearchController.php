@@ -35,7 +35,6 @@ class SearchController extends AbstractController
             // default values
             $distance = $form->get('distance')->getData();
             $isFriend = $form->get('isFriend')->getData();
-
             $trips = $tripRepository->findBySearchFields(
                 $user,
                 $search->getActivity(),
@@ -50,22 +49,31 @@ class SearchController extends AbstractController
             $search->setActivity(null)
                 ->setDateAt(new \DateTimeImmutable('today'))
                 ->setLocation($user->getCity());
-
+            $isFriend = false;
             $trips = $tripRepository->findBySearchFields(
                 $user,
                 $search->getActivity(),
                 $search->getDateAt(),
                 $search->getLocation(),
                 $distance,
+                $isFriend
             );
         }
 
+        dump($isFriend);
+
         return $this->render('search/index.html.twig', [
+            // Trips found
             'trips' => $trips,
+            // Search object (trip)
             'search' => $search,
-            'distance' => $distance,
+            // Distance value
+            // 'distance' => $distance,
+            // Calendar trips ordered by date
             'calendar' => $planningService->getPlanning($trips, $search->getDateAt()),
+            // Form search
             'form' => $form,
+            // Total trips in app
             'totalTrips' => $tripRepository->countTotalTrips($user, (new \DateTime('today')))
         ]);
     }

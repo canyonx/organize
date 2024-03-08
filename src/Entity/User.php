@@ -244,31 +244,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    // /**
-    //  * @return array<int, User>
-    //  */
-    // public function getMyFriends(): array
-    // {
-    //     $friends = $this->myFriends->matching(FriendRepository::friendCriteria());
-    //     $myFriends = [];
-    //     foreach ($friends as $f) {
-    //         $myFriends[] = $f->getFriend();
-    //     }
-    //     return $myFriends;
-    // }
+    /**
+     * @return array<int, User>
+     */
+    public function getMyFriendUsers(): array
+    {
+        $friends = $this->myFriends->matching(FriendRepository::friendCriteria());
+        $myFriends = [];
+        foreach ($friends as $f) {
+            $myFriends[] = $f->getFriend();
+        }
+        return $myFriends;
+    }
 
-    // /**
-    //  * @return array<int, User>
-    //  */
-    // public function getMyBlocked(): array
-    // {
-    //     $blocked = $this->myFriends->matching(FriendRepository::blockedCriteria());
-    //     $myBlocked = [];
-    //     foreach ($blocked as $f) {
-    //         $myBlocked[] = $f->getFriend();
-    //     }
-    //     return $myBlocked;
-    // }
+    /**
+     * @return array<int, User>
+     */
+    public function getMyBlockedUsers(): array
+    {
+        $blocked = $this->myFriends->matching(FriendRepository::blockedCriteria());
+        $myBlocked = [];
+        foreach ($blocked as $f) {
+            $myBlocked[] = $f->getFriend();
+        }
+        return $myBlocked;
+    }
 
     /**
      * @return Collection<int, Friend>
