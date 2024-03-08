@@ -13,18 +13,19 @@ export default class extends Controller {
     
     check() {
         //  Get date from field
+        var id = document.getElementById('trip_id').value;
         var date = document.getElementById('trip_dateAt_date').value;
 
-        axios.get('/api/istripthatday/' + date)
+        axios.get('/api/istripthatday/' + id + '/' + date)
             .then(function (response) {
                 // handle success
                 console.log(response.data);
                 if (response.data == true) {
                     document.getElementById('warning_limitation').classList.remove("visually-hidden");
-                    document.getElementById('trip_submit').classList.add("disabled");
+                    document.getElementById('trip_submit').disabled = true;
                 } else {
                     document.getElementById('warning_limitation').classList.add("visually-hidden");
-                    document.getElementById('trip_submit').classList.remove("disabled");
+                    document.getElementById('trip_submit').disabled = false;
                 }
             })
             .catch(function (error) {
