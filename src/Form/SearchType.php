@@ -26,17 +26,26 @@ class SearchType extends AbstractType
         }
 
         $builder
-            ->add('dateAt', DateType::class, [
-                'widget' => 'single_text',
-                'required' => false,
-                'placeholder' => (new \DateTime('today'))->format('d/m/Y'),
-                'empty_data' => (new \DateTime('today'))->format('Y-m-d'),
-                'attr' => [
-                    'class' => 'js-datepicker',
-                    'min' => date('d/m/Y')
-                ]
-            ])
+            // ->add('dateAt', DateType::class, [
+            //     'widget' => 'single_text',
+            //     'required' => false,
+            //     'placeholder' => (new \DateTime('today'))->format('d/m/Y'),
+            //     'empty_data' => (new \DateTime('today'))->format('Y-m-d'),
+            //     'attr' => [
+            //         'class' => 'js-datepicker',
+            //         'min' => date('d/m/Y')
+            //     ]
+            // ])
             ->add('location', TextType::class, [
+                'label' => false,
+                'required' => false
+            ])
+            ->add('lat', TextType::class, [
+                'label' => false,
+                'required' => false
+            ])
+            ->add('lng', TextType::class, [
+                'label' => false,
                 'required' => false
             ])
             ->add('distance', ChoiceType::class, [

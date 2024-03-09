@@ -53,9 +53,12 @@ class TripRepository extends ServiceEntityRepository
         Activity $activity = null,
         \DateTimeImmutable $dateFrom = new \DateTimeImmutable('today'),
         string $location = null,
-        ?int $distance = 30,
+        float $lat = null,
+        float $lng = null,
+        int $distance = 30,
         bool $isFriend = false,
     ): array {
+        $location = $user->getCity();
         // Create Query builder
         $qb = $this->createQueryBuilder('t');
         // Different from the user
@@ -78,7 +81,7 @@ class TripRepository extends ServiceEntityRepository
         }
         // Locations, single or square
         if ($location) {
-            TripUtil::byLocation($qb, $location, $distance);
+            TripUtil::byLocation($qb, $location, $lat, $lng, $distance);
         }
         // Orderby Date
         TripUtil::orderByDate($qb);
@@ -86,9 +89,9 @@ class TripRepository extends ServiceEntityRepository
         $results = $qb->getQuery()
             ->getResult();
         // Delete results in corners if square search
-        // if ($location && $distance) {
-        //     return  DistanceService::checkDistance($results, $lat, $lng, $distance);
-        // }
+        if ($location && $distance) {
+            return  TripUtil::checkDistance($results, $lat, $lng, $distance);
+        }
         return $results;
     }
 

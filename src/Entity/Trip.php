@@ -26,10 +26,10 @@ class Trip
     private ?string $description = null;
 
     #[ORM\Column(length: 10)]
-    private ?string $lat = null;
+    private ?float $lat = null;
 
     #[ORM\Column(length: 10)]
-    private ?string $lng = null;
+    private ?float $lng = null;
 
     #[ORM\ManyToOne(inversedBy: 'trips')]
     #[ORM\JoinColumn(nullable: false)]
@@ -94,24 +94,24 @@ class Trip
         return $this;
     }
 
-    public function getLat(): ?string
+    public function getLat(): ?float
     {
         return $this->lat;
     }
 
-    public function setLat(string $lat): static
+    public function setLat(float $lat): static
     {
         $this->lat = $lat;
 
         return $this;
     }
 
-    public function getLng(): ?string
+    public function getLng(): ?float
     {
         return $this->lng;
     }
 
-    public function setLng(string $lng): static
+    public function setLng(float $lng): static
     {
         $this->lng = $lng;
 

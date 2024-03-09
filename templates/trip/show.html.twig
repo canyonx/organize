@@ -1,42 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Trip{% endblock %}
+{% block title %}Trip
+{% endblock %}
 
 {% block body %}
-    <h1>Trip</h1>
+	{# <h1>Trip n°{{ trip.id }}</h1> #}
+	<div class="my-2">
+		<a href="{{ path('app_planning_index') }}" class="btn btn-link">Mon planning</a>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			{% include "trip/_info.html.twig" %}
+		</div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ trip.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ trip.title }}</td>
-            </tr>
-            <tr>
-                <th>DateAt</th>
-                <td>{{ trip.dateAt ? trip.dateAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ trip.description }}</td>
-            </tr>
-            <tr>
-                <th>Lat</th>
-                <td>{{ trip.lat }}</td>
-            </tr>
-            <tr>
-                <th>Lng</th>
-                <td>{{ trip.lng }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_trip_index') }}">back to list</a>
-
-    <a href="{{ path('app_trip_edit', {'id': trip.id}) }}">edit</a>
-
-    {{ include('trip/_delete_form.html.twig') }}
+		<div class="col-md-6">
+			{% if trip.member == app.user %}
+				{# All requests for this trip #}
+				{# {% include "trip/_join_requests_card.html.twig" %} #}
+			{# {% elseif alreadyTrip and trip.user != app.user %} #}
+				{# TODO : if alreadyTrip && user != abonné #}
+				{% include "shared/_warning_limitation.html.twig" %}
+			{% else %}
+				{# Form to join this trip #}
+				{# {% include "join/_form.html.twig" %} #}
+			{% endif %}
+		</div>
+	</div>
 {% endblock %}

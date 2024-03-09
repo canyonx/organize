@@ -63,23 +63,4 @@ class DistanceService
 
         return $losange;
     }
-
-    // Delete trips in corners of square search, where distance > $distance
-    public static function checkDistance(array $results, float $lat, float $lng, int $distance): array
-    {
-        $trips = [];
-        foreach ($results as $trip) {
-            $dist = DistanceService::distanceInKmBetweenEarthCoordinates(
-                $trip->getLocation()->getLatitude(),
-                $trip->getLocation()->getLongitude(),
-                $lat,
-                $lng
-            );
-
-            if ($dist < $distance) {
-                $trips[] = $trip;
-            }
-        }
-        return $trips;
-    }
 }

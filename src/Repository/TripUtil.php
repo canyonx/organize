@@ -18,26 +18,21 @@ class TripUtil
      * Search in Trip by date between
      *
      * @param QueryBuilder $qb
-     * @param \DateTimeImmutable|null $dateStart, if null start today
+     * @param \DateTimeImmutable|null $dateStart, start today
      * @param \DateTimeImmutable|null $dateEnd, if null end today + 7 days
      * @return QueryBuilder
      */
     public static function byDateBetween(
         QueryBuilder $qb,
-        \DateTimeImmutable $dateFrom = null,
-        \DateTimeImmutable $dateTo = null
+        \DateTimeImmutable|null $dateFrom = null,
+        \DateTimeImmutable|null $dateTo = null
     ): QueryBuilder {
-        if ($dateFrom === null) {
-            $dateFrom = new \DateTimeImmutable("today");
-        }
+        if ($dateFrom === null) $dateFrom = new \DateTimeImmutable("today");
 
-        if ($dateTo === null) {
-            $dateTo = new \DateTimeImmutable($dateFrom->format('Y-m-d') . ' + 7 days');
-        }
+        if ($dateTo === null) $dateTo = new \DateTimeImmutable($dateFrom->format('Y-m-d') . ' + 7 days');
 
-        return $qb->andWhere('t.dateAt >= :dateFrom')
+        return $qb->andWhere('t.dateAt BETWEEN :dateFrom AND :dateTo')
             ->setParameter('dateFrom', $dateFrom)
-            ->andWhere('t.dateAt <= :dateTo')
             ->setParameter('dateTo', $dateTo);
     }
 
@@ -111,8 +106,8 @@ class TripUtil
     public static function byLocation(
         QueryBuilder $qb,
         string $location,
-        // float $lat,
-        // float $lng,
+        float $lat,
+        float $lng,
         int $distance = null
     ): QueryBuilder {
         // Single location search
@@ -120,20 +115,25 @@ class TripUtil
             return $qb->andWhere('t.location = :location')
                 ->setParameter('location', $location);
         }
+        // dd($lat, $lng, $distance);
+        // Calculate square search
+        $coords = DistanceService::cardinalCoordonatesDistanceFromPoint(
+            $lat,
+            $lng,
+            $distance
+        );
+
+        dump($lat, $lng, $distance, $coords);
+
+        // Square location search
+        $qb->andWhere(
+            $qb->expr()->andX(
+                $qb->expr()->between('t.lat', $coords['S']['latitude'], $coords['N']['latitude']),
+                $qb->expr()->between('t.lng', $coords['W']['longitude'], $coords['E']['longitude'])
+            )
+        );
+
         return $qb;
-        // // Calculate square search
-        // $coords = DistanceService::cardinalCoordonatesDistanceFromPoint(
-        //     $lat,
-        //     $lng,
-        //     $distance
-        // );
-        // // Square location search
-        // return $qb->leftJoin('t.location', 'location')
-        //     ->addSelect('location')
-        //     ->andWhere($qb->expr()->andX(
-        //         $qb->expr()->between('location.latitude', $coords['S']['latitude'], $coords['N']['latitude']),
-        //         $qb->expr()->between('location.longitude', $coords['W']['longitude'], $coords['E']['longitude'])
-        //     ));
     }
 
     /**
@@ -202,5 +202,24 @@ class TripUtil
             $qb->expr()->in('t.member', ':friends')
         )
             ->setParameter('friends', $friends);
+    }
+
+    // Delete trips in corners of square search, where distance > $distance
+    public static function checkDistance(array $results, float $lat, float $lng, int $distance): array
+    {
+        $trips = [];
+        foreach ($results as $trip) {
+            $dist = DistanceService::distanceInKmBetweenEarthCoordinates(
+                $trip->getLat(),
+                $trip->getLng(),
+                $lat,
+                $lng
+            );
+
+            if ($dist < $distance) {
+                $trips[] = $trip;
+            }
+        }
+        return $trips;
     }
 }

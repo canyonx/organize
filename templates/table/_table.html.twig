@@ -30,7 +30,9 @@
 						{{ trip.activity|title }}
 					</td>
 					<td>
-						<a href="{{ path('app_trip_show', {'id': trip.id}) }}" class="btn btn-primary position-relative">
+						<a href="{{ path('app_trip_show', {'id': trip.id}) }}" 
+							class="btn btn-primary position-relative"
+							data-turbo-frame="_top">
 							{{ trip.title|capitalize }}
 							{# {% include "table/_notif.html.twig" %} #}
 						</a>

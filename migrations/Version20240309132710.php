@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240305145549 extends AbstractMigration
+final class Version20240309132710 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -37,14 +37,14 @@ final class Version20240305145549 extends AbstractMigration
         $this->addSql('COMMENT ON COLUMN message.created_at IS \'(DC2Type:datetime_immutable)\'');
         $this->addSql('CREATE TABLE setting (id INT NOT NULL, member_id INT NOT NULL, is_new_trip_request BOOLEAN NOT NULL, is_new_message BOOLEAN NOT NULL, is_trip_request_status_change BOOLEAN NOT NULL, is_friend_new_trip BOOLEAN NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_9F74B8987597D3FE ON setting (member_id)');
-        $this->addSql('CREATE TABLE trip (id INT NOT NULL, member_id INT NOT NULL, activity_id INT NOT NULL, title VARCHAR(50) NOT NULL, date_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, description TEXT DEFAULT NULL, lat VARCHAR(10) NOT NULL, lng VARCHAR(10) NOT NULL, is_available BOOLEAN NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE trip (id INT NOT NULL, member_id INT NOT NULL, activity_id INT NOT NULL, title VARCHAR(50) NOT NULL, date_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, description TEXT DEFAULT NULL, lat DOUBLE PRECISION NOT NULL, lng DOUBLE PRECISION NOT NULL, is_available BOOLEAN NOT NULL, location VARCHAR(100) DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_7656F53B7597D3FE ON trip (member_id)');
         $this->addSql('CREATE INDEX IDX_7656F53B81C06096 ON trip (activity_id)');
         $this->addSql('COMMENT ON COLUMN trip.date_at IS \'(DC2Type:datetime_immutable)\'');
         $this->addSql('CREATE TABLE trip_request (id INT NOT NULL, trip_id INT NOT NULL, member_id INT NOT NULL, status VARCHAR(10) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_D7BCA32A5BC2E0E ON trip_request (trip_id)');
         $this->addSql('CREATE INDEX IDX_D7BCA327597D3FE ON trip_request (member_id)');
-        $this->addSql('CREATE TABLE "user" (id INT NOT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, pseudo VARCHAR(50) NOT NULL, birth_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, avatar VARCHAR(255) DEFAULT NULL, about TEXT DEFAULT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, last_conn_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, is_verified BOOLEAN NOT NULL, slug VARCHAR(50) NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE "user" (id INT NOT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, pseudo VARCHAR(50) NOT NULL, birth_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, avatar VARCHAR(255) DEFAULT NULL, about TEXT DEFAULT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, last_conn_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, is_verified BOOLEAN NOT NULL, slug VARCHAR(50) NOT NULL, reset_token VARCHAR(255) DEFAULT NULL, city VARCHAR(100) DEFAULT NULL, lat DOUBLE PRECISION DEFAULT NULL, lng DOUBLE PRECISION DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_8D93D649E7927C74 ON "user" (email)');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_8D93D64986CC499D ON "user" (pseudo)');
         $this->addSql('COMMENT ON COLUMN "user".birth_at IS \'(DC2Type:datetime_immutable)\'');

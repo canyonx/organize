@@ -25,6 +25,7 @@ class SearchController extends AbstractController
 
         // Form Search
         $search = new Trip();
+        $search->setDateAt(new \DateTimeImmutable('today'));
 
         $form = $this->createForm(SearchType::class, $search);
         $form->handleRequest($request);
@@ -33,34 +34,42 @@ class SearchController extends AbstractController
             // Submitted form 
             // distance from unmapped field of SearchType form
             // default values
-            $distance = $form->get('distance')->getData();
+            $distance = $form->get('distance')->getData() ?: false;
             $isFriend = $form->get('isFriend')->getData();
             $trips = $tripRepository->findBySearchFields(
                 $user,
                 $search->getActivity(),
-                $search->getDateAt(),
+                new \DateTimeImmutable('today'),
                 $search->getLocation(),
+                $search->getLat(),
+                $search->getLng(),
                 $distance,
                 $isFriend
             );
         } else {
             // Unsubmitted form default values
-            $distance = 50;
+            $distance = 0;
             $search->setActivity(null)
-                ->setDateAt(new \DateTimeImmutable('today'))
-                ->setLocation($user->getCity());
+                ->setDateAt(new \DateTimeImmutable('today'));
+
+            // if ($user->getCity()) {
+            $search
+                ->setLocation($user->getCity())
+                ->setLat($user->getLat())
+                ->setLng($user->getLng());
+            // }
             $isFriend = false;
             $trips = $tripRepository->findBySearchFields(
                 $user,
                 $search->getActivity(),
-                $search->getDateAt(),
+                new \DateTimeImmutable('today'),
                 $search->getLocation(),
+                $search->getLat(),
+                $search->getLng(),
                 $distance,
                 $isFriend
             );
         }
-
-        dump($isFriend);
 
         return $this->render('search/index.html.twig', [
             // Trips found
@@ -68,7 +77,7 @@ class SearchController extends AbstractController
             // Search object (trip)
             'search' => $search,
             // Distance value
-            // 'distance' => $distance,
+            'distance' => $distance,
             // Calendar trips ordered by date
             'calendar' => $planningService->getPlanning($trips, $search->getDateAt()),
             // Form search

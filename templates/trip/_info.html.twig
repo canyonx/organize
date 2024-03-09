@@ -1,0 +1,61 @@
+<section class="card m-3">
+    <div class="card-header">
+        <div class="d-flex justify-content-between align-items-baseline">
+            <h2>{{ trip.title|capitalize }}</h2>
+            <span class="badge text-bg-secondary">{{ trip.activity|capitalize }}</span>
+        </div>
+        <br>
+        {{ trip.dateAt|date('H\\hi') }}, {{ trip.dateAt|format_datetime(pattern='EEE dd MMM', locale='fr') }}
+        <br>
+        à {{ trip.location|title }}
+    </div>
+    <div class="card-body">
+        <p>
+            {% if app.user != trip.member %}
+                Created by <a href="{{ path('app_profile_show', {'slug': trip.member.slug}) }}">{{ trip.member }}</a>
+            {% endif %}
+        </p>
+
+        <p>{{ trip.description }}</p>
+
+        Point de RDV    
+        <input id="trip_lat" type="hidden" value="{{ trip.lat }}"></input>
+        <input id="trip_lng" type="hidden" value="{{ trip.lng }}"></input>
+        
+        <div id="map" class="my-2 rounded" style="height:360px" data-controller="map-trip"></div>
+    </div>
+       
+
+
+    {# <p>
+        {% if trip.acceptedUsers %}
+            Participants :
+        {% endif %}
+        {% for acceptedUser in trip.acceptedUsers %}
+            {% if not loop.first %}, {% endif %}
+            <a href="{{ path('app_profile_show', {'id': acceptedUser.id}) }}">{{ acceptedUser }}</a>
+        {% endfor %}
+    </p> #}
+
+    <div class="row justify-content-end">
+        <div class="col-auto">
+            {% if trip.member ==  app.user %}
+                <a href="{{ path('app_trip_edit', {'id': trip.id}) }}" class="btn btn-secondary rounded-pill">Modifier</a>
+            {% endif %}
+        </div>
+    </div>
+
+</section>
+
+{# Util for Map #}
+{# {% block stylesheets %}
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+{% endblock %}
+
+{% block javascripts %}
+	 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+{% endblock %} #}
