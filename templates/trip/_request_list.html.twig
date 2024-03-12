@@ -9,7 +9,7 @@
                 <a href="{{ path('app_trip_request_show', {'id': tripRequest.id} )}}" 
                 class="btn btn-primary rounded-pill position-relative">
                     {{ tripRequest.member }}
-                    {# {% include "trip/_notif.html.twig" %} #}
+                    {% include "trip/_notif.html.twig" %}
                 </a> 
                 <button class="btn btn-{{ tripRequest.color }}" disabled>
                     {{ tripRequest.status|title|trans }}

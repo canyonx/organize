@@ -18,10 +18,22 @@
             </button>
         </div>
 
-        <div class="" data-controller="trip-status">
+        <div class="" data-turbo-frame="accepted_user">
             {% if tripRequest.status == 'PENDING' or tripRequest.status == 'REFUSED'  %}
                 <a href="{{ path('app_trip_request_status', {id: tripRequest.id , status: 'ACCEPTED'}) }}" 
                 class="btn btn-success rounded-pill">
+                {# Turbo stream update participant list #}
+                <turbo-stream action="update" target="accepted_user">
+                    <template>
+                        {% if trip.acceptedUsers %}
+                            Participants :
+                        {% endif %}
+                        {% for acceptedUser in trip.acceptedUsers %}
+                            {% if not loop.first %}, {% endif %}
+                            <a href="{{ path('app_profile_show', {slug: acceptedUser.slug}) }}">{{ acceptedUser }}</a>
+                        {% endfor %}
+                    </template>
+                </turbo-stream>
                     Accepter
                 </a>
 
@@ -36,6 +48,18 @@
             {% if tripRequest.status == 'PENDING' or tripRequest.status == 'ACCEPTED' %}
                 <a href="{{ path('app_trip_request_status', {id: tripRequest.id , status: 'REFUSED'}) }}" 
                 class="btn btn-secondary rounded-pill">
+                {# Turbo stream update participant list #}
+                <turbo-stream action="update" target="accepted_user">
+                    <template>
+                        {% if trip.acceptedUsers %}
+                            Participants :
+                        {% endif %}
+                        {% for acceptedUser in trip.acceptedUsers %}
+                            {% if not loop.first %}, {% endif %}
+                            <a href="{{ path('app_profile_show', {slug: acceptedUser.slug}) }}">{{ acceptedUser }}</a>
+                        {% endfor %}
+                    </template>
+                </turbo-stream>
                     Refuser
                 </a>
 

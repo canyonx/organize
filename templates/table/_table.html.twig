@@ -3,13 +3,13 @@
 		<tr>
 			<th>Date</th>
 			<th></th>
-			<th>Location</th>
-			<th>Activity</th>
-			<th>Title</th>
-			<th>Created by</th>
+			<th>Ville</th>
+			<th>Activité</th>
+			<th>Titre</th>
+			<th>Crée par</th>
 			<th>
 			{# {% if pending %}<span class="badge bg-primary">{{ pending }}</span>{% endif %} #}
-			Requests 
+			Demandes 
 			</th>
 		</tr>
 	</thead>
@@ -19,7 +19,7 @@
 				<tr class="align-middle">
 					{% if loop.first %}
 						<td {% if trips|length > 1 %}rowspan="{{ trips|length }}"{% endif %}>
-							{{ date|date('d.m') }}
+							{{ date|format_datetime(pattern='dd MMM', locale='fr') }}
 						</td>
 					{% endif %}
 					<td>{{ trip.dateAt|date('H\\hi')}}</td>
@@ -34,7 +34,7 @@
 							class="btn btn-primary position-relative"
 							data-turbo-frame="_top">
 							{{ trip.title|capitalize }}
-							{# {% include "table/_notif.html.twig" %} #}
+							{% include "table/_notif.html.twig" %}
 						</a>
 					</td>
 					<td>
@@ -54,7 +54,7 @@
 			{% else %}
 				<tr>
 					<td>
-						{{ date|date('d.m') }}
+						{{ date|format_datetime(pattern='dd MMM', locale='fr') }}
 					</td>
 					<td colspan="100%"></td>
 				</tr>

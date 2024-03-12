@@ -200,4 +200,21 @@ class Trip
     {
         return $this->member;
     }
+
+    /**
+     * Array of accepted users
+     * Used in : trip info to show participants list
+     * @return User[]
+     */
+    public function getAcceptedUsers(): array
+    {
+        $acceptedUsers = array();
+        foreach ($this->getTripRequests() as $tr) {
+            if ($tr->getStatus() == TripRequest::ACCEPTED) {
+                $acceptedUsers[] = $tr->getMember();
+            }
+        }
+
+        return $acceptedUsers;
+    }
 }

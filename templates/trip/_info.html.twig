@@ -20,18 +20,16 @@
         <input id="trip_lng" type="hidden" value="{{ trip.lng }}"></input>
         
         <div id="map" class="rounded" style="height:360px" data-controller="map-trip"></div>
-       
 
-
-        {# <p>
+        <p id="accepted_user">
             {% if trip.acceptedUsers %}
                 Participants :
             {% endif %}
             {% for acceptedUser in trip.acceptedUsers %}
                 {% if not loop.first %}, {% endif %}
-                <a href="{{ path('app_profile_show', {'id': acceptedUser.id}) }}">{{ acceptedUser }}</a>
+                <a href="{{ path('app_profile_show', {slug: acceptedUser.slug}) }}">{{ acceptedUser }}</a>
             {% endfor %}
-        </p> #}
+        </p>
 
         {% if trip.member ==  app.user %}
             <div class="text-end">
