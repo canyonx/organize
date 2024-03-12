@@ -31,7 +31,10 @@ class StatusService extends AbstractController
 
             foreach ($trip->getTripRequests() as $tr) {
                 // Count only for requests
-                $tripStatus[$trip->getId()][$tr->getStatus()]['qty'] += 1;
+                if ($tr->getStatus() != TripRequest::OWNER) {
+                    $tripStatus[$trip->getId()][$tr->getStatus()]['qty'] += 1;
+                    $tripStatus[$trip->getId()][$tr->getStatus()]['color'] = $tr->getColor();
+                }
             }
         }
 

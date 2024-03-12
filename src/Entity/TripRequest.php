@@ -2,10 +2,10 @@
 
 namespace App\Entity;
 
-use App\Repository\TripRequestRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\TripRequestRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: TripRequestRepository::class)]
 class TripRequest
@@ -14,6 +14,13 @@ class TripRequest
     public const PENDING = 'PENDING';
     public const ACCEPTED = 'ACCEPTED';
     public const REFUSED = 'REFUSED';
+
+    public const COLOR = array(
+        'OWNER' => 'danger',
+        'PENDING' => 'primary',
+        'ACCEPTED' => 'success',
+        'REFUSED' => 'secondary',
+    );
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -110,28 +117,20 @@ class TripRequest
         return $this;
     }
 
-    public function getDateAt(): ?\DateTimeImmutable
+    public function getColor(): ?string
     {
-        return $this->getTrip()->getDateAt();
+        return $this::COLOR[$this->status];
     }
 
-    // public function getTitle(): ?string
-    // {
-    //     return $this->getTrip()->getTitle();
-    // }
+    public function countNewMessage(): int
+    {
+        // $m = 0;
+        // foreach ($this->getMessages() as $message) {
 
-    // public function getLocation(): ?string
-    // {
-    //     return $this->getTrip()->getLocation();
-    // }
-
-    // public function getActivity(): ?string
-    // {
-    //     return $this->getTrip()->getActivity();
-    // }
-
-    // public function getCreatedBy(): ?User
-    // {
-    //     return $this->getTrip()->getMember();
-    // }
+        //     if ($message->isIsRead() == false) {
+        //         $m++;
+        //     }
+        // }
+        return $this->getMessages()->count();
+    }
 }

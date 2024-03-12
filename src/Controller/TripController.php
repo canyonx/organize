@@ -141,7 +141,7 @@ class TripController extends AbstractController
 
             // $this->addFlash('success', 'A join request sent to ' . $trip->getUser()->getUserName());
             // return $this->redirectToRoute('app_trip_show', ['id' => $trip->getId()], Response::HTTP_SEE_OTHER);
-            return $this->redirectToRoute('app_planning_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_trip_request_show', ['id' => $tr->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('trip/show.html.twig', [

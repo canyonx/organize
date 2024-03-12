@@ -1,16 +1,18 @@
 {# Show the list of all requests for a trip #}
 <section class="card">
-    <div class="card-header">
+    <div class="card-body">
         <h2 class="card-title">Demandes</h2>
     </div>
     <ul class="list-group list-group-flush">
         {% for tripRequest in tripRequests %}
             <li class="list-group-item py-3 d-flex justify-content-between">
-                <a href="{{ path('app_trip_request_show', {'id': tripRequest.id} )}}" class="btn btn-primary position-relative">{{ tripRequest.member }}
+                <a href="{{ path('app_trip_request_show', {'id': tripRequest.id} )}}" 
+                class="btn btn-primary rounded-pill position-relative">
+                    {{ tripRequest.member }}
                     {# {% include "trip/_notif.html.twig" %} #}
                 </a> 
-                <button class="btn btn-secondary" disabled>
-                    {{ tripRequest.status|title }}
+                <button class="btn btn-{{ tripRequest.color }}" disabled>
+                    {{ tripRequest.status|title|trans }}
                 </button>
             </li>
         {% else %}

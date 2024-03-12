@@ -45,9 +45,9 @@ class PlanningController extends AbstractController
         $tripRequestsStatus = [];
         if ($request->get('f') != 'requests') {
             // Get trip requests of user
-            $trips = $tripRepository->findByUserAndBetweenDate($user);
+            $createdTrips = $tripRepository->findByUserAndBetweenDate($user);
             // Get status for each trip created by user
-            $tripRequestsStatus = $statusService->getStatus($trips);
+            $tripRequestsStatus = $statusService->getStatus($createdTrips);
         }
 
         return $this->render('planning/index.html.twig', [

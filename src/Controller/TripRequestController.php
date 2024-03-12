@@ -107,14 +107,18 @@ class TripRequestController extends AbstractController
     }
 
     #[Route('/delete/{id}', name: 'app_trip_request_delete', methods: ['POST'])]
-    public function delete(Request $request, TripRequest $tripRequest, TripRequestRepository $tripRequestRepository): Response
-    {
-        // Cannot delete a join with a refused status
-        if ($tripRequest->getStatus() != TripRequest::REFUSED) {
-            if ($this->isCsrfTokenValid('delete' . $tripRequest->getId(), $request->request->get('_token'))) {
-                $tripRequestRepository->remove($tripRequest, true);
-            }
+    public function delete(
+        Request $request,
+        TripRequest $tripRequest,
+        EntityManagerInterface $em
+    ): Response {
+        // Cannot delete trip request with a refused status
+        // if ($tripRequest->getStatus() != TripRequest::REFUSED) {
+        if ($this->isCsrfTokenValid('delete' . $tripRequest->getId(), $request->request->get('_token'))) {
+            $em->remove($tripRequest);
+            $em->flush();
         }
+        // }
 
         return $this->redirectToRoute('app_trip_show', ['id' => $tripRequest->getTrip()->getId()], Response::HTTP_SEE_OTHER);
     }
