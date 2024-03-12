@@ -4,26 +4,20 @@
 {% endblock %}
 
 {% block body %}
-	{# <h1>Trip n°{{ trip.id }}</h1> #}
 	<div class="my-2">
 		<a href="{{ path('app_planning_index') }}" class="btn btn-link">Mon planning</a>
 	</div>
 	<div class="row">
 		<div class="col-md-6">
+			{# Show trip details #}
 			{% include "trip/_info.html.twig" %}
 		</div>
-
 		<div class="col-md-6">
-			{% if trip.member == app.user %}
-				{# All requests for this trip #}
-				{# {% include "trip/_join_requests_card.html.twig" %} #}
-			{# {% elseif alreadyTrip and trip.user != app.user %} #}
-				{# TODO : if alreadyTrip && user != abonné #}
-				{% include "shared/_warning_limitation.html.twig" %}
-			{% else %}
-				{# Form to join this trip #}
-				{# {% include "join/_form.html.twig" %} #}
-			{% endif %}
+		{# Recharge uniquement la request_card #}
+			<turbo-frame id="request_card">
+				{# Show requests for the trip #}
+				{% include "trip/_requests.html.twig" %}
+			</turbo-frame>
 		</div>
 	</div>
 {% endblock %}

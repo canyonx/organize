@@ -15,22 +15,23 @@ class StatusService extends AbstractController
      */
     function getStatus($trips): array
     {
+        // Table to count each type of status for trip
         $status = [
-            TripRequest::OWNER => ['qty' => 0, 'color' => TripRequest::COLOR[TripRequest::OWNER]],
-            TripRequest::PENDING => ['qty' => 0, 'color' => TripRequest::COLOR[TripRequest::PENDING]],
-            TripRequest::ACCEPTED => ['qty' => 0, 'color' => TripRequest::COLOR[TripRequest::ACCEPTED]],
-            TripRequest::REFUSED => ['qty' => 0, 'color' => TripRequest::COLOR[TripRequest::REFUSED]]
+            TripRequest::OWNER => ['qty' => 0],
+            TripRequest::PENDING => ['qty' => 0],
+            TripRequest::ACCEPTED => ['qty' => 0],
+            TripRequest::REFUSED => ['qty' => 0]
         ];
+
         $tripStatus = [];
         foreach ($trips as $trip) {
             // Initialise status for trip
             $tripStatus[$trip->getId()] = $status;
-            foreach ($trip->getJoins() as $join) {
+
+
+            foreach ($trip->getTripRequests() as $tr) {
                 // Count only for requests
-                if ($join->getStatus() != Join::OWNER) {
-                    $tripStatus[$join->getTrip()->getId()][$join->getStatus()]['qty'] += 1;
-                    $tripStatus[$join->getTrip()->getId()][$join->getStatus()]['color'] = TripRequest::COLOR[$join->getStatus()];
-                }
+                $tripStatus[$trip->getId()][$tr->getStatus()]['qty'] += 1;
             }
         }
 

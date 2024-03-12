@@ -38,10 +38,13 @@ export default class extends Controller {
         function onSelected(feature) {
             let input = document.getElementsByClassName('photon-input');
             input[0].setAttribute('placeholder', feature.properties.city);
+
+            var form = document.getElementsByTagName('form');
+            var element = form[0].name;
             
-            document.getElementById('user_city').setAttribute('value', feature.properties.city);
-            document.getElementById('user_lat').setAttribute('value', feature.geometry.coordinates[1].toFixed(4));
-            document.getElementById('user_lng').setAttribute('value', feature.geometry.coordinates[0].toFixed(4));
+            document.getElementById(element + '_city').setAttribute('value', feature.properties.city);
+            document.getElementById(element + '_lat').setAttribute('value', feature.geometry.coordinates[1].toFixed(4));
+            document.getElementById(element + '_lng').setAttribute('value', feature.geometry.coordinates[0].toFixed(4));
             
             console.log(feature);
         }
@@ -50,7 +53,7 @@ export default class extends Controller {
         var container = new Photon.Search({
             resultsHandler: myHandler,
             onSelected: onSelected,
-            placeholder: "Entrez une adresse",
+            placeholder: "Entrez une ville",
             formatResult: formatResult,
             url: "https://api-adresse.data.gouv.fr/search/?type=municipality&autocomplete=1&",
             feedbackEmail: null,

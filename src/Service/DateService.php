@@ -7,6 +7,7 @@ use DateTime;
 use App\Entity\User;
 use App\Repository\TripRepository;
 use App\Repository\TripRequestRepository;
+use DateTimeImmutable;
 
 class DateService
 {
@@ -26,11 +27,11 @@ class DateService
      * @return dates[] Array
      */
     public static function getDates(
-        \DateTime $fromtime,
+        \DateTimeImmutable $fromtime,
         int $days = 7
     ): array {
         for ($i = 0; $i < $days; $i++) {
-            $dates[$i] = new \DateTime($fromtime->format('Y-m-d') . "+ $i day");
+            $dates[$i] = new \DateTimeImmutable($fromtime->format('Y-m-d') . "+ $i day");
         }
         return $dates;
     }
@@ -45,12 +46,14 @@ class DateService
      */
     public function isTripThatDay(
         User $user,
-        DateTime $date
+        DateTimeImmutable $date
     ): bool {
         // Consider participating to trip if status
         $status = [TripRequest::ACCEPTED, TripRequest::PENDING];
+        $dateFrom = $date;
+        $dateTo = new \DateTimeImmutable($date->format('Y-m-d') . ' + 1 day');
         // Is user have a trip that day
-        $myTrips = $this->tripRequestRepository->findByUserDateAndStatus($user, $date, $status, 1);
+        $myTrips = $this->tripRequestRepository->findByUserAndBetweenDateAndStatus($user, $dateFrom, $dateTo, $status);
         if ($myTrips) {
             return true;
         }

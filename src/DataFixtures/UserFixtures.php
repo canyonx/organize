@@ -30,8 +30,9 @@ class UserFixtures
         $this->em->persist($admin);
     }
 
-    public function createUser(int $qty): void
+    public function createUser(int $qty, array $location): void
     {
+        $loc = $location[rand(0, count($location) - 1)];
         for ($i = 0; $i < $qty; $i++) {
             $user = new User;
             $user->setEmail('user' . $i . '@gmail.com')
@@ -39,7 +40,10 @@ class UserFixtures
                 ->setPassword($this->userPasswordHasherInterface->hashPassword($user, 'user'))
                 ->setCreatedAt(new \DateTimeImmutable())
                 ->setLastConnAt(new \DateTimeImmutable())
-                ->setSlug(strtolower($this->slugger->slug($user->getPseudo(), '_')));
+                ->setSlug(strtolower($this->slugger->slug($user->getPseudo(), '_')))
+                ->setCity($loc[0])
+                ->setLat($loc[1])
+                ->setLng($loc[2]);
 
             $this->em->persist($user);
         }

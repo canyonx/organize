@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Trip;
 use App\Entity\User;
 use App\Form\SearchType;
+use App\Service\SearchService;
 use App\Service\PlanningService;
 use App\Repository\TripRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +19,7 @@ class SearchController extends AbstractController
     public function index(
         TripRepository $tripRepository,
         PlanningService $planningService,
+        SearchService $searchService,
         Request $request,
     ): Response {
         /** @var User */
@@ -48,7 +50,7 @@ class SearchController extends AbstractController
             );
         } else {
             // Unsubmitted form default values
-            $distance = 0;
+            $distance = 10;
             $search->setActivity(null)
                 ->setDateAt(new \DateTimeImmutable('today'));
 
@@ -79,7 +81,7 @@ class SearchController extends AbstractController
             // Distance value
             'distance' => $distance,
             // Calendar trips ordered by date
-            'calendar' => $planningService->getPlanning($trips, $search->getDateAt()),
+            'calendar' => $searchService->getSearchCalendar($trips, $search->getDateAt()),
             // Form search
             'form' => $form,
             // Total trips in app

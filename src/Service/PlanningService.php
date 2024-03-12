@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Trip;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PlanningService extends AbstractController
@@ -35,10 +36,12 @@ class PlanningService extends AbstractController
      * @param array $trips
      * @return array
      */
-    public function getPlanning(array $trips, \DateTimeImmutable $dateStart = null): array
-    {
+    public function getPlanning(
+        array $tripRequests,
+        \DateTimeImmutable $dateFrom = new \DateTimeImmutable('today')
+    ): array {
         // Array of dates to show in the planning
-        $dates = $this->getArrayDates($dateStart);
+        $dates = $this->getArrayDates($dateFrom);
 
         // Create calendar and organises trips by days
         $calendar = [];
@@ -47,9 +50,9 @@ class PlanningService extends AbstractController
             $calendar[$date] = [];
 
             // Add activity to Array
-            foreach ($trips as $key => $trip) {
-                if ($trip->getDateAt()->format('Y-m-d') == $date) {
-                    $calendar[$date][$key] = $trip;
+            foreach ($tripRequests as $key => $tr) {
+                if ($tr->getTrip()->getDateAt()->format('Y-m-d') == $date) {
+                    $calendar[$date][$key] = $tr->getTrip();
                 }
             }
         }

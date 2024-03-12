@@ -38,17 +38,17 @@
 						</a>
 					</td>
 					<td>
-						{% if trip.member != app.user %}
-							<a href="{{ path('app_profile_show', {'slug': trip.member.slug}) }}" 
+						{% if trip.createdBy != app.user %}
+							<a href="{{ path('app_profile_show', {'slug': trip.createdBy.slug}) }}" 
 								class=""
 								data-turbo-frame="_top">
-								{{ trip.member }}
-								{% if trip.member in app.user.myFriendUsers %} *<i class="fa-solid fa-star"></i> {% endif %}
+								{{ trip.createdBy }}
+								{% if trip.createdBy in app.user.myFriendUsers %} *<i class="fa-solid fa-star"></i> {% endif %}
 							</a>
 						{% endif %}
 					</td>
 					<td>
-						{# {% include "table/_table_status.html.twig" %} #}
+						{% include "table/_table_status.html.twig" %}
 					</td>
 				</tr>
 			{% else %}

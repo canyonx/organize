@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: TripRequestRepository::class)]
 class TripRequest
 {
+    public const OWNER = 'OWNER';
     public const PENDING = 'PENDING';
     public const ACCEPTED = 'ACCEPTED';
     public const REFUSED = 'REFUSED';
@@ -108,4 +109,29 @@ class TripRequest
 
         return $this;
     }
+
+    public function getDateAt(): ?\DateTimeImmutable
+    {
+        return $this->getTrip()->getDateAt();
+    }
+
+    // public function getTitle(): ?string
+    // {
+    //     return $this->getTrip()->getTitle();
+    // }
+
+    // public function getLocation(): ?string
+    // {
+    //     return $this->getTrip()->getLocation();
+    // }
+
+    // public function getActivity(): ?string
+    // {
+    //     return $this->getTrip()->getActivity();
+    // }
+
+    // public function getCreatedBy(): ?User
+    // {
+    //     return $this->getTrip()->getMember();
+    // }
 }

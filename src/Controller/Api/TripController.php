@@ -42,6 +42,7 @@ class TripController extends AbstractController
 
         // Looking for user trip for a day
         $trips = $tripRepository->findByUserAndBetweenDate($user, $dateFrom, $dateTo);
+        $tripRequests = $tripRequestRepository->findByUserAndBetweenDate($user, $dateFrom, $dateTo);
 
         // if id set, editing trip
         if ($id) {
@@ -54,10 +55,7 @@ class TripController extends AbstractController
 
         // dump($dateFrom, $dateTo, $trips);
 
-        // Looking for user trip request for a day
-        // $tr = $tripRequestRepository->findOneBy(['member' => $user, 'dateAt' => $date]);
-
-        $alreadyTrip = ($trips) ? true : false;
+        $alreadyTrip = ($trips || $tripRequests) ? true : false;
 
         return $this->json($alreadyTrip);
     }

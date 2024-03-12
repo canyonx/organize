@@ -2,16 +2,18 @@
 
 namespace App\Form;
 
-use App\Entity\Activity;
 use App\Entity\Trip;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Activity;
+use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class TripType extends AbstractType
 {
@@ -45,7 +47,10 @@ class TripType extends AbstractType
                 'label' => 'Activité',
                 'class' => Activity::class,
                 'autocomplete' => true, // Symfony-ux Autocomplete
-                // 'choice_label' => 'id',
+                'query_builder' => function (EntityRepository $er): QueryBuilder {
+                    return $er->createQueryBuilder('a')
+                        ->orderBy('a.name', 'ASC');
+                },
             ]);
     }
 

@@ -18,6 +18,15 @@
                 {{ form_row(registrationForm.email, {label: 'Adresse email'}) }}
                 {{ form_row(registrationForm.pseudo, {label: 'Pseudo'}) }}
                 {{ form_row(registrationForm.plainPassword, {label: 'Mot de passe'}) }}
+                <div class="mb-3">
+                    <label for="city_profile" class="form-label">Ville</label>
+                    <div id="city_profile" data-controller="city-profile"></div>
+                </div>
+                <div class="row" class="visually-hidden">
+                    <div class="col-4 visually-hidden">{{ form_row(registrationForm.city) }}</div>
+                    <div class="col-4 visually-hidden">{{ form_row(registrationForm.lat) }}</div>
+                    <div class="col-4 visually-hidden">{{ form_row(registrationForm.lng) }}</div>
+                </div>
                 {{ form_row(registrationForm.agreeTerms, {label: 'J\'accepte les conditions d\'utilisation'}) }}
 
                 <button type="submit" class="btn btn-primary rounded-pill p-2">Créer mon compte</button>

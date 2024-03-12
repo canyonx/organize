@@ -1,0 +1,13 @@
+{% if trip.member == app.user %}
+    {# All requests for this trip #}
+    {% include "trip/_request_list.html.twig" %}
+
+{% elseif alreadyTrip and trip.member != app.user %}
+    {# Show limitation if user have a trip on the same day #}
+    {% include "shared/_warning_limitation.html.twig" %}
+
+{% else %}
+    {# Form to join this trip #}
+    {% include "trip_request/_form.html.twig" %}
+
+{% endif %}

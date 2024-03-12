@@ -5,8 +5,14 @@ namespace App\Controller;
 use App\Entity\Trip;
 use App\Entity\User;
 use App\Form\TripType;
+use App\Entity\Message;
+use App\Entity\TripRequest;
+use App\Service\DateService;
+use App\Form\TripRequestType;
+use App\Service\MailerService;
 use App\Repository\TripRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\TripRequestRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -59,11 +65,93 @@ class TripController extends AbstractController
     /**
      * Show trip, public page
      */
-    #[Route('/{id}', name: 'app_trip_show', methods: ['GET'])]
-    public function show(Trip $trip): Response
-    {
+    #[Route('/{id}', name: 'app_trip_show', methods: ['GET', 'POST'])]
+    public function show(
+        Trip $trip,
+        DateService $dateService,
+        Request $request,
+        EntityManagerInterface $em,
+        MailerService $mailerService,
+        TripRepository $tripRepository,
+        TripRequestRepository $tripRequestRepository
+    ): Response {
+        /** @var User */
+        $user = $this->getUser();
+
+        // Trip not found
+        if (!$trip) {
+            throw $this->createNotFoundException('Trip not found');
+        }
+
+        // User already ask to join the trip -> redirect to trip request show
+        $tripRequest = $tripRequestRepository->findOneBy(
+            [
+                'trip' => $trip,
+                'member' => $user,
+                'status' => [TripRequest::ACCEPTED, TripRequest::PENDING, TripRequest::REFUSED]
+            ],
+            []
+        );
+        if ($tripRequest) {
+            return $this->redirectToRoute('app_trip_request_show', ['id' => $tripRequest->getId()]);
+        }
+
+        // Check if user have already planified a trip for that day
+        // If true show Info subscribe
+        $dateFrom = new \DateTimeImmutable($trip->getDateAt()->format('Y-m-d'));
+
+        // If userTripThatDay or userTripRequestThatDay -> show warning limitation
+        $alreadyTrip = $dateService->isTripThatDay($user, $dateFrom) ?: false;
+
+        // new Trip Request
+        $tr = new TripRequest();
+        $tr->setStatus(TripRequest::PENDING)
+            ->setTrip($trip)
+            ->setMember($this->getUser());
+
+        // Create form for TripRequest, message 
+        $form = $this->createForm(TripRequestType::class, $tr);
+        $form->handleRequest($request);
+
+        // Form submitted AND NO trip that day
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Write trip request in DB
+            $em->persist($tr);
+            $em->flush();
+            // dd($tr, $form->get('message')->getData());
+
+            // Create message associate to the trip request
+            if ($form->get('message')->getData()) {
+                $message = new Message();
+                $message->setCreatedAt(new \DateTimeImmutable('now'))
+                    ->setTripRequest($tr)
+                    ->setContent($form->get('message')->getData())
+                    ->setMember($user)
+                    ->setIsRead(false);
+
+                $em->persist($message);
+                $em->flush();
+            }
+
+            // If trip owner setting notification is true
+            // if ($trip->getMember()->getSetting()->isIsNewTripRequest()) {
+            // Send email trip request notification : ' $user is interested by your $trip'
+            // $mailerService->newJoinRequestNotification($user, $tr, $message);
+            // }
+
+            // $this->addFlash('success', 'A join request sent to ' . $trip->getUser()->getUserName());
+            // return $this->redirectToRoute('app_trip_show', ['id' => $trip->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_planning_index', [], Response::HTTP_SEE_OTHER);
+        }
+
         return $this->render('trip/show.html.twig', [
             'trip' => $trip,
+            'tripRequests' => $tripRequestRepository->findBy([
+                'trip' => $trip,
+                'status' => [TripRequest::ACCEPTED, TripRequest::PENDING, TripRequest::REFUSED]
+            ]),
+            'form' => $form,
+            'alreadyTrip' => $alreadyTrip
         ]);
     }
 

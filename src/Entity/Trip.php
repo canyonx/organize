@@ -195,4 +195,9 @@ class Trip
 
         return $this;
     }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->member;
+    }
 }

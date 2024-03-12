@@ -1,0 +1,14 @@
+<div class="mt-2">
+    {{ form_start(form, { action:"/trip/request/" ~ tripRequest.id }) }}
+        {% if app.user == trip.member %}
+            {{ form_label(form.content, 'Ecrire à ' ~ tripRequest.member) }}
+        {% else %}
+            {{ form_label(form.content, 'Ecrire à ' ~ trip.member) }}
+        {% endif %}
+        
+        {{ form_widget(form.content) }}
+        <div class="mt-2 text-end">
+            <button class="btn btn-success rounded-pill">{{ button_label|default('Envoyer') }}</button>
+        </div>
+    {{ form_end(form) }}
+</div>
