@@ -1,7 +1,7 @@
 {% if app.user == trip.member %}
 
     {% if trip.isAvailable == false %}
-        <button class="btn btn-warning" disabled>Closed</button>
+        <button class="btn btn-danger" disabled>Fermée</button>
     {% endif %}
 
     {# Trip join requests status #}

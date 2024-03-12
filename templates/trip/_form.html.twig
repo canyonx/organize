@@ -14,14 +14,14 @@
                 <label for="city_trip" class="form-label">Ville</label>
                 <div id="city_trip" data-controller="city-trip"></div>
             </div>
-            <div class="row">
-                <div class="col-md-4">
+            <div class="row visually-hidden">
+                <div class="col visually-hidden">
                     {{ form_row(form.location, {value: trip.location ?: app.user.city}) }}
                 </div>
-                <div class="col-md-4">
+                <div class="col visually-hidden">
                     {{ form_row(form.lat, {value: trip.lat ?: app.user.lat}) }}
                 </div>
-                <div class="col-md-4">
+                <div class="col visually-hidden">
                     {{ form_row(form.lng, {value: trip.lng ?: app.user.lng}) }}
                 </div>
             </div>

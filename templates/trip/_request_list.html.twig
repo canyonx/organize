@@ -21,11 +21,17 @@
             </li>
         {% endfor %}
     </ul>
-    {# <div class="card-body">
+    <div class="card-body">
         {% if trip.isAvailable == true %}
-            <a href="{{ path('app_trip_available', {'id': trip.id, 'param': 0}) }}" class="card-link btn btn-success">Close requests</a>
+            <a href="{{ path('app_trip_available', {'id': trip.id, 'param': 0}) }}" 
+            class="card-link btn btn-success rounded-pill">
+                Fermer les demandes
+            </a>
         {% else %}
-            <a href="{{ path('app_trip_available', {'id': trip.id, 'param': 1}) }}" class="card-link btn btn-danger">Open requests</a>
+            <a href="{{ path('app_trip_available', {'id': trip.id, 'param': 1}) }}" 
+            class="card-link btn btn-danger rounded-pill">
+                Ouvrir les demandes
+            </a>
         {% endif %}
-    </div> #}
+    </div>
 </section>

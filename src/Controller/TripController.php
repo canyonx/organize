@@ -53,7 +53,7 @@ class TripController extends AbstractController
             $entityManager->persist($trip);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_trip_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_trip_show', ['id' => $trip->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('trip/new.html.twig', [
@@ -169,7 +169,7 @@ class TripController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_trip_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_trip_show', ['id' => $trip->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('trip/edit.html.twig', [
@@ -178,6 +178,28 @@ class TripController extends AbstractController
         ]);
     }
 
+    /**
+     * Change availability of a trip
+     */
+    #[Route('/{id}/available/{param}', name: 'app_trip_available', methods: ['GET'])]
+    public function available(
+        Trip $trip,
+        bool $param,
+        EntityManagerInterface $em
+    ): Response {
+        if ($this->getUser() !== $trip->getMember()) {
+            return $this->redirectToRoute('app_planning_index');
+        }
+
+        $trip->setIsAvailable($param);
+        $em->flush();
+
+        return $this->redirectToRoute('app_trip_show', ['id' => $trip->getId()], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * Delete trip for trip owner connected user
+     */
     #[Route('/{id}', name: 'app_trip_delete', methods: ['POST'])]
     public function delete(Request $request, Trip $trip, EntityManagerInterface $entityManager): Response
     {
