@@ -117,7 +117,10 @@ class TripRequestController extends AbstractController
             $to = ($user == $tripRequest->getMember()) ? $tripRequest->getTrip()->getMember() : $tripRequest->getMember();
 
             // If $to user setting isIsNewMessage
-            if ($to->getSetting()->isIsTripRequestStatusChange()) {
+            if (
+                $to->getSetting() &&
+                $to->getSetting()->isIsTripRequestStatusChange()
+            ) {
                 // Send email Message Notification
                 $mailerService->send(
                     $to->getEmail(),

@@ -349,6 +349,9 @@
             "config/packages/messenger.yaml"
         ]
     },
+    "symfonycasts/sass-bundle": {
+        "version": "v0.6.0"
+    },
     "symfonycasts/verify-email-bundle": {
         "version": "v1.16.0"
     },

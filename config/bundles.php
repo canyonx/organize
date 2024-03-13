@@ -19,4 +19,5 @@ return [
     Symfony\UX\TwigComponent\TwigComponentBundle::class => ['all' => true],
     Nelmio\CorsBundle\NelmioCorsBundle::class => ['all' => true],
     Liip\ImagineBundle\LiipImagineBundle::class => ['all' => true],
+    Symfonycasts\SassBundle\SymfonycastsSassBundle::class => ['all' => true],
 ];

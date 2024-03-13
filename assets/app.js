@@ -9,11 +9,12 @@ import './bootstrap.js';
  * which should already be in your base.html.twig.
  */
  
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import './vendor/@webgeodatavore/photon-geocoder-autocomplete/dist/photon-geocoder-autocomplete.min.css';
 import './vendor/leaflet/dist/leaflet.min.css';
-import './styles/app.css';
+// import './styles/app.css';
 import './styles/photon-no-map.css';
+// import './styles/custom.scss';
 
 
-console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉')
+// console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉')

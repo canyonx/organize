@@ -1,54 +1,42 @@
 <section class="card">
-    <div class="card-header">
+    <div class="card-body">
         <div class="d-flex justify-content-between align-items-baseline">
             <h2>{{ trip.title|capitalize }}</h2>
+            {# Edit button #}
+            {% if trip.member == app.user %}
+                {# <div class="text-end"> #}
+                    <a href="{{ path('app_trip_edit', {'id': trip.id}) }}" 
+                    class="btn btn-secondary rounded-pill">
+                        Modifier
+                    </a>   
+                {# </div> #}
+            {% else %}
+                <a href="{{ path('app_profile_show', {'slug': trip.member.slug}) }}"
+                class="btn btn-primary rounded-pill">
+                    {{ trip.member }}
+                </a>
+            {% endif %}
+        </div>
+        <div class="mb-3">
             <span class="badge text-bg-secondary">{{ trip.activity|capitalize }}</span>
         </div>
-        {{ trip.dateAt|date('H\\hi') }}, {{ trip.dateAt|format_datetime(pattern='EEE dd MMM', locale='fr') }} - {{ trip.location|title }}
-    </div>
-    <div class="card-body">
-        <p>
-            {% if app.user != trip.member %}
-                Created by <a href="{{ path('app_profile_show', {'slug': trip.member.slug}) }}">{{ trip.member }}</a>
-            {% endif %}
-        </p>
+        <div class="mb-3">
+            <b class="text-muted">
+                {{ trip.dateAt|date('H\\hi') }} le {{ trip.dateAt|format_datetime(pattern='EEE dd MMM', locale='fr') }} - {{ trip.location|title }}
+            </b>
+        </div>
 
         <p>{{ trip.description }}</p>
-
-        Point de RDV    
+ 
         <input id="trip_lat" type="hidden" value="{{ trip.lat }}"></input>
         <input id="trip_lng" type="hidden" value="{{ trip.lng }}"></input>
         
-        <div id="map" class="rounded" style="height:360px" data-controller="map-trip"></div>
 
-        {% if trip.acceptedUsers %}
-            <p id="accepted_user">
-                Participants :
-                {% for acceptedUser in trip.acceptedUsers %}
-                    {% if not loop.first %}, {% endif %}
-                    <a href="{{ path('app_profile_show', {slug: acceptedUser.slug}) }}">{{ acceptedUser }}</a>
-                {% endfor %}
-            </p>
-        {% endif %}
-
-        {% if trip.member ==  app.user %}
-            <div class="text-end">
-                <a href="{{ path('app_trip_edit', {'id': trip.id}) }}" class="btn btn-secondary rounded-pill mt-3">Modifier</a>   
-            </div>
-        {% endif %}
+        {% include 'trip/_accepted_user.html.twig' %}
+        
     </div>
 
+    {# carte #}
+    <div id="map" class="rounded-bottom-4" style="height:360px" data-controller="map-trip"></div>
+
 </section>
-
-{# Util for Map #}
-{# {% block stylesheets %}
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-     crossorigin=""/>
-{% endblock %}
-
-{% block javascripts %}
-	 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-     crossorigin=""></script>
-{% endblock %} #}

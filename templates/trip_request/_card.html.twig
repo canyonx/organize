@@ -1,21 +1,16 @@
 <turbo-frame id="request_card">
     <section class="card">
         <div class="card-body">
-            {# <turbo-frame id="request_status"> #}
-                {# Status of the request #}
-                {% include "trip_request/_status.html.twig" %}
-            {# </turbo-frame> #}
+            {# Status of the request #}
+            {% include "trip_request/_status.html.twig" %}
         </div>
 
         {% if tripRequest.status != 'REFUSED' %}
-            <hr class="">
-            <div class="card-body">
-                {# <turbo-frame id="message_list"> #}
-                    {# Collection of messages associates to the trip request #}
-                    {% include "trip_request/_message_list.html.twig" %}
-                    {# Message form #}
-                    {% include "message/_form.html.twig" %}
-                {# </turbo-frame> #}
+            <div class="card-body border-top">
+                {# Collection of messages associates to the trip request #}
+                {% include "trip_request/_message_list.html.twig" %}
+                {# Message form #}
+                {% include "message/_form.html.twig" %}
             </div>
         {% endif %}
     </section>

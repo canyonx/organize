@@ -1,0 +1,20 @@
+/* body {
+    background-color: #f6f6f6;
+} */
+
+h1, h2, h3 {
+    color: #343a40;
+}
+
+$primary: #007ea7;
+$secondary: #eae4e9;
+$danger: #ff6392;
+$success: #06d6a0;
+$warning: #ffe45e;
+$light: #f9f9f9;
+
+
+$card-border-radius: 1rem;
+$card-border-width: 0px;
+
+@import '../../vendor/twbs/bootstrap/scss/bootstrap';
