@@ -1,4 +1,6 @@
 twig:
+    globals:
+        images_dir: 'images/uploads/'
     default_path: '%kernel.project_dir%/templates'
     form_themes: ['bootstrap_5_layout.html.twig']
 

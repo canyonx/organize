@@ -9,12 +9,14 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserType extends AbstractType
 {
@@ -27,34 +29,34 @@ class UserType extends AbstractType
             ->add('birthAt', DateType::class, [
                 'label' => 'Date de naissance'
             ])
-            ->add('city', TextType::class, [
+            ->add('city', HiddenType::class, [
                 'label' => false,
-                // 'attr' => [
-                //     'inert' => true,
-                //     'style' => 'background-color:#e9ecef'
-                // ],
             ])
-            ->add('lat', NumberType::class, [
+            ->add('lat', HiddenType::class, [
                 'label' => false,
-                // 'attr' => [
-                //     'inert' => true,
-                //     'style' => 'background-color:#e9ecef'
-                // ],
             ])
-            ->add('lng', NumberType::class, [
+            ->add('lng', HiddenType::class, [
                 'label' => false,
-                // 'attr' => [
-                //     'inert' => true,
-                //     'style' => 'background-color:#e9ecef'
-                // ],
             ])
-            ->add('avatar', FileType::class, [
+            ->add('imageFile', FileType::class, [
                 'label' => 'Photo de profil',
-                'required' => false
+                'required' => false,
+                'mapped' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1M',
+                        'maxSizeMessage' => 'La taille du fichier ne doit pas dépasser 300 ko',
+                        'mimeTypes' => ['image/jpeg', 'image/png', 'image/gif'],
+                        'mimeTypesMessage' => 'Veuillez télécharger une image au format JPEG, PNG ou GIF',
+                    ]),
+                ],
             ])
             ->add('about', TextareaType::class, [
                 'label' => 'Présentation',
-                'required' => false
+                'required' => false,
+                'attr' => [
+                    'rows' => 4
+                ]
             ])
             ->add('activities', EntityType::class, [
                 'label' => 'Activités',

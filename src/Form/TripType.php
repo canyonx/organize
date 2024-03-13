@@ -27,7 +27,9 @@ class TripType extends AbstractType
                 'date_label' => 'Date',
                 'date_widget' => 'single_text',
                 'time_label' => 'Time',
-                'time_widget' => 'choice'
+                'time_widget' => 'choice',
+                // 'disabled' => $options['edit']
+
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description'
@@ -58,6 +60,7 @@ class TripType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Trip::class,
+            'edit' => false
         ]);
     }
 }

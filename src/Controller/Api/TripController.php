@@ -3,6 +3,7 @@
 namespace App\Controller\Api;
 
 use App\Entity\User;
+use App\Service\DateService;
 use App\Repository\TripRepository;
 use App\Repository\TripRequestRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +23,7 @@ class TripController extends AbstractController
     public function getIsTripThatDay(
         Request $request,
         TripRepository $tripRepository,
-        TripRequestRepository $tripRequestRepository
+        DateService $dateService
     ): Response {
         /** @var User */
         $user = $this->getUser();
@@ -32,30 +33,22 @@ class TripController extends AbstractController
         $id = $postData->id;
         $date = $postData->date;
 
-        // If no date defined return false
-        if (!$date) {
-            return $this->json(false);
-        }
+        // If no date defined return false, new trip
+        if (!$date) return $this->json(false);
 
         $dateFrom = new \DateTimeImmutable($date);
-        $dateTo = new \DateTimeImmutable($date . ' + 1 day');
 
-        // Looking for user trip for a day
-        $trips = $tripRepository->findByUserAndBetweenDate($user, $dateFrom, $dateTo);
-        $tripRequests = $tripRequestRepository->findByUserAndBetweenDate($user, $dateFrom, $dateTo);
+        $alreadyTrip = $dateService->isTripThatDay($user, $dateFrom);
 
-        // if id set, editing trip
-        if ($id) {
-            // Remove the trip from array
+        // If is on edit
+        if ($id && $alreadyTrip) {
             $trip = $tripRepository->find($id);
-            if (($key = array_search($trip, $trips)) !== false) {
-                unset($trips[$key]);
+
+            // user edit trip
+            if ($trip->getMember() == $user && $trip->getDateAt()->format('Y-m-d') == $dateFrom->format('Y-m-d')) {
+                return $this->json(false);
             }
         }
-
-        // dump($dateFrom, $dateTo, $trips);
-
-        $alreadyTrip = ($trips || $tripRequests) ? true : false;
 
         return $this->json($alreadyTrip);
     }

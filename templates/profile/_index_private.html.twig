@@ -1,7 +1,16 @@
 <section class="card m-3">
     <div class="card-body row">
         <div class="col-md-6 text-center">
-            <img src="https://placehold.co/300" alt="" class="rounded-circle border border-3 p-2">
+        {% if user.avatar %}
+            <img src="{{ asset(images_dir ~ user.avatar)|imagine_filter('avatar') }}" 
+            alt="Photo de {{ user }}" 
+            class="rounded-circle border border-3 p-2"
+            with="300" height="300">
+        {% else %}
+            <img src="https://placehold.co/300" 
+            alt="Photo par défaut" 
+            class="rounded-circle border border-3 p-2">
+        {% endif %}
         </div>
         <div class="col-md-6">
             <h1>{{ user }}</h1>

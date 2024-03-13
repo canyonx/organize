@@ -64,14 +64,22 @@ class TripRequestController extends AbstractController
             $em->flush();
 
             // MessageEventListener : send newMessageNotification
-
+            $from = ($user == $tripRequest->getMember()) ? $tripRequest->getMember() : $tripRequest->getTrip()->getMember();
             $to = ($user == $tripRequest->getMember()) ? $tripRequest->getTrip()->getMember() : $tripRequest->getMember();
 
             // If $to user setting isIsNewMessage
-            // if ($to->getSetting()->isIsNewMessage()) {
-            // Send email Message Notification
-            // $mailerService->newMessageNotification($user, $to, $message->getJoinRequest(), $message);
-            // }
+            if ($to->getSetting()->isIsNewMessage()) {
+                // Send email Message Notification
+                $mailerService->send(
+                    $to->getEmail(),
+                    'Nouveau message de ' . $from,
+                    'notification',
+                    [
+                        'title' => 'Nouveau message de ' . $from,
+                        'message' => $message->getContent()
+                    ]
+                );
+            }
 
             return $this->redirectToRoute('app_trip_request_show', ['id' => $tripRequest->getId()], Response::HTTP_SEE_OTHER);
         }
@@ -88,11 +96,15 @@ class TripRequestController extends AbstractController
     public function edit(
         Request $request,
         TripRequest $tripRequest,
-        EntityManagerInterface $em
+        EntityManagerInterface $em,
+        MailerService $mailerService
     ): Response {
         if (!$tripRequest) {
             return $this->redirectToRoute('app_planning_index');
         }
+
+        /** @var User */
+        $user = $this->getUser();
 
         // TODO: Deny if not owner of the trip
         // $this->denyAccessUnlessGranted('TRIP_OWNER', $myFriend);
@@ -101,6 +113,22 @@ class TripRequestController extends AbstractController
             $tripRequest->setStatus($request->get('status'));
             $em->flush();
             // JoinEventListener : send mail on update, status change
+
+            $to = ($user == $tripRequest->getMember()) ? $tripRequest->getTrip()->getMember() : $tripRequest->getMember();
+
+            // If $to user setting isIsNewMessage
+            if ($to->getSetting()->isIsTripRequestStatusChange()) {
+                // Send email Message Notification
+                $mailerService->send(
+                    $to->getEmail(),
+                    'Changement de status d\'une demande',
+                    'notification',
+                    [
+                        'title' => 'Changement de status pour ' . $tripRequest->getTrip()->getTitle(),
+                        'message' => 'Votre demande à maintenant le status ' . $tripRequest->getStatus()
+                    ]
+                );
+            }
         }
 
         return $this->redirectToRoute('app_trip_request_show', ['id' => $tripRequest->getId()], Response::HTTP_SEE_OTHER);

@@ -9,6 +9,7 @@ use App\Entity\Message;
 use App\Entity\TripRequest;
 use App\Service\DateService;
 use App\Form\TripRequestType;
+use App\Repository\FriendRepository;
 use App\Service\MailerService;
 use App\Repository\TripRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -37,8 +38,12 @@ class TripController extends AbstractController
      * @return Response
      */
     #[Route('/nouveau', name: 'app_trip_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
+    public function new(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        MailerService $mailerService,
+        FriendRepository $friendRepository
+    ): Response {
         /** @var User */
         $user = $this->getUser();
 
@@ -53,6 +58,29 @@ class TripController extends AbstractController
             $entityManager->persist($trip);
             $entityManager->flush();
 
+            // Friends relations where trip member is followed
+            $friendsOf = $friendRepository->findBy(['friend' => $trip->getMember()]);
+
+            // Send email to each user who follow trip member
+            // And have activated emails 
+            foreach ($friendsOf as $f) {
+                if (
+                    $f->getMember()->getSetting() &&
+                    $f->getMember()->getSetting()->isIsFriendNewTrip()
+                ) {
+                    // Send email trip request notification : ' $user is interested by your $trip'
+                    $mailerService->send(
+                        $f->getMember()->getEmail(),
+                        $trip->getMember() . ' a crée une nouvelle sortie',
+                        'notification',
+                        [
+                            'title' => $trip->getMember() . ' a crée une nouvelle sortie',
+                            'message' => $trip->getTitle()
+                        ]
+                    );
+                }
+            }
+
             return $this->redirectToRoute('app_trip_show', ['id' => $trip->getId()], Response::HTTP_SEE_OTHER);
         }
 
@@ -65,7 +93,7 @@ class TripController extends AbstractController
     /**
      * Show trip, public page
      */
-    #[Route('/{id}', name: 'app_trip_show', methods: ['GET', 'POST'])]
+    #[Route('/{id}', name: 'app_trip_show', methods: ['GET'])]
     public function show(
         Trip $trip,
         DateService $dateService,
@@ -134,10 +162,18 @@ class TripController extends AbstractController
             }
 
             // If trip owner setting notification is true
-            // if ($trip->getMember()->getSetting()->isIsNewTripRequest()) {
-            // Send email trip request notification : ' $user is interested by your $trip'
-            // $mailerService->newJoinRequestNotification($user, $tr, $message);
-            // }
+            if ($trip->getMember()->getSetting()->isIsNewTripRequest()) {
+                // Send email trip request notification : ' $user is interested by your $trip'
+                $mailerService->send(
+                    $trip->getMember()->getEmail(),
+                    $tr->getMember() . ' demande à rejoindre votre sortie',
+                    'notification',
+                    [
+                        'title' => 'Nouvelle demande de participation de ' . $tr->getMember(),
+                        'message' => $message->getContent()
+                    ]
+                );
+            }
 
             // $this->addFlash('success', 'A join request sent to ' . $trip->getUser()->getUserName());
             // return $this->redirectToRoute('app_trip_show', ['id' => $trip->getId()], Response::HTTP_SEE_OTHER);
@@ -163,7 +199,7 @@ class TripController extends AbstractController
     {
         $this->denyAccessUnlessGranted('TRIP_EDIT', $trip);
 
-        $form = $this->createForm(TripType::class, $trip);
+        $form = $this->createForm(TripType::class, $trip, ['edit' => true]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

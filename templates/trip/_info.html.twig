@@ -21,15 +21,15 @@
         
         <div id="map" class="rounded" style="height:360px" data-controller="map-trip"></div>
 
-        <p id="accepted_user">
-            {% if trip.acceptedUsers %}
+        {% if trip.acceptedUsers %}
+            <p id="accepted_user">
                 Participants :
-            {% endif %}
-            {% for acceptedUser in trip.acceptedUsers %}
-                {% if not loop.first %}, {% endif %}
-                <a href="{{ path('app_profile_show', {slug: acceptedUser.slug}) }}">{{ acceptedUser }}</a>
-            {% endfor %}
-        </p>
+                {% for acceptedUser in trip.acceptedUsers %}
+                    {% if not loop.first %}, {% endif %}
+                    <a href="{{ path('app_profile_show', {slug: acceptedUser.slug}) }}">{{ acceptedUser }}</a>
+                {% endfor %}
+            </p>
+        {% endif %}
 
         {% if trip.member ==  app.user %}
             <div class="text-end">

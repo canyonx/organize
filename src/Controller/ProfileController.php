@@ -6,13 +6,16 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Entity\Setting;
 use App\Form\SettingType;
+use App\Service\FileUploader;
 use App\Form\ChangePasswordType;
 use App\Repository\UserRepository;
 use App\Repository\SettingRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -62,8 +65,12 @@ class ProfileController extends AbstractController
      * Edit profile for connected user
      */
     #[Route('/editer', name: 'app_profile_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, EntityManagerInterface $entityManager): Response
-    {
+    public function edit(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        Filesystem $filesystem,
+        FileUploader $fileUploader
+    ): Response {
         /** @var User */
         $user = $this->getUser();
 
@@ -71,6 +78,20 @@ class ProfileController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            // Traitement de l'image
+            // Type $imageFile comme un objet UploadedFile
+            /** @var UploadedFile $imageFile */
+            $imageFile = $form->get('imageFile')->getData();
+            // Si une image est uploadé
+            if ($imageFile) {
+                // Supprime l'image actuelle, chemin complet de l'image
+                $filesystem->remove($this->getParameter('app_images_directory') . '/' . $user->getAvatar());
+                // Utilise Service/FileUploader pour enregistrer l'image
+                $imageFileName = $fileUploader->upload($imageFile);
+                // Met à jour la propriété image avec le nouveau nom de l'image
+                $user->setAvatar($imageFileName);
+            }
 
             $entityManager->flush();
 
@@ -131,9 +152,18 @@ class ProfileController extends AbstractController
      * Delete profile for connected user
      */
     #[Route('/{id}', name: 'app_profile_delete', methods: ['POST'])]
-    public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
-    {
+    public function delete(
+        Request $request,
+        User $user,
+        EntityManagerInterface $entityManager,
+        Filesystem $filesystem
+    ): Response {
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
+
+            if ($user->getAvatar()) {
+                // Supprime l'image, chemin complet de l'image
+                $filesystem->remove($this->getParameter('app_images_directory') . '/' . $user->getAvatar());
+            }
             $entityManager->remove($user);
             $entityManager->flush();
         }

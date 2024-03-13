@@ -34,7 +34,7 @@ export default class extends Controller {
         });
 
         const marker = L.marker([lat, lng], {icon: defaultMarker}).addTo(map)
-        	.bindPopup('<a href="https://maps.google.com/?q=' + lat + ',' + lng + '">Open in Google map</a>')
+        	.bindPopup('<a href="https://maps.google.com/?q=' + lat + ',' + lng + '">Ouvrir avec Google map</a>')
             .openPopup();
     }
 }
