@@ -1,13 +1,12 @@
-<div class="card">
-    <div class="card-body">
-        {% if user.avatar %}
-            <img src="{{ asset(images_dir ~ user.avatar)|imagine_filter('user_card') }}" 
-            alt="Photo de {{ user }}" 
-            class="rounded-circle me-2"
-            with="50" height="50">
-        {% else %}
-            <img src="https://placehold.co/50" alt="{{ user.pseudo|title }}" class="rounded-circle me-2">
-        {% endif %}
-        <a href="{{ path('app_profile_show', {slug: user.slug}) }}">{{ user.pseudo|title }}</a>
-    </div>
-</div>
+{# <div class="card">
+	<div class="card-body"> #}
+<a href="{{ path('app_profile_show', {slug: user.slug}) }}" class="btn btn-outline-primary rounded-pill">
+	{% if user.avatar %}
+		<img src="{{ asset(images_dir ~ user.avatar)|imagine_filter('user_card') }}" alt="Photo de {{ user }}" class="rounded-circle me-2" with="50" height="50">
+	{% else %}
+		<img src="https://placehold.co/50" alt="{{ user.pseudo|title }}" class="rounded-circle me-2">
+	{% endif %}
+	{{ user.pseudo|title }}
+</a>
+{# </div>
+</div> #}

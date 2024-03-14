@@ -2,18 +2,15 @@
 
 namespace App\EventListener;
 
-use App\Entity\Join;
 use App\Entity\Trip;
-use App\Entity\TripRequest;
 use Doctrine\ORM\Events;
+use App\Entity\TripRequest;
 use App\Service\MailerService;
-use App\Repository\JoinRepository;
-use App\Repository\TripRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\TripRequestRepository;
 use Doctrine\ORM\Event\PostUpdateEventArgs;
 use Doctrine\ORM\Event\PostPersistEventArgs;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[AsEntityListener(event: Events::postPersist, method: 'postPersist', entity: Trip::class)]

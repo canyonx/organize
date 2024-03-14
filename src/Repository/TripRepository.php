@@ -115,6 +115,26 @@ class TripRepository extends ServiceEntityRepository
         return (int) $result;
     }
 
+    /**
+     * Trips before or later than today
+     * @param compare < >=
+     * 
+     * @return Event[] Returns an array of Event objects
+     */
+    public function findByPeriod($compare): array
+    {
+        $today = new \DateTimeImmutable('today');
+
+        return $this->createQueryBuilder('t')
+            // A partir de $today
+            ->andWhere('t.dateAt ' . $compare . ' :date')
+            ->setParameter('date', $today)
+            // triés par date
+            ->orderBy('t.dateAt', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Trip[] Returns an array of Trip objects
     //     */

@@ -133,4 +133,9 @@ class TripRequest
         // }
         return $this->getMessages()->count();
     }
+
+    public function __toString(): string
+    {
+        return $this->getId() . ' - ' . $this->getMember() . ' to ' . $this->getTrip()->getMember() . ', trip ' . $this->getTrip()->getId();
+    }
 }
