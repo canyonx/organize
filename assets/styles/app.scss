@@ -6,15 +6,20 @@ h1, h2, h3 {
     color: #343a40;
 }
 
-$primary: #007ea7;
-$secondary: #eae4e9;
-$danger: #ff6392;
-$success: #06d6a0;
-$warning: #ffe45e;
+// $primary: #007ea7;
+$primary: #345995;
+$secondary: #cfdbd5;
+$danger: #ca1551;
+$success: #8ac926;
+$warning: #ffbc42;
 $light: #f9f9f9;
+$info: #1982c4;
 
 
 $card-border-radius: 1rem;
 $card-border-width: 0px;
+
+$alert-border-radius: 1rem;
+
 
 @import '../../vendor/twbs/bootstrap/scss/bootstrap';

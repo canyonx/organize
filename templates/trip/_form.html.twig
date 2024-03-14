@@ -2,16 +2,27 @@
     <div id="warning_limitation" class="visually-hidden">
         {% include "shared/_warning_limitation.html.twig" %}
     </div>
+
     <div class="row">
         <div class="col-md-6">
             <input id="trip_id" value="{{ trip.id ?: false }}" class="visually-hidden" disabled></input>
             {{ form_row(form.activity) }}
-            {{ form_row(form.dateAt.children.date, {attr: {"data-controller": 'trip-date', "data-action": 'change->trip-date#check' } }) }}
-            {{ form_row(form.dateAt.children.time) }}
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(form.dateAt.children.date, {attr: {"data-controller": 'trip-date', "data-action": 'change->trip-date#check' } }) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.dateAt.children.time) }}
+                </div>
+            </div>
             {{ form_row(form.title) }}
             {{ form_row(form.description) }}
+        </div>
+
+        <div class="col-md-6">
+            <div id="map_form" class="rounded my-2" style="height:360px"></div>
             <div class="mb-3">
-                <label for="city_trip" class="form-label">Ville</label>
+                {# <label for="city_trip" class="form-label">Ville</label> #}
                 <div id="city_trip" data-controller="city-trip"></div>
             </div>
             <div class="row visually-hidden">
@@ -26,13 +37,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="mb-3">
-                <div id="map_form" class="rounded my-2" style="height:360px"></div>
-            </div>
-        </div>
     </div>
+
     <div class="d-flex justify-content-between">
         <button id="trip_submit" class="btn btn-primary rounded-pill">{{ button_label|default('Enregistrer') }}</button>
     </div>
+    
 {{ form_end(form) }}

@@ -13,6 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class TripType extends AbstractType
@@ -32,16 +33,19 @@ class TripType extends AbstractType
 
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'Description'
+                'label' => 'Description',
+                'attr' => [
+                    'rows' => 4
+                ]
             ])
-            ->add('location', TextType::class, [
+            ->add('location', HiddenType::class, [
                 'label' => 'Ville'
             ])
-            ->add('lat', NumberType::class, [
+            ->add('lat', HiddenType::class, [
                 'label' => 'Latitude',
                 // 'disabled' => true
             ])
-            ->add('lng', NumberType::class, [
+            ->add('lng', HiddenType::class, [
                 'label' => 'Longitude',
                 // 'disabled' => true
             ])

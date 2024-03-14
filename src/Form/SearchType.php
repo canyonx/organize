@@ -13,6 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class SearchType extends AbstractType
@@ -20,7 +21,7 @@ class SearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $choices = [];
-        for ($i = 1; $i < 11; $i++) {
+        for ($i = 1; $i < 6; $i++) {
             $val = $i * 10;
             $choices[$val] = $val;
         }
@@ -36,26 +37,23 @@ class SearchType extends AbstractType
             //         'min' => date('d/m/Y')
             //     ]
             // ])
-            ->add('location', TextType::class, [
-                'label' => false,
-                'required' => false
+            ->add('location', HiddenType::class, [
+                'label' => false
             ])
-            ->add('lat', TextType::class, [
-                'label' => false,
-                'required' => false
+            ->add('lat', HiddenType::class, [
+                'label' => false
             ])
-            ->add('lng', TextType::class, [
-                'label' => false,
-                'required' => false
+            ->add('lng', HiddenType::class, [
+                'label' => false
             ])
             ->add('distance', ChoiceType::class, [
                 'mapped' => false,
-                'required' => false,
+                // 'required' => false,
                 'choices' => $choices,
-                'empty_data' => null
+                // 'empty_data' => null
             ])
             ->add('activity', EntityType::class, [
-                'label' => 'Activités',
+                'label' => 'Activité',
                 'class' => Activity::class,
                 'choice_label' => function (Activity $activity): string {
                     return ucfirst($activity->getName());

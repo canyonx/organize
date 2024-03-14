@@ -1,6 +1,7 @@
 {% if app.user == tripRequest.trip.member %}
+    <span id="tripRequest_id" class="visually-hidden" value="{{ tripRequest.id }}">{{ tripRequest.id }}</span>
     {# For Trip owner, show trip Request status/actions #}
-    <div class="mb-2">
+    <div class="d-flex justify-content-between align-items-baseline">
         <h2 class="">Demande de 
             <a href="{{ path('app_profile_show', {slug: tripRequest.member.slug}) }}"
             {# class="btn btn-primary rounded-pill" #}
@@ -8,16 +9,25 @@
                 {{ tripRequest.member|title }}
             </a>
         </h2>
+
+        {# Status #}
+        <b class="text-{{ tripRequest.color}} h2 my-2 ms-2">
+            {{ tripRequest.status|title|trans }}
+        </b>
     </div>
-    <span id="tripRequest_id" class="visually-hidden" value="{{ tripRequest.id }}">{{ tripRequest.id }}</span>
-    <div class="d-flex justify-content-between align-items-center">
+    
+    <div class="d-flex justify-content-between align-items-baseline mt-3">
+        {# Retour #}
         <div class="">
-            <button class="btn btn-{{ tripRequest.color}}" disabled>
-                {{ tripRequest.status|title|trans }}
-            </button>
+            <a href="{{ path('app_trip_show', {id: tripRequest.trip.id})}}"
+            class="btn btn-link rounded-pill">
+                Retour aux demandes
+            </a>
         </div>
 
-        <div class="" data-turbo-frame="accepted_user">
+        {# Buttons action #}
+        <div class="text-center">
+            {# Button Accept #}
             {% if tripRequest.status == 'PENDING' or tripRequest.status == 'REFUSED'  %}
                 <a href="{{ path('app_trip_request_status', {id: tripRequest.id , status: 'ACCEPTED'}) }}" 
                 class="btn btn-success rounded-pill">
@@ -29,15 +39,9 @@
                 </turbo-stream>
                     Accepter
                 </a>
-
-                {# <button 
-                class="btn btn-success rounded-pill"
-                data-action="click->trip-status#change"
-                data-trip-status-id-param="{{ tripRequest.id }}"
-                data-trip-status-status-param="ACCEPTED">
-                    Accepter
-                </button> #}
             {% endif %}
+
+            {# Button Refuse #}
             {% if tripRequest.status == 'PENDING' or tripRequest.status == 'ACCEPTED' %}
                 <a href="{{ path('app_trip_request_status', {id: tripRequest.id , status: 'REFUSED'}) }}" 
                 class="btn btn-secondary rounded-pill">
@@ -49,32 +53,19 @@
                 </turbo-stream>
                     Refuser
                 </a>
-
-                {# <button 
-                class="btn btn-secondary rounded-pill"
-                data-action="click->trip-status#change"
-                data-trip-status-id-param="{{ tripRequest.id }}"
-                data-trip-status-status-param="REFUSED">
-                    Refuser
-                </button> #}
             {% endif %}
         </div>
-    </div>
-    <div class="mt-3">
-        <a href="{{ path('app_trip_show', {id: tripRequest.trip.id})}}"
-        class="btn btn-link rounded-pill">
-            Retour aux demandes
-        </a>
     </div>
 
 {% else %}
     {# For User, show my tripRequest request status #}
-    <h3 class="">Ma demande</h3>
-    <div class="d-flex justify-content-around">
-        <button class="btn btn-{{ tripRequest.color }}" disabled>
+    <div class="d-flex justify-content-between align-items-baseline">
+        <h2 class="">Ma demande</h2>
+        <b class="text-{{ tripRequest.color}} h2 my-2 ms-2">
             {{ tripRequest.status|title|trans }}
-        </button>
-        {# {% include 'trip_request/_delete_form.html.twig' %} #}
+        </b>
     </div>
-
+    {# <div class="text-end mt-3">
+        {% include 'trip_request/_delete_form.html.twig' %}
+    </div> #}
 {% endif %}

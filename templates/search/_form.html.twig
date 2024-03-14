@@ -7,42 +7,38 @@
         {{ form_errors(form) }}
     </div>
 
+    {{ form_row(form.location, {value: search.location ?: app.user.city}) }}
+    {{ form_row(form.lat, {value: search.lat ?: app.user.lat}) }}
+    {{ form_row(form.lng, {value: search.lng ?: app.user.lng}) }}
+        
     <div class="row">
-        <div class="col">
+        <div class="col-md-4">
             <div class="mb-3">
                 <label for="city_search" class="form-label">Ville</label>
                 <div id="city_search" data-controller="city-search"></div>
             </div>
         </div>
-        <div class="col">
+        <div class="col-md-4">
             {{ form_row(form.distance, {value: distance, attr: {'data-controller': 'search-distance'}}) }}
         </div>
-        <div class="col">
+        <div class="col-md-4">
             {{ form_row(form.activity) }}
         </div>
         {# <div class="col">
             {{ form_row(form.dateAt, {value: search.dateAt|date('Y-m-d')}) }}
         </div> #}
     </div>
-    <div class="row visually-hidden">
-        <div class="col visually-hidden">
-            {{ form_row(form.location, {value: search.location ?: app.user.city}) }}
-        </div>
-        <div class="col visually-hidden">
-            {{ form_row(form.lat, {value: search.lat ?: app.user.lat}) }}
-        </div>
-        <div class="col visually-hidden">
-            {{ form_row(form.lng, {value: search.lng ?: app.user.lng}) }}
-        </div>
-    </div>
+
+    
+    
     <div class="row">
-        <div class="col-3 d-flex justify-content-center align-items-baseline">
+        <div class="col-md-3 d-flex justify-content-center align-items-baseline mb-3">
             <div class="form-check form-switch">
                 {{ form_widget(form.isFriend, {attr: {'class': 'form-check-input'}}) }}
             </div>
         </div>
-        <div class="col">
-            <button type="submit" class="btn btn-primary w-100">Chercher dans {{ totalTrips }} sorties</button>
+        <div class="col-md-9">
+            <button type="submit" class="btn btn-primary rounded-pill w-100">Chercher dans {{ totalTrips }} sorties</button>
         </div>
     </div>
 {{ form_end(form) }}
