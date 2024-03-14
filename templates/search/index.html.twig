@@ -11,8 +11,10 @@
 			</div>
 		</section>
 		<section class="card">
-			<div class="card-body bg-primary bg-opacity-10">
-				<h1>{{ trips|length }} <span class="text-muted">Sorties</span></h1>
+			<div class="card-header bg-primary bg-opacity-10">
+				<h1>{{ trips|length }}
+					<span class="text-muted">Sorties</span>
+				</h1>
 			</div>
 			<div class="card-body">
 				{% include "table/_table.html.twig" %}
