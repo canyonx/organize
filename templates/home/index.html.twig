@@ -1,7 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil{% endblock %}
+{% block title %}Accueil
+{% endblock %}
 
-{% block body %}
-    {% include "home/_header.html.twig" %}
+{% block main %}
+	{% include "home/_header.html.twig" %}
+	{% include "home/_feature.html.twig" %}
 {% endblock %}

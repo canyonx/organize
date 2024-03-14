@@ -26,18 +26,20 @@
 		{% include "shared/_navbar.html.twig" %}
 
 		{# Main container #}
-		<div
-			class="container my-4" style="min-height:88vh">
-			{# Flash messages #}
-			{% for type, messages in app.flashes %}
-				{% for message in messages %}
-					{{ component('Alert', { type:type, message:message }) }}
+		{% block main %}
+			<div
+				class="container my-4" style="min-height:88vh">
+				{# Flash messages #}
+				{% for type, messages in app.flashes %}
+					{% for message in messages %}
+						{{ component('Alert', { type:type, message:message }) }}
+					{% endfor %}
 				{% endfor %}
-			{% endfor %}
 
-			{# Body #}
-			{% block body %}{% endblock %}
-		</div>
+				{# Body #}
+				{% block body %}{% endblock %}
+			</div>
+		{% endblock %}
 
 		{# Footer #}
 		{% include "shared/_footer.html.twig" %}

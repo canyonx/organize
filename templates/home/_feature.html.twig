@@ -1,0 +1,15 @@
+<div class="bg-light py-5">
+	{% for key, feature in features %}
+		<section class="py-4 col-8 mx-auto">
+			<div class="row">
+				<div class="col-md-6 align-self-center {% if ((key + 1) / 2) matches '/^\\d+$/' %} order-md-2{% endif %}">
+					<h1>{{ feature.title }}</h1>
+					<p>{{ feature.subtitle }}</p>
+				</div>
+				<div class="col-md-6 text-center {% if ((key + 1) / 2) matches '/^\\d+$/' %} order-md-1{% endif %}">
+					<img src="https://placehold.co/300" alt="" class="rounded-4">
+				</div>
+			</div>
+		</section>
+	{% endfor %}
+</div>

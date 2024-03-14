@@ -1,15 +1,13 @@
-<section class="my-4" style="height: 100vh">
-    <div class="d-flex align-items-center justify-content-center" style="height: 50vh">
-        <div class="text-center">
-            <h1>OrganiZe</h1>
-            <p>Partenaires d'aventures</p>
-        </div>
-    </div>
-    <div>
-        <hr>
-        <h2 class="h1">Trouve des partenaires dans <span class="text-muted">{{ activities|length }} activités</span></h2>
-        {% for activity in activities %}
-            <button class="m-2 btn btn-light">{{ activity.name|title }}</button>
-        {% endfor %}
-    </div>
+<section class="d-flex align-items-center" style="height: 80vh; background: url('{{ asset('images/'~ home.background) }}') no-repeat center center fixed; background-size: cover;">
+	<div class="row h-50 justify-content-center">
+		<div class="col-6 ">
+			<div class="text-center">
+				<h1 class="text-white" style="text-shadow: 0 0 5px #000000;">{{ home.title }}</h1>
+				<p class="text-white fs-3" style="text-shadow: 0 0 5px #000000;">{{ home.subtitle }}</p>
+				{% for activity in activities %}
+					<button class="m-2 btn btn-light" disabled>{{ activity.name|title }}</button>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
 </section>

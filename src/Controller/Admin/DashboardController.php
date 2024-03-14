@@ -5,6 +5,8 @@ namespace App\Controller\Admin;
 use App\Entity\Trip;
 use App\Entity\User;
 use App\Entity\Activity;
+use App\Entity\Feature;
+use App\Entity\Homepage;
 use App\Entity\Message;
 use App\Repository\TripRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -69,9 +71,12 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('Messages');
         yield MenuItem::linkToCrud('Messages', 'fas fa-comment', Message::class);
 
-        yield MenuItem::section('Administration')
-            ->setPermission('ROLE_ADMIN');
-        yield MenuItem::linkToCrud('Activities', 'fas fa-bicycle', Activity::class);
+        yield MenuItem::section('Users');
         yield MenuItem::linkToCrud('Users', 'fas fa-user', User::class);
+
+        yield MenuItem::section('Settings');
+        yield MenuItem::linkToCrud('Activities', 'fas fa-bicycle', Activity::class);
+        yield MenuItem::linkToCrud('Homepage', 'fas fa-house', Homepage::class);
+        yield MenuItem::linkToCrud('Features', 'fas fa-bolt', Feature::class);
     }
 }
