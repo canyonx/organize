@@ -1,42 +1,37 @@
 <section class="card">
-    <div class="card-body">
-        <div class="d-flex justify-content-between align-items-baseline">
-            <h2>{{ trip.title|capitalize }}</h2>
-            {# Edit button #}
-            {% if trip.member == app.user %}
-                {# <div class="text-end"> #}
-                    <a href="{{ path('app_trip_edit', {'id': trip.id}) }}" 
-                    class="btn btn-secondary rounded-pill">
-                        Modifier
-                    </a>   
-                {# </div> #}
-            {% else %}
-                <a href="{{ path('app_profile_show', {'slug': trip.member.slug}) }}"
-                class="btn btn-primary rounded-pill">
-                    {{ trip.member }}
-                </a>
-            {% endif %}
-        </div>
-        <div class="mb-3">
-            <span class="badge text-bg-secondary">{{ trip.activity|capitalize }}</span>
-        </div>
-        <div class="mb-3">
-            <b class="text-muted">
-                {{ trip.dateAt|date('H\\hi') }} le {{ trip.dateAt|format_datetime(pattern='EEE dd MMM', locale='fr') }} - {{ trip.location|title }}
-            </b>
-        </div>
+	<div class="card-body">
+		<div class="d-flex justify-content-between align-items-baseline">
+			<h2>{{ trip.title|capitalize }}</h2>
+			{# Edit button #}
+			{% if trip.member == app.user %}
+				{# <div class="text-end"> #}
+				<a href="{{ path('app_trip_edit', {'id': trip.id}) }}" class="btn btn-secondary rounded-pill">
+					Modifier
+				</a>
+				{# </div> #}
+			{% else %}
+				<a href="{{ path('app_profile_show', {'slug': trip.member.slug}) }}" class="btn btn-primary rounded-pill">
+					{{ trip.member }}
+				</a>
+			{% endif %}
+		</div>
+		<div class="mb-3">
+			<span class="badge text-bg-secondary">{{ trip.activity|capitalize }}</span>
+		</div>
+		<div class="mb-3">
+			<b class="text-muted">
+				{{ trip.dateAt|format_datetime(pattern='EEE dd MMM', locale='fr') }}
+				à
+				{{ trip.dateAt|date('H\\hi') }}
+				-
+				{{ trip.location|title }}
+			</b>
+		</div>
 
-        <p>{{ trip.description|nl2br }}</p>
- 
-        <input id="trip_lat" type="hidden" value="{{ trip.lat }}"></input>
-        <input id="trip_lng" type="hidden" value="{{ trip.lng }}"></input>
-        
+		<p>{{ trip.description|nl2br }}</p>
 
-        {% include 'trip/_accepted_user.html.twig' %}
-        
-    </div>
+		<input id="trip_lat" type="hidden" value="{{ trip.lat }}"></input>
+	<input id="trip_lng" type="hidden" value="{{ trip.lng }}"></input>
 
-    {# carte #}
-    <div id="map" class="rounded-bottom-4" style="height:360px" data-controller="map-trip"></div>
 
-</section>
+{% include 'trip/_accepted_user.html.twig' %}</div>{# carte #}<div id="map" class="rounded-bottom-4" style="height:360px" data-controller="map-trip"></div></section>

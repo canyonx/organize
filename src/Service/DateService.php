@@ -54,6 +54,8 @@ class DateService
         $dateTo = new \DateTimeImmutable($date->format('Y-m-d') . ' + 1 day');
         // Is user have a trip that day
         $myTrips = $this->tripRequestRepository->findByUserAndBetweenDateAndStatus($user, $dateFrom, $dateTo, $status);
+
+        dump($myTrips);
         if ($myTrips) {
             return true;
         }

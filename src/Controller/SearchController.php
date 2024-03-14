@@ -50,7 +50,7 @@ class SearchController extends AbstractController
             );
         } else {
             // Unsubmitted form default values
-            $distance = 10;
+            $distance = 30;
             $search->setActivity(null)
                 ->setDateAt(new \DateTimeImmutable('today'));
 

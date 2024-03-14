@@ -1,21 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Join{% endblock %}
+{% block title %}Demandes
+{% endblock %}
 
 {% block body %}
-    <div class="my-2">
-        {% if app.user == trip.member %}
-            <a href="{{ path('app_trip_show', {'id': trip.id}) }}" class="btn btn-primary">Retour à la sortie</a>
-        {% else %}
-            <a href="{{ path('app_planning_index') }}" class="btn btn-primary">Retour au planning</a>                
-        {% endif %}
-    </div>
-    <div class="row">
-        <div class="col-md-6 mb-3">
-            {% include "trip/_info.html.twig" %}
-        </div>
-        <div class="col-md-6 mb-3">
-            {% include "trip_request/_card.html.twig" %}
-        </div>
-    </div>
+	<div class="row">
+		<div class="col-md-6 mb-3">
+			{% include "trip/_info.html.twig" %}
+		</div>
+		<div class="col-md-6 mb-3">
+			{% include "trip_request/_card.html.twig" %}
+		</div>
+	</div>
 {% endblock %}

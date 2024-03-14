@@ -1,38 +1,45 @@
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}{% endblock %} - OrganiZe</title>
-        <meta name="turbo-refresh-method">
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {% block stylesheets %}
-            <link rel="stylesheet" href="{{ asset('styles/app.scss') }}">
-            {# {{ ux_controller_link_tags() }} #}
-        {% endblock %}
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}{% endblock %}
+			- OrganiZe</title>
+		<meta name="turbo-refresh-method">
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+		{% block stylesheets %}
+			<link
+			rel="stylesheet" href="{{ asset('styles/app.scss') }}">
+		{# {{ ux_controller_link_tags() }} #}
+		{% endblock %}
 
-        
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body class="bg-primary">
-        {# Navbar #}
-        {% include "shared/_navbar.html.twig" %}
 
-        {# Main container #}
-        <div class="container my-4" style="min-height:88vh">
-            {# Flash messages #}
-            {% for type, messages in app.flashes %}
-                {% for message in messages %}
-                    {{ component('Alert', { type:type, message:message }) }}
-                {% endfor %}
-            {% endfor %}
+		{% block javascripts %}
+			{% block importmap %}
+				{{ importmap('app') }}
+			{% endblock %}
+		{% endblock %}
+	</head>
+	<body
+		class="bg-primary">
+		{# Navbar #}
+		{% include "shared/_navbar.html.twig" %}
 
-            {# Body #}
-            {% block body %}{% endblock %}
-        </div>
+		{# Main container #}
+		<div
+			class="container my-4" style="min-height:88vh">
+			{# Flash messages #}
+			{% for type, messages in app.flashes %}
+				{% for message in messages %}
+					{{ component('Alert', { type:type, message:message }) }}
+				{% endfor %}
+			{% endfor %}
 
-        {# Footer #}
-        {% include "shared/_footer.html.twig" %}
-    </body>
+			{# Body #}
+			{% block body %}{% endblock %}
+		</div>
+
+		{# Footer #}
+		{% include "shared/_footer.html.twig" %}
+	</body>
 </html>

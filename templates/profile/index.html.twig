@@ -4,8 +4,14 @@
 {% endblock %}
 
 {% block body %}
-	{% include "profile/_index_private.html.twig" %}
-	{% include "profile/_index_setting.html.twig" %}
-	{% include "profile/_index_follow.html.twig" %}
-	{% include "profile/_index_blocked.html.twig" %}
+	<div class="row">
+		<div class="col-lg-6">
+			{% include "profile/_profile_card.html.twig" %}
+		</div>
+		<div class="col-lg-6">
+			{% include "profile/_index_setting.html.twig" %}
+			{% include "profile/_index_follow.html.twig" %}
+			{% include "profile/_index_blocked.html.twig" %}
+		</div>
+	</div>
 {% endblock %}

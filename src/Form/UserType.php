@@ -55,7 +55,7 @@ class UserType extends AbstractType
                 'label' => 'Présentation',
                 'required' => false,
                 'attr' => [
-                    'rows' => 4
+                    'rows' => 5
                 ]
             ])
             ->add('activities', EntityType::class, [

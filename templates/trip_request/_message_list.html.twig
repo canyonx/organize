@@ -1,41 +1,43 @@
-<h6 class="mb-2">{{ discution|length }} messages</h6>
-<div class="" style="max-height: 50vh; overflow-y: scroll;">
-    {% if discution|length > 0 %}
-        {% for message in discution %}
+{% if discution|length > 0 %}
+	<h6 class="mb-2">{{ discution|length }}
+		messages
+	</h6>
+	<div class="" style="max-height: 50vh; overflow-y: scroll;">
+		{% for message in discution %}
 
-            {% if app.user == message.member %}
-                <div class="row m-2 justify-content-end">
-                    <div class="col-auto p-3 alert alert-light">
-                        {{ message.content }}
-                        <br>
-                        <sub class="my-2 float-end">{{ message.createdAt|format_datetime(pattern='dd MMM à HH:mm', locale='fr') }}
-                            {% if message.isRead %}
-                                <span class="text-primary"> - Vu</span>
-                            {% endif %}
-                            <a 
-                            class="text-danger" 
-                            href="{{ path('app_message_delete', { id:message.id }) }}">
-                                x
-                            </a>
-                        </sub>
-                    </div>
-                </div>
-            {% else %}
-                <div class="row m-2">
-                    <div class="col-auto p-3 alert alert-info">
-                    {{ message.content }}
-                        <br>
-                        <sub>{{ message.createdAt|format_datetime(pattern='dd MMM à HH:mm', locale='fr') }} par {{ message.member }}
-                            {% if message.isRead %}
-                                <span class="text-primary"> - Vu</span>
-                            {% endif %}
-                        </sub>
-                    </div>
-                </div>
-            {% endif %}        
+			{% if app.user == message.member %}
+				<div class="row m-2 justify-content-end">
+					<div class="col-auto p-3 alert alert-light">
+						{{ message.content }}
+						<br>
+						<sub class="my-2 float-end">{{ message.createdAt|format_datetime(pattern='dd MMM à HH:mm', locale='fr') }}
+							{% if message.isRead %}
+								<span class="text-primary">
+									- Vu</span>
+							{% endif %}
+							<a class="text-danger" href="{{ path('app_message_delete', { id:message.id }) }}">
+								x
+							</a>
+						</sub>
+					</div>
+				</div>
+			{% else %}
+				<div class="row m-2">
+					<div class="col-auto p-3 alert alert-info">
+						{{ message.content }}
+						<br>
+						<sub>{{ message.createdAt|format_datetime(pattern='dd MMM à HH:mm', locale='fr') }}
+							par
+							{{ message.member }}
+							{% if message.isRead %}
+								<span class="text-primary">
+									- Vu</span>
+							{% endif %}
+						</sub>
+					</div>
+				</div>
+			{% endif %}
 
-        {% endfor %}
-    {% else %}
-        Pas de messages pour le moment
-    {% endif %}
-</div>
+		{% endfor %}
+	</div>
+{% endif %}

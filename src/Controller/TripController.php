@@ -93,7 +93,7 @@ class TripController extends AbstractController
     /**
      * Show trip, public page
      */
-    #[Route('/{id}', name: 'app_trip_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_trip_show', methods: ['GET', 'POST'])]
     public function show(
         Trip $trip,
         DateService $dateService,
@@ -162,7 +162,10 @@ class TripController extends AbstractController
             }
 
             // If trip owner setting notification is true
-            if ($trip->getMember()->getSetting()->isIsNewTripRequest()) {
+            if (
+                $trip->getMember()->getSetting() &&
+                $trip->getMember()->getSetting()->isIsNewTripRequest()
+            ) {
                 // Send email trip request notification : ' $user is interested by your $trip'
                 $mailerService->send(
                     $trip->getMember()->getEmail(),
@@ -182,10 +185,15 @@ class TripController extends AbstractController
 
         return $this->render('trip/show.html.twig', [
             'trip' => $trip,
-            'tripRequests' => $tripRequestRepository->findBy([
-                'trip' => $trip,
-                'status' => [TripRequest::ACCEPTED, TripRequest::PENDING, TripRequest::REFUSED]
-            ]),
+            'tripRequests' => $tripRequestRepository->findBy(
+                [
+                    'trip' => $trip,
+                    'status' => [TripRequest::ACCEPTED, TripRequest::PENDING, TripRequest::REFUSED]
+                ],
+                [
+                    'status' => 'ASC'
+                ]
+            ),
             'form' => $form,
             'alreadyTrip' => $alreadyTrip
         ]);
@@ -236,7 +244,7 @@ class TripController extends AbstractController
     /**
      * Delete trip for trip owner connected user
      */
-    #[Route('/{id}', name: 'app_trip_delete', methods: ['POST'])]
+    #[Route('/{id}/delete', name: 'app_trip_delete', methods: ['POST'])]
     public function delete(Request $request, Trip $trip, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('TRIP_EDIT', $trip);

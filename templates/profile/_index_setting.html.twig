@@ -1,29 +1,30 @@
-<section class="card m-3">
-    <div class="card-body">
-        <h2>Notifications</h2>
-        {{ form_start(formSetting) }}
-            <div class="row p-3">
-                <div class="col-2 text-end">
-                    <p>Email : </p>
-                </div>
-                <div class="col  text-start">
-                    <div class="form-check form-switch">
-                        {{ form_widget(formSetting.isNewTripRequest) }}
-                    </div>
-                    <div class="form-check form-switch">
-                        {{ form_widget(formSetting.isNewMessage) }}
-                    </div>
-                    <div class="form-check form-switch">
-                        {{ form_widget(formSetting.isTripRequestStatusChange) }}
-                    </div>
-                    <div class="form-check form-switch">
-                        {{ form_widget(formSetting.isFriendNewTrip) }}
-                    </div>
-                </div>
-            </div>
-            <div class="text-end">
-                <button type="submit" class="btn btn-primary rounded-pill">Enregister</button>
-            </div>
-        {{ form_end(formSetting) }}
-    </div>
+<section class="card mb-3">
+	<div class="card-body">
+		<h2>Notifications</h2>
+		{{ form_start(formSetting) }}
+		<div class="row p-3">
+			<div class="col-2 text-end">
+				<p>Email :
+				</p>
+			</div>
+			<div class="col  text-start">
+				<div class="form-check form-switch">
+					{{ form_widget(formSetting.isNewTripRequest) }}
+				</div>
+				<div class="form-check form-switch">
+					{{ form_widget(formSetting.isNewMessage) }}
+				</div>
+				<div class="form-check form-switch">
+					{{ form_widget(formSetting.isTripRequestStatusChange) }}
+				</div>
+				<div class="form-check form-switch">
+					{{ form_widget(formSetting.isFriendNewTrip) }}
+				</div>
+			</div>
+		</div>
+		<div class="text-end">
+			<button type="submit" class="btn btn-primary rounded-pill">Enregister</button>
+		</div>
+		{{ form_end(formSetting) }}
+	</div>
 </section>

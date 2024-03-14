@@ -6,18 +6,26 @@ h1, h2, h3 {
     color: #343a40;
 }
 
+.btn {
+    margin-bottom: 0.5rem;
+}
+
 // $primary: #007ea7;
 $primary: #345995;
-$secondary: #cfdbd5;
+$secondary: #adb5bd;
 $danger: #ca1551;
 $success: #8ac926;
-$warning: #ffbc42;
+// $warning: #ffbc42;
+$warning: #ff4000;
 $light: #f9f9f9;
 $info: #1982c4;
+$dark: #10002b;
 
 
 $card-border-radius: 1rem;
 $card-border-width: 0px;
+// $enable-shadows: true;
+// $card-box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
 
 $alert-border-radius: 1rem;
 

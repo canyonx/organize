@@ -17,7 +17,7 @@ class TripRequest
 
     public const COLOR = array(
         'OWNER' => 'danger',
-        'PENDING' => 'primary',
+        'PENDING' => 'info',
         'ACCEPTED' => 'success',
         'REFUSED' => 'secondary',
     );
