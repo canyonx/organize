@@ -71,6 +71,10 @@ export default class extends Controller {
         // Add class from-control to search field
         var inputAddress = document.getElementsByClassName('photon-input');
         inputAddress[0].classList.add("form-control");
+
+        if (document.getElementById('user_city').value) {
+            inputAddress[0].setAttribute('placeholder', document.getElementById('user_city').value);
+        }
         
     }
 }

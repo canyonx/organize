@@ -1,30 +1,28 @@
 {{ form_start(form) }}
-    <div class="row">
-        <div class="col-md-4">
-            <h2 class="h5">Informations personnelles</h2>
-            <p class="text-muted">Ces informations sont visibles par les autres utilisateurs</p>
-        </div>
-        <div class="col-md-8 row">
-            <div class="col-md-6">
-                {{ form_row(form.birthAt) }}
-            </div>
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label for="city_profile" class="form-label">Ville</label>
-                    <div id="city_profile" data-controller="city-profile"></div>
-                </div>
-            </div>
-            <div class="row" class="visually-hidden">
-                <div class="col-4 visually-hidden">{{ form_row(form.city) }}</div>
-                <div class="col-4 visually-hidden">{{ form_row(form.lat) }}</div>
-                <div class="col-4 visually-hidden">{{ form_row(form.lng) }}</div>
-            </div>
-            {{ form_row(form.imageFile) }}
-            {{ form_row(form.about) }}
-            {{ form_row(form.activities) }}
-        </div>
-    </div>
-    <div class="p-3">
-        <button class="btn btn-primary rounded-pill w-100">{{ button_label|default('Save') }}</button>
-    </div>
+<div class="row">
+	<div class="col-md-4">
+		<h2 class="h5">Informations personnelles</h2>
+		<p class="text-muted">Ces informations sont visibles par les autres utilisateurs</p>
+	</div>
+	<div class="row col-md-8">
+		<div class="col-md-6">
+			{{ form_row(form.birthAt) }}
+		</div>
+		<div class="col-md-6">
+			<div class="mb-3">
+				<label for="city_profile" class="form-label">Ville</label>
+				<div id="city_profile" data-controller="city-profile"></div>
+			</div>
+			{{ form_row(form.city, {value: app.user.city}) }}
+			{{ form_row(form.lat) }}
+			{{ form_row(form.lng) }}
+		</div>
+		{{ form_row(form.imageFile) }}
+		{{ form_row(form.about) }}
+		{{ form_row(form.activities) }}
+	</div>
+</div>
+<div class="p-3">
+	<button class="btn btn-primary rounded-pill w-100">{{ button_label|default('Save') }}</button>
+</div>
 {{ form_end(form) }}
