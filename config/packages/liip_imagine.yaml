@@ -23,3 +23,11 @@ liip_imagine:
             quality: 75
             filters:
                 thumbnail: { size: [50, 50], mode: outbound }
+
+         
+        feature:
+            filters:
+                relative_resize:
+
+                        # given 50x40px, output 32x26px using "widen" option
+                        widen: 300

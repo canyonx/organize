@@ -20,7 +20,7 @@ class HomeController extends AbstractController
         return $this->render('home/index.html.twig', [
             'home' => $homepageRepository->find(1),
             'activities' => $activityRepository->findBy([], ['name' => 'ASC']),
-            'features' => $featureRepository->findAll()
+            'features' => $featureRepository->findBy([], ['id' => 'ASC'])
         ]);
     }
 }

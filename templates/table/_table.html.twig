@@ -26,13 +26,16 @@
 						{{ trip.location }}
 					</td>
 					{# <td>
-																					{{ trip.activity|title }}
-																				</td> #}
+																																																			{{ trip.activity|title }}
+																																																		</td> #}
 					<td>
 
 						<a href="{{ path('app_trip_show', {'id': trip.id}) }}" {# class="btn btn-primary" #} data-turbo-frame="_top">
 							<div class="btn-group" role="group" aria-label="Activity">
-								<button type="button" class="btn btn-primary" disabled>{{ trip.activity|title }}</button>
+								<button type="button" class="btn btn-primary" disabled>
+
+									{{ trip.activity|title }}
+								</button>
 								<button type="button" class="btn btn-primary position-relative">
 									{{ trip.title|capitalize }}
 									{% include "table/_notif.html.twig" %}
@@ -41,15 +44,15 @@
 						</a>
 					</td>
 					{# <td>
-																					{% if trip.createdBy != app.user %}
-																						<a href="{{ path('app_profile_show', {'slug': trip.createdBy.slug}) }}" 
-																							class=""
-																							data-turbo-frame="_top">
-																							{{ trip.createdBy }}
-																							{% if trip.createdBy in app.user.myFriendUsers %} *<i class="fa-solid fa-star"></i> {% endif %}
-																						</a>
-																					{% endif %}
-																				</td> #}
+																																																			{% if trip.createdBy != app.user %}
+																																																				<a href="{{ path('app_profile_show', {'slug': trip.createdBy.slug}) }}" 
+																																																					class=""
+																																																					data-turbo-frame="_top">
+																																																					{{ trip.createdBy }}
+																																																					{% if trip.createdBy in app.user.myFriendUsers %} *<i class="fa-solid fa-star"></i> {% endif %}
+																																																				</a>
+																																																			{% endif %}
+																																																		</td> #}
 					<td>
 						{% include "table/_table_status.html.twig" %}
 					</td>

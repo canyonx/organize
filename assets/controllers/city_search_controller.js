@@ -38,6 +38,7 @@ export default class extends Controller {
         function onSelected(feature) {
             let input = document.getElementsByClassName('photon-input');
             input[0].setAttribute('placeholder', feature.properties.city);
+            input[0].classList.add("form-control");
             
             document.getElementById('search_location').setAttribute('value', feature.properties.city);
             document.getElementById('search_lat').setAttribute('value', feature.geometry.coordinates[1].toFixed(4));
