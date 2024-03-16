@@ -23,7 +23,7 @@ class SearchType extends AbstractType
         $choices = [];
         for ($i = 1; $i < 6; $i++) {
             $val = $i * 10;
-            $choices[$val] = $val;
+            $choices[$val . ' km'] = $val;
         }
 
         $builder

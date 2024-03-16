@@ -63,6 +63,8 @@ class TripRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('t');
         // Different from the user
         TripUtil::isNotUser($qb, $user);
+        // Trip not already asked by user
+        TripUtil::isNotAsked($qb, $user);
         // Different from blocked users
         TripUtil::isNotBlockedUsers($qb, $user);
         // Is available
@@ -70,8 +72,6 @@ class TripRepository extends ServiceEntityRepository
         // Between dates
         TripUtil::byDateBetween($qb, $dateFrom);
         // In Followed users
-
-        // dd($isFriend);
         if ($isFriend == true) {
             TripUtil::byFriendUsers($qb, $user);
         }

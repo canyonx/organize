@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\User;
 use App\Entity\Activity;
+use App\Entity\TripRequest;
 use Doctrine\ORM\QueryBuilder;
 use App\Service\DistanceService;
 
@@ -65,6 +66,27 @@ class TripUtil
     }
 
     /**
+     * If user haven't a trip request on the trip
+     *
+     * @param QueryBuilder $qb
+     * @param User $user
+     * @return QueryBuilder
+     */
+    public static function isNotAsked(QueryBuilder $qb, User $user): QueryBuilder
+    {
+        $trs = $user->getTripRequests();
+        foreach ($trs as $k => $tr) {
+            $qb->andWhere(
+                $qb->expr()->not(
+                    $qb->expr()->isMemberOf(':tr' . $k, 't.tripRequests')
+                )
+            )
+                ->setParameter('tr' . $k, $tr);
+        }
+        return $qb;
+    }
+
+    /**
      * Order results by date
      *
      * @param QueryBuilder $qb
@@ -115,15 +137,13 @@ class TripUtil
             return $qb->andWhere('t.location = :location')
                 ->setParameter('location', $location);
         }
-        // dd($lat, $lng, $distance);
+
         // Calculate square search
         $coords = DistanceService::cardinalCoordonatesDistanceFromPoint(
             $lat,
             $lng,
             $distance
         );
-
-        dump($lat, $lng, $distance, $coords);
 
         // Square location search
         $qb->andWhere(
@@ -146,17 +166,6 @@ class TripUtil
      */
     public static function isNotBlockedUsers(QueryBuilder $qb, User $user): QueryBuilder
     {
-        $qb->leftJoin('t.member', 'tripUser')
-            ->addSelect('tripUser');
-
-
-        $qb->leftJoin('tripUser.myFriends', 'myFriends')
-            ->addSelect('myFriends');
-
-        $qb->leftJoin('tripUser.friendsWithMe', 'friendsWithMe')
-            ->addSelect('friendsWithMe');
-
-
         $blocked = [];
         // Users I blocked and users blocked me
         $blockedUsers = $user->getMyBlocked();

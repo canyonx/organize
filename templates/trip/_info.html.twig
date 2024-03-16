@@ -16,7 +16,7 @@
 			{% endif %}
 		</div>
 		<div class="mb-3">
-			<span class="badge text-bg-secondary">{{ trip.activity|capitalize }}</span>
+			<span class="badge text-bg-primary">{{ trip.activity|capitalize }}</span>
 		</div>
 		<div class="mb-3">
 			<b class="text-muted">
@@ -28,10 +28,17 @@
 			</b>
 		</div>
 
-		<p>{{ trip.description|nl2br }}</p>
+		<p>
+			{{ trip.description|nl2br }}
+		</p>
 
-		<input id="trip_lat" type="hidden" value="{{ trip.lat }}"></input>
-	<input id="trip_lng" type="hidden" value="{{ trip.lng }}"></input>
+		<input id="trip_lat" type="hidden" value="{{ trip.lat }}"/>
+		<input id="trip_lng" type="hidden" value="{{ trip.lng }}"/>
 
+		{% include 'trip/_accepted_user.html.twig' %}
+	</div>
 
-{% include 'trip/_accepted_user.html.twig' %}</div>{# carte #}<div id="map" class="rounded-bottom-4" style="height:360px" data-controller="map-trip"></div></section>
+	<div id="map" class="rounded-bottom-4" style="height:360px" data-controller="map-trip"></div>
+</section>
+
+<a href="" class="ms-4 text-secondary">signaler</a>

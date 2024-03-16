@@ -136,6 +136,6 @@ class TripRequest
 
     public function __toString(): string
     {
-        return $this->getId() . ' - ' . $this->getMember() . ' to ' . $this->getTrip()->getMember() . ', trip ' . $this->getTrip()->getId();
+        return $this->getId() . ' - ' . $this->getStatus() . ', ' . $this->getMember() . ' to ' . $this->getTrip()->getMember() . ', trip ' . $this->getTrip()->getId();
     }
 }
