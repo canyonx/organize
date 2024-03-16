@@ -52,6 +52,7 @@ class TripRepository extends ServiceEntityRepository
         User $user,
         Activity $activity = null,
         \DateTimeImmutable $dateFrom = new \DateTimeImmutable('today'),
+        \DateTimeImmutable $dateTo = new \DateTimeImmutable('today + 7 day'),
         string $location = null,
         float $lat = null,
         float $lng = null,
@@ -70,7 +71,7 @@ class TripRepository extends ServiceEntityRepository
         // Is available
         TripUtil::isAvailable($qb, true);
         // Between dates
-        TripUtil::byDateBetween($qb, $dateFrom);
+        TripUtil::byDateBetween($qb, $dateFrom, $dateTo);
         // In Followed users
         if ($isFriend == true) {
             TripUtil::byFriendUsers($qb, $user);

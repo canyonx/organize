@@ -7,13 +7,15 @@ use App\Entity\Activity;
 use App\Entity\TripRequest;
 use Doctrine\ORM\QueryBuilder;
 use App\Service\DistanceService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 
 /**
  *
  * Utilities functions for Trip search
  *
  */
-class TripUtil
+class TripUtil extends AbstractController
 {
     /**
      * Search in Trip by date between

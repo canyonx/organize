@@ -38,10 +38,12 @@ class SearchController extends AbstractController
             // default values
             $distance = $form->get('distance')->getData() ?: false;
             $isFriend = $form->get('isFriend')->getData();
+
             $trips = $tripRepository->findBySearchFields(
                 $user,
                 $search->getActivity(),
                 new \DateTimeImmutable('today'),
+                new \DateTimeImmutable('today + ' . $this->getParameter('app_planning_week') . ' day'),
                 $search->getLocation(),
                 $search->getLat(),
                 $search->getLng(),
@@ -51,20 +53,18 @@ class SearchController extends AbstractController
         } else {
             // Unsubmitted form default values
             $distance = 30;
+            $isFriend = false;
             $search->setActivity(null)
-                ->setDateAt(new \DateTimeImmutable('today'));
-
-            // if ($user->getCity()) {
-            $search
+                ->setDateAt(new \DateTimeImmutable('today'))
                 ->setLocation($user->getCity())
                 ->setLat($user->getLat())
                 ->setLng($user->getLng());
-            // }
-            $isFriend = false;
+
             $trips = $tripRepository->findBySearchFields(
                 $user,
                 $search->getActivity(),
                 new \DateTimeImmutable('today'),
+                new \DateTimeImmutable('today + ' . $this->getParameter('app_planning_week') . ' day'),
                 $search->getLocation(),
                 $search->getLat(),
                 $search->getLng(),
@@ -81,7 +81,7 @@ class SearchController extends AbstractController
             // Distance value
             'distance' => $distance,
             // Calendar trips ordered by date
-            'calendar' => $searchService->getSearchCalendar($trips, $search->getDateAt()),
+            'calendar' => $searchService->getSearchCalendar($trips, $search->getDateAt(), $this->getParameter('app_planning_week')),
             // Form search
             'form' => $form,
             // Total trips in app
