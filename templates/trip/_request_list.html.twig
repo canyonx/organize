@@ -6,11 +6,11 @@
 		<div>
 			{% if trip.isAvailable == true %}
 				<a href="{{ path('app_trip_available', {'id': trip.id, 'param': 0}) }}" class="card-link btn btn-success rounded-pill">
-					Ouverte
+					Ouvertes
 				</a>
 			{% else %}
 				<a href="{{ path('app_trip_available', {'id': trip.id, 'param': 1}) }}" class="card-link btn btn-danger rounded-pill">
-					Fermée
+					Fermées
 				</a>
 			{% endif %}
 		</div>
@@ -27,7 +27,7 @@
 				</button>
 			</li>
 		{% else %}
-			<li class="list-group-item">
+			<li class="list-group-item py-3 text-center">
 				Aucune demande pour le moment
 			</li>
 		{% endfor %}

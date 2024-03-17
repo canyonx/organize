@@ -54,13 +54,14 @@ class TripCrudController extends AbstractCrudController
                 ->hideOnForm(),
             DateField::new('dateAt')
                 ->setFormat("dd MMMM - HH'h'mm"),
-            TextField::new('activity'),
+            AssociationField::new('activity'),
             TextField::new('title'),
             BooleanField::new('isAvailable'),
             TextField::new('location'),
             TextEditorField::new('description')
                 ->hideOnIndex(),
             CollectionField::new('tripRequests')
+                ->hideOnForm()
                 ->hideOnIndex()
         ];
     }

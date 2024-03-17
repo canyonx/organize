@@ -40,7 +40,7 @@ export default class extends Controller {
         // Create marker
         var marker = L.marker([lat, lng], {icon: defaultMarker, draggable: true})
             .addTo(map)
-            .bindPopup('Déplacer le marqueur pour choisir un point de RDV')
+            .bindPopup('Déplacer le marqueur <br> pour choisir un point de RDV')
             .openPopup();
 
         // Marker drag function
