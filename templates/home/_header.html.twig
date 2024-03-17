@@ -1,12 +1,19 @@
-<section class="d-flex align-items-center pb-5" style="height: 88vh; background: url('{{ asset('images/'~ home.background) }}') no-repeat center center fixed; background-size: cover;">
+<section class="d-flex align-items-center justify-content-center pb-5" style="height: 88vh; background: url('{{ asset('images/'~ home.background) }}') no-repeat center center fixed; background-size: cover;">
 	<div class="row pb-5">
-		<div class="col-6 mx-auto text-center pb-5">
+		<div class="col-6 mx-auto pb-5 text-center">
 			<h1 class="text-white" style="text-shadow: 0 0 5px #000000;">{{ home.title }}</h1>
 			<p class="text-white fs-3" style="text-shadow: 0 0 5px #000000;">{{ home.subtitle }}</p>
-
-			{% for activity in activities %}
-				<button class="btn btn-light rounded-pill" disabled>{{ activity.name|title }}</button>
-			{% endfor %}
+			<div class="d-none d-md-block">
+				{% for activity in activities %}
+					<button class="btn btn-light rounded-pill" disabled>{{ activity.name|title }}</button>
+				{% endfor %}
+			</div>
+			<div class="d-block d-md-none text-center">
+				<button class="btn btn-light rounded-pill" disabled>
+					{{ activities|length }}
+					activités
+				</button>
+			</div>
 		</div>
 	</div>
 </section>

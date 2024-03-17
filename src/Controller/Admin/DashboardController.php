@@ -57,6 +57,9 @@ class DashboardController extends AbstractDashboardController
     {
         // yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
 
+        yield MenuItem::section('Site');
+        yield MenuItem::linkToRoute('App', 'fa fa-globe', 'app_home');
+
         yield MenuItem::section('Signalments');
         yield MenuItem::linkToCrud('Signalments', 'fas fa-triangle-exclamation', Signal::class);
 
