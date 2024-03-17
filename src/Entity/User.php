@@ -92,6 +92,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?float $lng = null;
 
+    #[ORM\OneToMany(mappedBy: 'member', targetEntity: Signal::class, orphanRemoval: true)]
+    private Collection $signals;
+
     public function __construct()
     {
         $this->myFriends = new ArrayCollection();
@@ -100,6 +103,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->tripRequests = new ArrayCollection();
         $this->messages = new ArrayCollection();
         $this->activities = new ArrayCollection();
+        $this->signals = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -585,6 +589,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLng(?float $lng): static
     {
         $this->lng = $lng;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Signal>
+     */
+    public function getSignals(): Collection
+    {
+        return $this->signals;
+    }
+
+    public function addSignal(Signal $signal): static
+    {
+        if (!$this->signals->contains($signal)) {
+            $this->signals->add($signal);
+            $signal->setMember($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSignal(Signal $signal): static
+    {
+        if ($this->signals->removeElement($signal)) {
+            // set the owning side to null (unless already changed)
+            if ($signal->getMember() === $this) {
+                $signal->setMember(null);
+            }
+        }
 
         return $this;
     }

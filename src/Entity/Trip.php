@@ -217,4 +217,9 @@ class Trip
 
         return $acceptedUsers;
     }
+
+    public function __toString()
+    {
+        return ucfirst($this->title);
+    }
 }

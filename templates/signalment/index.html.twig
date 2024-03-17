@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editer mon profil
+{% endblock %}
+
+{% block body %}
+	<section class="card col-md-6 mx-auto">
+		<div class="card-header">
+			<h1>Signalement de
+				{{ entity }}</h1>
+			<p>
+				Signaler une sortie ou un utilisateur qui te paraît incorrect.
+			</p>
+		</div>
+		<div class="card-body">
+			{{ include('signalment/_form.html.twig', {'button_label': 'Signaler'}) }}
+		</div>
+	</section>
+{% endblock %}

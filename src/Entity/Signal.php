@@ -26,6 +26,10 @@ class Signal
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $message = null;
 
+    #[ORM\ManyToOne(inversedBy: 'signals')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $member = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +79,18 @@ class Signal
     public function setMessage(?string $message): static
     {
         $this->message = $message;
+
+        return $this;
+    }
+
+    public function getMember(): ?User
+    {
+        return $this->member;
+    }
+
+    public function setMember(?User $member): static
+    {
+        $this->member = $member;
 
         return $this;
     }

@@ -8,6 +8,7 @@ use App\Entity\Activity;
 use App\Entity\Feature;
 use App\Entity\Homepage;
 use App\Entity\Message;
+use App\Entity\Signal;
 use App\Repository\TripRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -54,6 +55,9 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         // yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+
+        yield MenuItem::section('Signalments');
+        yield MenuItem::linkToCrud('Signal', 'fas fa-danger', Signal::class);
 
         yield MenuItem::section('Trips');
         // Événements passés

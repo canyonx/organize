@@ -77,5 +77,5 @@
 </section>
 
 {% if user != app.user %}
-	<a href="" class="ms-4 text-secondary">signaler</a>
+	<a href="{{ path('app_signalment_index', {type: 'user', id: user.id}) }}" class="ms-4 text-secondary">signaler</a>
 {% endif %}
