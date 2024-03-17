@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Entity\Activity;
 use App\Entity\Feature;
 use App\Entity\Homepage;
+use App\Entity\Legal;
 use App\Entity\Message;
 use App\Entity\Signal;
 use App\Repository\TripRepository;
@@ -57,7 +58,7 @@ class DashboardController extends AbstractDashboardController
         // yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
 
         yield MenuItem::section('Signalments');
-        yield MenuItem::linkToCrud('Signal', 'fas fa-danger', Signal::class);
+        yield MenuItem::linkToCrud('Signalments', 'fas fa-triangle-exclamation', Signal::class);
 
         yield MenuItem::section('Trips');
         // Événements passés
@@ -80,7 +81,10 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::section('Settings');
         yield MenuItem::linkToCrud('Activities', 'fas fa-bicycle', Activity::class);
-        yield MenuItem::linkToCrud('Homepage', 'fas fa-house', Homepage::class);
-        yield MenuItem::linkToCrud('Features', 'fas fa-bolt', Feature::class);
+        yield MenuItem::linkToCrud('Homepage', 'fas fa-house', Homepage::class)
+            ->setQueryParameter('crudAction', 'detail')
+            ->setQueryParameter('entityId', '1');
+        yield MenuItem::linkToCrud('Features', 'fas fa-list', Feature::class);
+        yield MenuItem::linkToCrud('Legal', 'fas fa-gavel', Legal::class);
     }
 }
