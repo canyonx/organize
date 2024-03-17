@@ -7,7 +7,7 @@
 	<section class="card m-3">
 		<div class="card-header">
 			<h1>Modifier une sortie</h1>
-			<a href="{{ path('app_trip_index') }}" class="btn btn-primary rounded-pill">Retour</a>
+			<a href="{{ path('app_trip_show', {id: trip.id}) }}" class="btn btn-primary rounded-pill">Retour</a>
 		</div>
 		<div class="card-body">
 			{{ include('trip/_form.html.twig', {'button_label': 'Enregistrer'}) }}

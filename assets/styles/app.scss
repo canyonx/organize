@@ -10,13 +10,20 @@ h1, h2, h3 {
     margin-bottom: 0.5rem;
 }
 
+@media (min-width: 992px) {
+    #features {
+        margin-top: -9rem;
+    }
+}
+
+
 // Colors
 $primary: #345995;
 $secondary: #adb5bd;
 $danger: #ca1551;
 $success: #8ac926;
-// $warning: #ffbc42;
-$warning: #ff4000;
+$warning: #ffbc42;
+// $warning: #ff4000;
 $light: #f9f9f9;
 $info: #1982c4;
 $dark: #10002b;

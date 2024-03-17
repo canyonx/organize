@@ -28,11 +28,13 @@ class MessageController extends AbstractController
 
         $tripRequest = $message->getTripRequest();
 
-        // Delete message
-        if ($user == $message->getMember()) {
-            $em->remove($message);
-            $em->flush();
+        if ($user != $message->getMember()) {
+            throw $this->createAccessDeniedException();
         }
+
+        // Delete message
+        $em->remove($message);
+        $em->flush();
 
         return $this->redirectToRoute('app_trip_request_show', ['id' => $tripRequest->getId()], Response::HTTP_SEE_OTHER);
     }

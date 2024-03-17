@@ -73,10 +73,9 @@ class RegistrationController extends AbstractController
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
 
+            $this->addFlash('success', 'Compte crée, confirme ton email avant de te connecter !');
             return $this->redirectToRoute('app_login');
         }
-
-        $this->addFlash('success', 'Compte crée, confirme ton email avant de te connecter !');
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),

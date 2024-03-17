@@ -29,7 +29,7 @@
 		</div>
 
 		<p>
-			{{ trip.description|nl2br }}
+			{{ trip.description|nl2br|raw }}
 		</p>
 
 		<input id="trip_lat" type="hidden" value="{{ trip.lat }}"/>

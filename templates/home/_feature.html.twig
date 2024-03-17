@@ -1,10 +1,11 @@
-<div class="bg-light py-5">
+{% set colors = ['danger', 'info', 'success'] %}
+<div id="features">
 	{% for key, feature in features %}
 		<section class="py-4 col-8 mx-auto">
 			<div class="row">
 				<div class="col-md-6 align-self-center {% if ((key + 1) / 2) matches '/^\\d+$/' %} order-md-2{% endif %}">
-					<h1>{{ feature.title }}</h1>
-					<p>{{ feature.subtitle }}</p>
+					<h1 class="text-{{ colors[key] }}">{{ feature.title }}</h1>
+					<p>{{ feature.subtitle|raw }}</p>
 				</div>
 				<div class="col-md-6 text-center {% if ((key + 1) / 2) matches '/^\\d+$/' %} order-md-1{% endif %}">
 					{% if feature.picture %}

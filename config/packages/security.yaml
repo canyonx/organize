@@ -35,8 +35,8 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/(profil|trip|planning|search), roles: ROLE_USER }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/(api|profil|trip|planning|search|signalment), roles: ROLE_USER }
 
 when@test:
     security:

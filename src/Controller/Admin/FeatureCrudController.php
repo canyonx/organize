@@ -22,7 +22,7 @@ class FeatureCrudController extends AbstractCrudController
             IdField::new('id')
                 ->hideOnForm(),
             TextField::new('title'),
-            TextField::new('subtitle'),
+            TextEditorField::new('subtitle'),
             ImageField::new('picture')
                 ->setBasePath('images/')
                 ->setUploadDir('public/images/')
