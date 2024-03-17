@@ -11,7 +11,7 @@
 				<div class="col-md-auto me-auto my-2">
 
 					<button class="disabled btn rounded-pill">
-						Filtrer les sorties
+						Sorties
 					</button>
 					<a href="{{ path('app_planning_index')}}" class="btn btn-primary rounded-pill">
 						Toutes
@@ -32,6 +32,15 @@
 		</div>
 		<div class="card-body">
 			{% include "table/_table.html.twig" %}
+		</div>
+		<div class="d-flex justify-content-end me-3 mb-3">
+			<div>
+				Légende :
+				<button class="btn btn-outline" disabled="disabled">Mes demandes</button>
+				<button class="btn btn-info" disabled="disabled">Attente</button>
+				<button class="btn btn-success" disabled="disabled">Acceptée</button>
+				<button class="btn btn-secondary" disabled="disabled">Refusée</button>
+			</div>
 		</div>
 	</section>
 

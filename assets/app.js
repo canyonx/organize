@@ -2,6 +2,7 @@ import './bootstrap.js';
 // import './vendor/leaflet/leaflet.index.js';
 // import './vendor/@webgeodatavore/photon-geocoder-autocomplete/photon-geocoder-autocomplete.index.js';
 
+
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -9,7 +10,10 @@ import './bootstrap.js';
  * which should already be in your base.html.twig.
  */
  
-// import 'bootstrap/dist/css/bootstrap.min.css';
+//  js part of bootstrap
+import './vendor/bootstrap/dist/js/bootstrap.min.js';
+
+// Other Css
 import './vendor/@webgeodatavore/photon-geocoder-autocomplete/dist/photon-geocoder-autocomplete.min.css';
 import './vendor/leaflet/dist/leaflet.min.css';
 // import './styles/app.css';
