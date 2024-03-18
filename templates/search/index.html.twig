@@ -12,6 +12,19 @@
 			<div class="card-body">
 				{% include "table/_table.html.twig" %}
 			</div>
+			<div class="d-flex align-items-baseline justify-content-end me-3 mb-3">
+				<p class="me-2">
+					Légende :
+				</p>
+				<div class="btn-group" role="group" aria-label="Activity">
+					<button type="button" class="btn btn-primary" disabled>
+						Activité
+					</button>
+					<button type="button" class="btn btn-primary position-relative">
+						Titre de la sortie
+					</button>
+				</div>
+			</div>
 		</section>
 	</turbo-frame>
 {% endblock %}

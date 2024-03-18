@@ -7,8 +7,10 @@
 	<section>
 		<h1>Mention légales</h1>
 		{% for legal in legals %}
-			<h2>{{ legal.title|title }}</h2>
-			<p>{{ legal.content|nl2br }}</p>
+			<div class="p-5">
+				<h2 class="text-primary">{{ legal.title|title }}</h2>
+				<p>{{ legal.content|raw }}</p>
+			</div>
 		{% endfor %}
 	</section>
 {% endblock %}
