@@ -26,6 +26,7 @@ class RegistrationController extends AbstractController
     public function __construct(EmailVerifier $emailVerifier)
     {
         $this->emailVerifier = $emailVerifier;
+
     }
 
     /**
@@ -67,7 +68,7 @@ class RegistrationController extends AbstractController
                 'app_verify_email',
                 $user,
                 (new TemplatedEmail())
-                    ->from(new Address('noreply@organize.fr', 'OrganiZe'))
+                    ->from(new Address($this->getParameter('app_admin_mail'), 'OrganiZe'))
                     ->to($user->getEmail())
                     ->subject('Confirme ton email - Organize')
                     ->htmlTemplate('registration/confirmation_email.html.twig')

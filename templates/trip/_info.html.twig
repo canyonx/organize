@@ -40,5 +40,6 @@
 
 	<div id="map" class="rounded-bottom-4" style="height:360px" data-controller="map-trip"></div>
 </section>
-
-<a href="{{ path('app_signalment_index', {type: 'trip', id: trip.id}) }}" class="ms-4 mb-2 text-secondary">signaler</a>
+{% if trip.member != app.user %}
+	<a href="{{ path('app_signalment_index', {type: 'trip', id: trip.id}) }}" class="ms-4 mb-2 text-secondary">signaler</a>
+{% endif %}

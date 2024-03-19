@@ -60,7 +60,4 @@ $card-box-shadow: 0 5px 10px #0000001a;
 $alert-border-radius: 1rem;
 
 
-@import '../../vendor/twbs/bootstrap/scss/bootstrap';
-
-@import '../photon-geocoder-autocomplete/dist/photon-geocoder-autocomplete.min.css';
-@import './photon-no-map.css';
+@import '../vendor/bootstrap/dist/css/bootstrap.min.css';

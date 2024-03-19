@@ -7,4 +7,11 @@ import './bootstrap.js';
  * which should already be in your base.html.twig.
  */
 
+// Bootstrap js 
+import './vendor/bootstrap/dist/js/bootstrap.min.js'; 
+
 import './photon-geocoder-autocomplete/dist/photon-geocoder-autocomplete.min.js';
+
+import './vendor/leaflet/dist/leaflet.min.css';
+import './photon-geocoder-autocomplete/dist/photon-geocoder-autocomplete.min.css';
+import './styles/photon-no-map.css';
