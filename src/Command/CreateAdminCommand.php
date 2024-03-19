@@ -44,7 +44,7 @@ class CreateAdminCommand extends Command
         $password = $this->encoder->hashPassword($user, $input->getArgument('password'));
         $user->setPseudo($input->getArgument('pseudo'))
             ->setPassword($password)
-            ->setEmail($input->getArgument('pseudo'))
+            ->setEmail($input->getArgument('email'))
             ->setRoles(['ROLE_ADMIN'])
             ->setBirthAt(new \DateTimeImmutable('17-05-1988'))
             ->setCity('Briançon')
@@ -52,14 +52,11 @@ class CreateAdminCommand extends Command
             ->setLng(6)
             ->setCreatedAt(new \DateTimeImmutable())
             ->setLastConnAt(new \DateTimeImmutable())
-            ->setSlug(strtolower($this->slugger->slug($input->getArgument('pseudo'))));
+            ->setSlug(strtolower($this->slugger->slug($input->getArgument('pseudo'))))
+            ->setIsVerified(true);
 
-        $home = new Homepage;
-        $home->setTitle('OrganiZe')
-            ->setSubtitle('Partenaires d\'activités');
 
         $this->em->persist($user);
-        $this->em->persist($home);
         $this->em->flush();
 
         $io->success('Done');

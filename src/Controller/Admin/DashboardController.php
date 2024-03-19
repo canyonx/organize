@@ -84,9 +84,7 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::section('Settings');
         yield MenuItem::linkToCrud('Activities', 'fas fa-bicycle', Activity::class);
-        yield MenuItem::linkToCrud('Homepage', 'fas fa-house', Homepage::class)
-            ->setQueryParameter('crudAction', 'detail')
-            ->setQueryParameter('entityId', '1');
+        yield MenuItem::linkToCrud('Homepage', 'fas fa-house', Homepage::class);
         yield MenuItem::linkToCrud('Features', 'fas fa-list', Feature::class);
         yield MenuItem::linkToCrud('Legal', 'fas fa-gavel', Legal::class);
     }
