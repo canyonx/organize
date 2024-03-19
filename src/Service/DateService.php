@@ -50,7 +50,7 @@ class DateService
     ): bool {
         // Consider participating to trip if status
         $status = [TripRequest::ACCEPTED, TripRequest::PENDING, TripRequest::OWNER];
-        $dateFrom = $date;
+        $dateFrom = new \DateTimeImmutable($date->format('Y-m-d'));
         $dateTo = new \DateTimeImmutable($date->format('Y-m-d') . ' + 1 day');
         // Is user have a trip that day
         $myTrips = $this->tripRequestRepository->findByUserAndBetweenDateAndStatus($user, $dateFrom, $dateTo, $status);

@@ -30,7 +30,7 @@ class TripType extends AbstractType
                 'label' => 'Titre',
                 'constraints' => [
                     new NotBlank(),
-                    new Length(5, 50),
+                    new Length(['min' => 5, 'max' => 50]),
                     new Regex('/^\w+/')
                 ]
             ])
@@ -48,7 +48,7 @@ class TripType extends AbstractType
                 ],
                 'constraints' => [
                     new NotBlank(),
-                    new Length(5, 300),
+                    new Length(['min' => 5, 'max' => 300]),
                     new Regex('/^\w+/')
                 ]
             ])
@@ -56,7 +56,7 @@ class TripType extends AbstractType
                 'label' => 'Ville',
                 'constraints' => [
                     new NotBlank(),
-                    new Length(5, 100),
+                    new Length(['min' => 5, 'max' => 100]),
                     new Regex('/^\w+/')
                 ]
             ])

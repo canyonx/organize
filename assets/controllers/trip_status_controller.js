@@ -1,6 +1,8 @@
 import { Controller } from '@hotwired/stimulus';
 
 /*
+* UNUSED
+*
  * On Trip request status Accept/Refuse 
  * Change trip status when owner choose one
  */
