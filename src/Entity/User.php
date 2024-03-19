@@ -2,20 +2,21 @@
 
 namespace App\Entity;
 
-use App\Repository\FriendRepository;
-use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UserRepository;
+use App\Repository\FriendRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
-#[UniqueEntity(fields: ['pseudo'], message: 'There is already an account with this pseudo')]
+#[UniqueEntity(fields: ['email'], message: 'Il existe déjà un compte avec cet email')]
+#[UniqueEntity(fields: ['pseudo'], message: 'Il existe déjà un compte avec ce nom d\'utilisateur')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -23,6 +24,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Email]
+    #[Assert\Length(min: 5, max: 180)]
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
@@ -35,15 +39,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 5, max: 50)]
     #[ORM\Column(length: 50, unique: true)]
     private ?string $pseudo = null;
 
+    #[Assert\GreaterThanOrEqual(
+        value: '1944-01-01'
+    )]
+    #[Assert\LessThanOrEqual(
+        value: 'today - 7 year',
+    )]
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $birthAt = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $avatar = null;
 
+    #[Assert\Length(min: 5, max: 300)]
+    #[Assert\Regex('/^\w+/')]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $about = null;
 
@@ -74,7 +88,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 50, unique: true)]
     private ?string $slug = null;
 
     #[ORM\ManyToMany(targetEntity: Activity::class, inversedBy: 'members')]
@@ -83,12 +97,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $resetToken = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 3, max: 100)]
+    #[Assert\Regex('/^\w+/')]
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $city = null;
 
+    #[Assert\NotBlank]
     #[ORM\Column(nullable: true)]
     private ?float $lat = null;
 
+    #[Assert\NotBlank]
     #[ORM\Column(nullable: true)]
     private ?float $lng = null;
 

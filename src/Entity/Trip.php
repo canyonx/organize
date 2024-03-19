@@ -17,31 +17,18 @@ class Trip
     #[ORM\Column]
     private ?int $id = null;
 
-    #[Assert\NotBlank]
-    #[Assert\Length(min: 5, max: 50)]
-    #[Assert\Regex('/^\w+/')]
     #[ORM\Column(length: 50)]
     private ?string $title = null;
 
-    #[Assert\GreaterThanOrEqual(
-        value: 'now'
-    )]
-    #[Assert\LessThanOrEqual(
-        value: 'today + 7 day',
-    )]
     #[ORM\Column]
     private ?\DateTimeImmutable $dateAt = null;
 
-    #[Assert\NotBlank]
-    #[Assert\Regex('/^\w+/')]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[Assert\NotBlank]
     #[ORM\Column(length: 10)]
     private ?float $lat = null;
 
-    #[Assert\NotBlank]
     #[ORM\Column(length: 10)]
     private ?float $lng = null;
 
@@ -49,7 +36,6 @@ class Trip
     #[ORM\JoinColumn(nullable: false)]
     private ?User $member = null;
 
-    #[Assert\NotBlank]
     #[ORM\ManyToOne(inversedBy: 'trips')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Activity $activity = null;
@@ -60,9 +46,6 @@ class Trip
     #[ORM\Column]
     private ?bool $isAvailable = null;
 
-    #[Assert\NotBlank]
-    #[Assert\Length(min: 3, max: 100)]
-    #[Assert\Regex('/^\w+/')]
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $location = null;
 

@@ -15,6 +15,11 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class TripType extends AbstractType
 {
@@ -22,31 +27,50 @@ class TripType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, [
-                'label' => 'Titre'
+                'label' => 'Titre',
+                'constraints' => [
+                    new NotBlank(),
+                    new Length(5, 50),
+                    new Regex('/^\w+/')
+                ]
             ])
             ->add('dateAt', DateTimeType::class, [
                 'label' => 'Date et heure',
-                // 'date_label' => 'Date',
-                // 'date_widget' => 'single_text',
-                // 'time_label' => 'Heure',
-                // 'time_widget' => 'choice',
+                'constraints' => [
+                    new GreaterThanOrEqual('now'),
+                    new LessThanOrEqual('now + 7 day')
+                ]
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
                 'attr' => [
                     'rows' => 6
+                ],
+                'constraints' => [
+                    new NotBlank(),
+                    new Length(5, 300),
+                    new Regex('/^\w+/')
                 ]
             ])
             ->add('location', HiddenType::class, [
-                'label' => 'Ville'
+                'label' => 'Ville',
+                'constraints' => [
+                    new NotBlank(),
+                    new Length(5, 100),
+                    new Regex('/^\w+/')
+                ]
             ])
             ->add('lat', HiddenType::class, [
                 'label' => 'Latitude',
-                // 'disabled' => true
+                'constraints' => [
+                    new NotBlank()
+                ]
             ])
             ->add('lng', HiddenType::class, [
                 'label' => 'Longitude',
-                // 'disabled' => true
+                'constraints' => [
+                    new NotBlank()
+                ]
             ])
             ->add('activity', EntityType::class, [
                 'label' => 'Activité',
@@ -56,6 +80,9 @@ class TripType extends AbstractType
                     return $er->createQueryBuilder('a')
                         ->orderBy('a.name', 'ASC');
                 },
+                'constraints' => [
+                    new NotBlank()
+                ]
             ]);
     }
 

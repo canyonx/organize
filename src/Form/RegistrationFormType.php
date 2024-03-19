@@ -12,8 +12,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class RegistrationFormType extends AbstractType
@@ -23,53 +22,45 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter an email',
-                    ]),
-                    new Email([
-                        'message' => 'Enter a valid email'
-                    ]),
+                    new NotBlank(),
+                    new Email(),
                 ],
             ])
             ->add('pseudo', TextType::class, [
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a pseudo',
-                    ])
+                    new NotBlank(),
+                    new Length(['min' => 5, 'max' => 50]),
                 ],
             ])
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
-                    ]),
-                ],
-            ])
+            // ->add('agreeTerms', CheckboxType::class, [
+            //     'mapped' => false,
+            //     'constraints' => [
+            //         new IsTrue([
+            //             'message' => 'You should agree to our terms.',
+            //         ]),
+            //     ],
+            // ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a password',
-                    ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
-                    ]),
+                    new NotBlank(),
+                    new Length(['min' => 6, 'max' => 4096]),
                 ],
             ])
-            ->add('city', TextType::class, [
+            ->add('city', HiddenType::class, [
+                'label' => false,
+                'constraints' => [
+                    new NotBlank(),
+                    new Length(['min' => 3, 'max' => 100]),
+                ],
+            ])
+            ->add('lat', HiddenType::class, [
                 'label' => false,
             ])
-            ->add('lat', NumberType::class, [
-                'label' => false,
-            ])
-            ->add('lng', NumberType::class, [
+            ->add('lng', HiddenType::class, [
                 'label' => false,
             ]);
     }

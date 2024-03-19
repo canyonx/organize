@@ -39,12 +39,12 @@ export default class extends Controller {
             let input = document.getElementsByClassName('photon-input');
             input[0].setAttribute('placeholder', feature.properties.city);
 
-            var form = document.getElementsByTagName('form');
-            var element = form[0].name;
+            let form = document.getElementsByTagName('form');
+            let formName = form[0].name;
             
-            document.getElementById(element + '_city').setAttribute('value', feature.properties.city);
-            document.getElementById(element + '_lat').setAttribute('value', feature.geometry.coordinates[1].toFixed(4));
-            document.getElementById(element + '_lng').setAttribute('value', feature.geometry.coordinates[0].toFixed(4));
+            document.getElementById(formName + '_city').setAttribute('value', feature.properties.city);
+            document.getElementById(formName + '_lat').setAttribute('value', feature.geometry.coordinates[1].toFixed(4));
+            document.getElementById(formName + '_lng').setAttribute('value', feature.geometry.coordinates[0].toFixed(4));
             
             console.log(feature);
         }
@@ -72,7 +72,11 @@ export default class extends Controller {
         var inputAddress = document.getElementsByClassName('photon-input');
         inputAddress[0].classList.add("form-control");
 
-        if (document.getElementById('user_city').value) {
+        // Get the form name
+        let form = document.getElementsByTagName('form');
+        let formName = form[0].name;
+
+        if (document.getElementById(formName + '_city').value) {
             inputAddress[0].setAttribute('placeholder', document.getElementById('user_city').value);
         }
         

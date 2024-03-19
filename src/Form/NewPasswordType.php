@@ -14,26 +14,17 @@ class NewPasswordType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add(
-                'newPassword',
-                PasswordType::class,
-                [
-                    'mapped' => false,
-                    'constraints' => [
-                        new NotBlank([
-                            'message' => 'Choisisez un mot de passe.'
-                        ]),
-                        new Length([
-                            'min' => 6,
-                            'minMessage' => 'Votre mot de passe doit faire au moins {{ limit }} caractères'
-                        ])
-                    ],
-                    'label' => 'Nouveau mot de passe',
-                    'attr' => [
-                        'placeholder' => '******'
-                    ]
-                ]
-            );
+            ->add('newPassword', PasswordType::class, [
+                'label' => 'Nouveau mot de passe',
+                'mapped' => false,
+                'attr' => [
+                    'placeholder' => '******'
+                ],
+                'constraints' => [
+                    new NotBlank(),
+                    new Length(['min' => 6, 'max' => 4096]),
+                ],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
