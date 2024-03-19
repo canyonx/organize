@@ -11,13 +11,13 @@ import './bootstrap.js';
  */
  
 //  js part of bootstrap
-import './vendor/bootstrap/dist/js/bootstrap.min.js';
+// import './vendor/bootstrap/dist/js/bootstrap.min.js';
 
 // Other Css
-import './vendor/@webgeodatavore/photon-geocoder-autocomplete/dist/photon-geocoder-autocomplete.min.css';
-import './vendor/leaflet/dist/leaflet.min.css';
+// import './vendor/@webgeodatavore/photon-geocoder-autocomplete/dist/photon-geocoder-autocomplete.min.css';
+// import './vendor/leaflet/dist/leaflet.min.css';
 // import './styles/app.css';
-import './styles/photon-no-map.css';
+// import './styles/photon-no-map.css';
 // import './styles/custom.scss';
 
 

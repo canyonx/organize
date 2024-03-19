@@ -77,7 +77,7 @@ export default class extends Controller {
         let formName = form[0].name;
 
         if (document.getElementById(formName + '_city').value) {
-            inputAddress[0].setAttribute('placeholder', document.getElementById('user_city').value);
+            inputAddress[0].setAttribute('placeholder', document.getElementById(formName + '_city').value);
         }
         
     }

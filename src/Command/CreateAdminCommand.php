@@ -55,8 +55,14 @@ class CreateAdminCommand extends Command
             ->setSlug(strtolower($this->slugger->slug($input->getArgument('pseudo'))))
             ->setIsVerified(true);
 
+        $home = new Homepage;
+        $home->setBackground('backgound')
+            ->setSubtitle('subtitle')
+            ->setTitle('Title');
+
 
         $this->em->persist($user);
+        $this->em->persist($home);
         $this->em->flush();
 
         $io->success('Done');
