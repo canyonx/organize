@@ -25,12 +25,11 @@ class TripType extends AbstractType
                 'label' => 'Titre'
             ])
             ->add('dateAt', DateTimeType::class, [
-                'date_label' => 'Date',
-                'date_widget' => 'single_text',
-                'time_label' => 'Heure',
-                'time_widget' => 'choice',
-                // 'disabled' => $options['edit']
-
+                'label' => 'Date et heure',
+                // 'date_label' => 'Date',
+                // 'date_widget' => 'single_text',
+                // 'time_label' => 'Heure',
+                // 'time_widget' => 'choice',
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description',

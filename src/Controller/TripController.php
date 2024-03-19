@@ -49,7 +49,8 @@ class TripController extends AbstractController
 
         $trip = new Trip();
         $trip->setMember($user)
-            ->setIsAvailable(true);
+            ->setIsAvailable(true)
+            ->setDateAt(new \DateTimeImmutable());
 
         $form = $this->createForm(TripType::class, $trip);
         $form->handleRequest($request);

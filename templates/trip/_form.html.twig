@@ -1,20 +1,14 @@
 {{ form_start(form) }}
+{{ form_errors(form) }}
 <div id="warning_limitation" class="visually-hidden">
 	{% include "shared/_warning_limitation.html.twig" %}
 </div>
 
 <div class="row">
-	<div class="col-md-6">
+	<div class="col-md-6" data-controller="trip-date">
 		<input id="trip_id" value="{{ trip.id ?: false }}" type="hidden"/>
 		{{ form_row(form.activity) }}
-		<div class="row">
-			<div class="col-md-6 pt-1">
-				{{ form_row(form.dateAt.children.date, {attr: {"data-controller": 'trip-date', "data-action": 'change->trip-date#check' } }) }}
-			</div>
-			<div class="col-md-6">
-				{{ form_row(form.dateAt.children.time) }}
-			</div>
-		</div>
+		{{ form_row(form.dateAt, {attr: {"data-action": 'change->trip-date#check' } }) }}
 		{{ form_row(form.title) }}
 		{{ form_row(form.description) }}
 	</div>
