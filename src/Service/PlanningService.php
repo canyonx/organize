@@ -56,7 +56,7 @@ class PlanningService extends AbstractController
                 }
             }
         }
-        dump($calendar);
+        // dump($calendar);
         return $calendar;
     }
 }

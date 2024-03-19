@@ -44,6 +44,7 @@ class UserCrudController extends AbstractCrudController
             IdField::new('id'),
             TextField::new('email'),
             TextField::new('pseudo'),
+            TextField::new('slug'),
             DateField::new('birthAt'),
             TextField::new('city'),
             BooleanField::new('isVerified'),

@@ -55,7 +55,7 @@ class DateService
         // Is user have a trip that day
         $myTrips = $this->tripRequestRepository->findByUserAndBetweenDateAndStatus($user, $dateFrom, $dateTo, $status);
 
-        dump($myTrips);
+        // dump($myTrips);
         if ($myTrips) {
             return true;
         }

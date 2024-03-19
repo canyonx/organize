@@ -60,4 +60,5 @@ $card-box-shadow: 0 5px 10px #0000001a;
 $alert-border-radius: 1rem;
 
 
-@import '../vendor/bootstrap/dist/css/bootstrap.min.css';
+// Scss Bootstrap - CORRECT
+@import '../../vendor/twbs/bootstrap/scss/bootstrap';
