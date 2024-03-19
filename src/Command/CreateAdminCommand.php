@@ -13,6 +13,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[AsCommand(
     name: 'app:create-admin',
@@ -22,7 +23,8 @@ class CreateAdminCommand extends Command
 {
     public function __construct(
         private EntityManagerInterface $em,
-        private UserPasswordHasherInterface $encoder
+        private UserPasswordHasherInterface $encoder,
+        private SluggerInterface $slugger,
     ) {
         parent::__construct();
     }
@@ -44,7 +46,13 @@ class CreateAdminCommand extends Command
             ->setPassword($password)
             ->setEmail($input->getArgument('pseudo'))
             ->setRoles(['ROLE_ADMIN'])
-            ->setCity('Briançon');
+            ->setBirthAt(new \DateTimeImmutable('17-05-1988'))
+            ->setCity('Briançon')
+            ->setLat(45)
+            ->setLng(6)
+            ->setCreatedAt(new \DateTimeImmutable())
+            ->setLastConnAt(new \DateTimeImmutable())
+            ->setSlug(strtolower($this->slugger->slug($input->getArgument('pseudo'))));
 
         $home = new Homepage;
         $home->setTitle('OrganiZe')
