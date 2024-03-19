@@ -13,14 +13,12 @@
 
 		<meta name="description" content="Partenaires d'activités">
 
-		<link rel="stylesheet" href="https://unpkg.com/@webgeodatavore/photon-geocoder-autocomplete@2.0.1/dist/photon-geocoder-autocomplete.min.css" type="text/css">
 		{% block stylesheets %}
 			<link
 			rel="stylesheet" href="{{ asset('styles/app.scss') }}">
 		{# {{ ux_controller_link_tags() }} #}
 		{% endblock %}
 
-		 <script src="https://unpkg.com/@webgeodatavore/photon-geocoder-autocomplete@2.0.1/dist/photon-geocoder-autocomplete.min.js"></script>
 		{% block javascripts %}
 			{% block importmap %}
 				{{ importmap('app') }}
