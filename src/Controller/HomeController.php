@@ -18,7 +18,7 @@ class HomeController extends AbstractController
         FeatureRepository $featureRepository
     ): Response {
         return $this->render('home/index.html.twig', [
-            'home' => $homepageRepository->find(1),
+            'home' => $homepageRepository->findOneBy([], []),
             'activities' => $activityRepository->findBy([], ['name' => 'ASC']),
             'features' => $featureRepository->findBy([], ['id' => 'ASC'])
         ]);

@@ -1,0 +1,17 @@
+<div class="">
+	{% for date, trips in calendar %}
+		{% if trips|length > 0 %}
+
+			<div class="border-bottom">{{ date|format_datetime(pattern='dd MMM', locale='fr') }}</div>
+		{% endif %}
+		<div class="row">
+			{% for trip in trips %}
+
+				<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 col-xl-3 mt-3">
+					{{ component('PlanningCard', { trip: trip }) }}
+				</div>
+
+			{% endfor %}
+		</div>
+	{% endfor %}
+</div>

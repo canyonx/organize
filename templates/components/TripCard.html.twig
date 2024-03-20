@@ -1,29 +1,32 @@
 <section class="card">
-    <div class="card-header">
-        <div class="d-flex justify-content-between align-items-baseline">
-            <h2>{{ trip.title|capitalize }}</h2>
-            <span class="badge text-bg-secondary">{{ trip.activity|capitalize }}</span>
-        </div>
-        {{ trip.dateAt|date('H\\hi') }}, {{ trip.dateAt|format_datetime(pattern='EEE dd MMM', locale='fr') }} - {{ trip.location|title }}
-    </div>
-    <div class="card-body">
-        <p>
-            {% if app.user != trip.member %}
-                Created by <a href="{{ path('app_profile_show', {'slug': trip.member.slug}) }}">{{ trip.member }}</a>
-            {% endif %}
-        </p>
+	<div class="card-header">
+		<div class="d-flex justify-content-between align-items-baseline">
+			<h2>{{ trip.title|capitalize }}</h2>
+			<span class="badge text-bg-secondary">{{ trip.activity|capitalize }}</span>
+		</div>
+		{{ trip.dateAt|date('H\\hi') }},
+		{{ trip.dateAt|format_datetime(pattern='EEE dd MMM', locale='fr') }}
+		-
+		{{ trip.location|title }}
+	</div>
+	<div class="card-body">
+		<p>
+			{% if app.user != trip.member %}
+				Created by
+				<a href="{{ path('app_profile_show', {'slug': trip.member.slug}) }}">{{ trip.member }}</a>
+			{% endif %}
+		</p>
 
-        <p>{{ trip.description }}</p>
+		<p>{{ trip.description }}</p>
 
-        Point de RDV    
-        <input id="trip_lat" type="hidden" value="{{ trip.lat }}"></input>
-        <input id="trip_lng" type="hidden" value="{{ trip.lng }}"></input>
-        
-        <div id="map" class="rounded" style="height:360px" data-controller="map-trip"></div>
-       
+		Point de RDV
+		<input id="trip_lat" type="hidden" value="{{ trip.lat }}"></input>
+	<input id="trip_lng" type="hidden" value="{{ trip.lng }}"></input>
+
+<div id="map" class="rounded" style="height:360px" data-controller="map-trip"></div>
 
 
-        {# <p>
+{# <p>
             {% if trip.acceptedUsers %}
                 Participants :
             {% endif %}
@@ -33,11 +36,8 @@
             {% endfor %}
         </p> #}
 
-        {% if trip.member ==  app.user %}
-            <div class="text-end">
-                <a href="{{ path('app_trip_edit', {'id': trip.id}) }}" class="btn btn-secondary rounded-pill mt-3">Modifier</a>   
-            </div>
-        {% endif %}
-    </div>
-
-</section>
+{% if trip.member ==  app.user %}
+	<div class="text-end">
+		<a href="{{ path('app_trip_edit', {'id': trip.id}) }}" class="btn btn-secondary rounded-pill mt-3">Modifier</a>
+	</div>
+{% endif %}</div></section>
