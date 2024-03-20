@@ -41,15 +41,15 @@
 							</a>
 						</td>
 						{# <td>
-																																											{% if trip.createdBy != app.user %}
-																																												<a href="{{ path('app_profile_show', {'slug': trip.createdBy.slug}) }}" class="" data-turbo-frame="_top">
-																																													{{ trip.createdBy }}
-																																													{% if trip.createdBy in app.user.myFriendUsers %}
-																																														*<i class="fa-solid fa-star"></i>
-																																													{% endif %}
-																																												</a>
-																																											{% endif %}
-																																										</td> #}
+																																																	{% if trip.createdBy != app.user %}
+																																																		<a href="{{ path('app_profile_show', {'slug': trip.createdBy.slug}) }}" class="" data-turbo-frame="_top">
+																																																			{{ trip.createdBy }}
+																																																			{% if trip.createdBy in app.user.myFriendUsers %}
+																																																				*<i class="fa-solid fa-star"></i>
+																																																			{% endif %}
+																																																		</a>
+																																																	{% endif %}
+																																																</td> #}
 
 						<td>
 							{% include "table/_table_status.html.twig" %}
