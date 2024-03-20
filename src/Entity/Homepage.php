@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\HomepageRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: HomepageRepository::class)]
@@ -21,6 +22,9 @@ class Homepage
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $background = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description = null;
 
     public function getId(): ?int
     {
@@ -59,6 +63,18 @@ class Homepage
     public function setBackground(?string $background): static
     {
         $this->background = $background;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): static
+    {
+        $this->description = $description;
 
         return $this;
     }

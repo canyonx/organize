@@ -6,6 +6,7 @@ use App\Entity\Homepage;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
@@ -21,6 +22,7 @@ class HomepageCrudController extends AbstractCrudController
         return [
             TextField::new('title'),
             TextField::new('subtitle'),
+            TextareaField::new('description'),
             ImageField::new('background')
                 ->setBasePath('images/')
                 ->setUploadDir('public/images/')
