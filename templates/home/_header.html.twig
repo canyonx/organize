@@ -1,4 +1,4 @@
-<section class="d-flex align-items-center justify-content-center pb-5" {% if home.background %} style="height: 88vh; background: url('{{ asset('images/'~ home.background) }}') no-repeat center center fixed; background-size: cover;" {% endif %}>
+<section class="d-flex align-items-center justify-content-center pb-5" {% if home.background %} style="height: 88vh; border-radius: 30% 70% 30% 70% / 30% 30% 70% 70% ; background: url('{{ asset('images/'~ home.background) }}') no-repeat center center fixed; background-size: cover;" {% endif %}>
 	<div class="pb-5 text-center">
 		<h1 class="text-white" style="text-shadow: 0 0 5px #000000;">{{ home.title ? home.title : 'title'}}</h1>
 		<p class="text-white fs-3" style="text-shadow: 0 0 5px #000000;">{{ home.subtitle ? home.subtitle : 'subtitle' }}</p>
