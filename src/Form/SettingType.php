@@ -35,7 +35,7 @@ class SettingType extends AbstractType
                 'required' => false,
             ])
             ->add('isFriendNewTrip', CheckboxType::class, [
-                'label' => 'Nouvelle sortie crée par un ami',
+                'label' => 'Sortie crée par un utilisateur suivi',
                 'attr' => [
                     'class' => 'form-check-input'
                 ],
