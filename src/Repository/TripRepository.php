@@ -49,7 +49,7 @@ class TripRepository extends ServiceEntityRepository
      * @return Trip[] Returns an array of Trip objects
      */
     public function findBySearchFields(
-        User $user,
+        User|null $user,
         Activity $activity = null,
         \DateTimeImmutable $dateFrom = new \DateTimeImmutable('today'),
         \DateTimeImmutable $dateTo = new \DateTimeImmutable('today + 7 day'),
@@ -59,23 +59,24 @@ class TripRepository extends ServiceEntityRepository
         int $distance = 30,
         bool $isFriend = false,
     ): array {
-        $location = $user->getCity();
         // Create Query builder
         $qb = $this->createQueryBuilder('t');
-        // Different from the user
-        TripUtil::isNotUser($qb, $user);
-        // Trip not already asked by user
-        TripUtil::isNotAsked($qb, $user);
-        // Different from blocked users
-        TripUtil::isNotBlockedUsers($qb, $user);
+        if ($user) {
+            // Different from the user
+            TripUtil::isNotUser($qb, $user);
+            // Trip not already asked by user
+            TripUtil::isNotAsked($qb, $user);
+            // Different from blocked users
+            TripUtil::isNotBlockedUsers($qb, $user);
+            // In Followed users
+            if ($isFriend == true) {
+                TripUtil::byFriendUsers($qb, $user);
+            }
+        }
         // Is available
         TripUtil::isAvailable($qb, true);
         // Between dates
         TripUtil::byDateBetween($qb, $dateFrom, $dateTo);
-        // In Followed users
-        if ($isFriend == true) {
-            TripUtil::byFriendUsers($qb, $user);
-        }
         // Equal to activity
         if ($activity) {
             TripUtil::byActivity($qb, $activity);

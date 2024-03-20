@@ -12,6 +12,9 @@
 		<div class="collapse navbar-collapse" id="navbar00">
 
 			<ul class="navbar-nav ms-auto  text-primary">
+				<li class="nav-item">
+					<a href="{{ path('app_search_index') }}" class="nav-link">Chercher</a>
+				</li>
 				{% if is_granted('ROLE_USER') %}
 					{% if is_granted('ROLE_ADMIN') %}
 						<li class="nav-item">
@@ -20,9 +23,6 @@
 					{% endif %}
 					<li class="nav-item">
 						<a href="{{ path('app_planning_index') }}" class="nav-link">Planning</a>
-					</li>
-					<li class="nav-item">
-						<a href="{{ path('app_search_index') }}" class="nav-link">Chercher</a>
 					</li>
 					<li class="nav-item">
 						<a href="{{ path('app_profile_index') }}" class="nav-link">{{ app.user }}</a>

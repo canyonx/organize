@@ -56,12 +56,12 @@ class SearchController extends AbstractController
             $isFriend = false;
             $search->setActivity(null)
                 ->setDateAt(new \DateTimeImmutable('today'))
-                ->setLocation($user->getCity())
-                ->setLat($user->getLat())
-                ->setLng($user->getLng());
+                ->setLocation($user ? $user->getCity() : 'Briançon')
+                ->setLat($user ? $user->getLat() : 44.896)
+                ->setLng($user ? $user->getLng() : 6.638);
 
             $trips = $tripRepository->findBySearchFields(
-                $user,
+                $user ?: null,
                 $search->getActivity(),
                 new \DateTimeImmutable('today'),
                 new \DateTimeImmutable('today + ' . $this->getParameter('app_planning_week') . ' day'),
