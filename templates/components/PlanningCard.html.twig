@@ -1,56 +1,21 @@
 {# {% set color = random(['danger', 'info', 'success', 'warning']) %} #}
 
-<div class="alert alert-warning">
-	<a href="{{ path('app_trip_show', {'id': trip.id}) }}">
-		<div class="">
-			<h4>{{ trip.title|title }}</h4>
-			<span class="badge text-bg-primary">{{ trip.activity|capitalize }}</span>
-		</div>
-	</a>
-	<div class="">
-		<div class="mb-3">
-			<b
-				class="text-muted">
-				{# {{ trip.dateAt|format_datetime(pattern='EEE dd MMM', locale='fr') }}
-																												à #}
-				{{ trip.dateAt|date('H\\hi') }}
-			</b>
-			<br>
-			{{ trip.location|title }}
+<div class="alert alert-light row align-items-baseline">
+	<div class="col-md-3">
+		{{ trip.location|title }}
+	</div>
+	<div class="col">
+		<div class="btn-group w-100" role="group" aria-label="Activity">
+			<button type="button" style="width: 50%" class="btn btn-primary" disabled>
+				{{ trip.activity|title }}
+			</button>
+			<button type="button" style="width: 50%" class="btn btn-primary position-relative">
+				{{ trip.title|capitalize }}
+				{% include "table/_notif.html.twig" %}
+			</button>
 		</div>
 	</div>
-	<div class="">
-		{% if app.user == trip.member %}
-
-			{% if trip.isAvailable == false %}
-				<button class="btn btn-danger" disabled>Fermée</button>
-			{% endif %}
-
-			{# Trip join requests status #}
-			{% for status, data in status[trip.id] %}
-				{% if data.qty > 0 and status != 'OWNER' %}
-					<button class="btn btn-{{ data.color }}" disabled>
-						{{ data.qty }}
-						{# {{ status|title|trans }} #}
-					</button>
-				{% endif %}
-			{% endfor %}
-
-		{% else %}
-
-			{# User trip request status #}
-			{% for tripRequest in trip.tripRequests %}
-				{% if tripRequest.member == app.user %}
-					<div class="d-grid gap-2 d-md-block">
-						<button class="btn btn-outline-{{ tripRequest.color }}" disabled>
-							{{ tripRequest.status|title|trans }}
-						</button>
-					</div>
-				{% endif %}
-			{% endfor %}
-
-		{% endif %}
-
-
+	<div class="col-md-3 text-end">
+		{% include "table/_table_status.html.twig" %}
 	</div>
 </div>

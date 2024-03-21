@@ -1,0 +1,23 @@
+<div class="alert alert-light row align-items-baseline text-center">
+	<div class="col-md-3">
+		{{ trip.location|title }}
+	</div>
+	<div class="col">
+		<a href="{{ path('app_trip_show', {'id': trip.id}) }}" data-turbo-frame="_top">
+			<div class="btn-group w-100" role="group" aria-label="Activity">
+				<button type="button" style="width: 50%" class="btn btn-primary" disabled>
+					{{ trip.activity|title }}
+				</button>
+				<button type="button" style="width: 50%" class="btn btn-primary position-relative">
+					{{ trip.title|capitalize }}
+					{% include "table/_notif.html.twig" %}
+				</button>
+			</div>
+		</a>
+	</div>
+	{% if status is defined %}
+		<div class="col-md-3 text-end">
+			{% include "table/_table_status.html.twig" %}
+		</div>
+	{% endif %}
+</div>
