@@ -17,10 +17,10 @@
 						<a href="{{ path('app_admin') }}" class="nav-link">Administration</a>
 					</li>
 				{% endif %}
-				<li class="nav-item">
-					<a href="{{ path('app_search_index') }}" class="nav-link">Chercher</a>
-				</li>
 				{% if is_granted('ROLE_USER') %}
+					<li class="nav-item">
+						<a href="{{ path('app_search_index') }}" class="nav-link">Chercher</a>
+					</li>
 					<li class="nav-item">
 						<a href="{{ path('app_planning_index') }}" class="nav-link">Planning</a>
 					</li>
