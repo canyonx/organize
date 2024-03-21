@@ -1,18 +1,12 @@
 import { Controller } from '@hotwired/stimulus';
 
 /*
- * This is an example Stimulus controller!
- *
- * Any element with a data-controller="hello" attribute will cause
- * this controller to be executed. The name "hello" comes from the filename:
- * hello_controller.js -> "hello"
- *
- * Delete this file or adapt it for your use!
+ * Service worker on base.html.twig
  */
 export default class extends Controller {
     connect() {
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js')
+            navigator.serviceWorker.register('https://zazoo.ddns.net/sw.js')
                 .then(function () {console.log('Enregistrement reussi.')})
                 .catch(function (e) {console.error(e)});
         }

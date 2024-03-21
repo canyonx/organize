@@ -1,28 +1,24 @@
-<div class="spin-container">
-	<div class="shape">
-		<section class="d-flex align-items-center justify-content-center pb-5" {% if home.background is defined %} style="height: 88vh; border-radius: 30% 70% 70% 30% / 30% 30% 70% 70% ; background: url('{{ asset('images/'~ home.background) }}') no-repeat center center fixed; background-size: cover;" {% endif %}>
-			<div class="pb-5 text-center">
-				<h1 class="text-white text-shadow">
-					{{ home.title ? home.title : 'title'}}
-				</h1>
-				<p class="text-white text-shadow fs-3">
-					{{ home.subtitle ? home.subtitle : 'subtitle' }}
-				</p>
-				<div class="col-6 mx-auto d-none d-md-block">
-					{% for activity in activities %}
-						<button class="btn btn-light rounded-pill" disabled>
-							{{ activity.name|title }}
-						</button>
-					{% endfor %}
-				</div>
-				<div class="d-block d-md-none text-center">
-					<button class="btn btn-light rounded-pill" disabled>
-						dans
-						{{ activities|length }}
-						activités
-					</button>
-				</div>
-			</div>
-		</section>
+<section class="d-flex align-items-center justify-content-center pb-5" {% if home.background is defined %} style="height: 88vh; border-radius: 30% 70% 70% 30% / 30% 30% 70% 70% ; background: url('{{ asset('images/'~ home.background) }}') no-repeat center center fixed; background-size: cover;" {% endif %}>
+	<div class="pb-5 text-center">
+		<h1 class="text-white text-shadow">
+			{{ home.title ? home.title : 'title'}}
+		</h1>
+		<p class="text-white text-shadow fs-3">
+			{{ home.subtitle ? home.subtitle : 'subtitle' }}
+		</p>
+		<div class="col-6 mx-auto d-none d-md-block">
+			{% for activity in activities %}
+				<button class="btn btn-light rounded-pill" disabled>
+					{{ activity.name|title }}
+				</button>
+			{% endfor %}
+		</div>
+		<div class="d-block d-md-none text-center">
+			<button class="btn btn-light rounded-pill" disabled>
+				dans
+				{{ activities|length }}
+				activités
+			</button>
+		</div>
 	</div>
-</div>
+</section>
