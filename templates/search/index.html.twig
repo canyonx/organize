@@ -6,24 +6,13 @@
 {% block body %}
 	<turbo-frame id="searchForm">
 		<section class="card">
-			<div class="card-header">
+			<div class="card-header p-3">
 				{% include "search/_form.html.twig" %}
 			</div>
 			<div
 				class="card-body">
 				{# {% include "table/_table.html.twig" %} #}
 				{% include "table/_plan.html.twig" %}
-			</div>
-			<div class="text-end m-3">
-				<span class="me-2">Légende :</span>
-				<div class="btn-group" role="group" aria-label="Activity">
-					<button type="button" class="btn btn-primary" disabled>
-						Activité
-					</button>
-					<button type="button" class="btn btn-primary position-relative">
-						Titre de la sortie
-					</button>
-				</div>
 			</div>
 		</section>
 	</turbo-frame>

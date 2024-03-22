@@ -2,7 +2,7 @@
 	<span id="tripRequest_id" class="visually-hidden" value="{{ tripRequest.id }}">{{ tripRequest.id }}</span>
 	{# For Trip owner, show trip Request status/actions #}
 	<div class="d-flex justify-content-between align-items-baseline">
-		<h2 class="">Demande de
+		<h2 class="card-title">Demande de
 			<a href="{{ path('app_profile_show', {slug: tripRequest.member.slug}) }}" {# class="btn btn-primary rounded-pill" #} data-turbo-frame="_top">
 				{{ tripRequest.member|title }}
 			</a>
@@ -59,7 +59,7 @@
 {% else %}
 	{# For User, show my tripRequest request status #}
 	<div class="d-flex justify-content-between align-items-baseline">
-		<h2 class="">Ma demande</h2>
+		<h2 class="card-title">Ma demande</h2>
 		<b class="text-{{ tripRequest.color}} h2 my-2 ms-2">
 			{{ tripRequest.status|title|trans }}
 		</b>

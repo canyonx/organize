@@ -1,7 +1,7 @@
-<section class="card mb-3">
+<section class="card">
 	<div class="card-body">
 		<div class="d-flex justify-content-between align-items-baseline">
-			<h2>{{ trip.title|capitalize }}</h2>
+			<h2 class="card-title">{{ trip.title|capitalize }}</h2>
 			{# Edit button #}
 			{% if trip.member == app.user %}
 				{# <div class="text-end"> #}
@@ -38,8 +38,10 @@
 		{% include 'trip/_accepted_user.html.twig' %}
 	</div>
 
-	<div id="map" class="rounded-bottom-4" style="height:360px" data-controller="map-trip"></div>
+	<div id="map" class="rounded-bottom-5" style="height:360px" data-controller="map-trip"></div>
 </section>
 {% if trip.member != app.user %}
-	<a href="{{ path('app_signalment_index', {type: 'trip', id: trip.id}) }}" class="ms-4 mb-2 text-secondary">signaler</a>
+	<div class="ms-4 my-2">
+		<a href="{{ path('app_signalment_index', {type: 'trip', id: trip.id}) }}" class="text-secondary">signaler</a>
+	</div>
 {% endif %}

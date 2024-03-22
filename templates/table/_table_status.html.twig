@@ -1,31 +1,29 @@
 {% if app.user == trip.member %}
 
-    {% if trip.isAvailable == false %}
-        <button class="btn btn-danger" disabled>Fermée</button>
-    {% endif %}
+	{# {% if trip.isAvailable == false %}
+	        <button class="btn btn-danger" disabled>Fermée</button>
+	    {% endif %} #}
 
-    {# Trip join requests status #}
-    {% for status, data in status[trip.id] %}
-        {% if data.qty > 0 and status != 'OWNER' %}
-            <button class="btn btn-{{ data.color }}" disabled> 
-               {{ data.qty }} 
-               {# {{ status|title|trans }} #}
-            </button>
-        {% endif %}
-    {% endfor %}
-    
+	{# Trip join requests status #}
+		{% for status, data in status[trip.id] %}
+			{% if data.qty > 0 and status != 'OWNER' %}
+				<button class="btn btn-{{ data.color }}" disabled> {{ data.qty }}
+				{# {{ status|title|trans }} #}
+			</button>
+		{% endif %}
+	{% endfor %}
+
 {% else %}
 
-    {# User trip request status #}
-    {% for tripRequest in trip.tripRequests %}
-        {% if tripRequest.member == app.user %}
-            <div class="d-grid gap-2 d-md-block">
-                <button class="btn btn-outline-{{ tripRequest.color }}" disabled>
-                    {{ tripRequest.status|title|trans }}
-                </button>
-            </div>
-        {% endif %}
-    {% endfor %}
+	{# User trip request status #}
+	{% for tripRequest in trip.tripRequests %}
+		{% if tripRequest.member == app.user %}
+			<div class="d-grid gap-2 d-md-block">
+				<button class="btn btn-outline-{{ tripRequest.color }}" disabled>
+					{{ tripRequest.status|title|trans }}
+				</button>
+			</div>
+		{% endif %}
+	{% endfor %}
 
 {% endif %}
-

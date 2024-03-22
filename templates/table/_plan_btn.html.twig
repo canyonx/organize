@@ -1,0 +1,28 @@
+<div class="bg-success rounded-5 m-2 p-2 row align-items-center">
+	<div class="col-md-6 text-center">
+		<a href="{{ path('app_trip_show', {'id': trip.id}) }}" data-turbo-frame="_top" class="w-100 btn btn-warning rounded-pill position-relative text-decoration-none">
+			{{ trip.title|capitalize }}
+			{% include "table/_notif.html.twig" %}
+			{% if trip.isAvailable == false %}
+				<b class="text-danger" disabled>
+					:Fermée
+				</b>
+			{% endif %}
+		</a>
+	</div>
+	<div class="col-md-6">
+		<div class="row align-items-center">
+			<div class="col text-muted text-center">
+				{{ trip.location|capitalize }}
+			</div>
+			<div class="col text-muted text-center">
+				<i>{{ trip.activity|capitalize }}</i>
+			</div>
+			{% if status is defined %}
+				<div class="col bg-light rounded-pill text-center">
+					{% include "table/_table_status.html.twig" %}
+				</div>
+			{% endif %}
+		</div>
+	</div>
+</div>

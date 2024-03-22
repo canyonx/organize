@@ -255,6 +255,6 @@ class TripController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_trip_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_planning_index', [], Response::HTTP_SEE_OTHER);
     }
 }

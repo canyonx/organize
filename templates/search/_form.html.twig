@@ -24,11 +24,11 @@
 		{{ form_row(form.activity) }}
 	</div>
 	{# <div class="col">
-						            {{ form_row(form.dateAt, {value: search.dateAt|date('Y-m-d')}) }}
-						        </div> #}
+									            {{ form_row(form.dateAt, {value: search.dateAt|date('Y-m-d')}) }}
+									        </div> #}
 </div>
-<div class="row">
-	<div class="col-md-3 d-flex justify-content-center align-items-baseline mb-3">
+<div class="row justify-content-center align-items-baseline">
+	<div class="col-md-3">
 		<div class="form-check form-switch">
 			{{ form_widget(form.isFriend, {attr: {'class': 'form-check-input'}}) }}
 		</div>

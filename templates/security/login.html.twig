@@ -6,9 +6,9 @@
 {% block body %}
 	<section class="card col-md-6 mx-auto">
 		<div class="card-header">
-			<form method="post">
-				<h1 class="mb-4 font-weight-normal">Se connecter</h1>
+			<h1 class="card-title">Se connecter</h1>
 
+			<form method="post">
 				{% if error %}
 					<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 				{% endif %}
