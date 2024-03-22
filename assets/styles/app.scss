@@ -39,7 +39,7 @@ h1, h2, h3 {
 }
 
 
-// Colors
+// My Colors
 $primary: #345995;
 $secondary: #adb5bd;
 $danger: #ca1551;
@@ -50,13 +50,26 @@ $light: #f9f9f9;
 $info: #1982c4;
 $dark: #10002b;
 
+
+// $primary: #C3E88D;
+// $secondary: #bfc7d5;
+// $success: #7986E7;
+// $info: #82AAFF;
+// $warning: #ff2c83;
+// $danger: #89DDFF;
+// $light: #cdebf7;
+// $dark: #292D3E;
+
+
+
 // Active Shadows
-$enable-shadows: true;
+// $enable-shadows: true;
 
 // Card
-$card-border-radius: 1rem;
+$card-border-radius: 2rem;
 $card-border-width: 0px;
-$card-cap-bg: #eaeef4;
+// $card-cap-bg: #eaeef4;
+$card-cap-bg: #ffffff;
 $card-box-shadow: 0 5px 10px #0000001a;
 
 // Alert

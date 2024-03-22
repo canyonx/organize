@@ -6,13 +6,10 @@
 {% block body %}
 	<section class="card">
 		<div class="card-header">
-			<h1>Mon planning</h1>
+			<h1>Mes Sorties</h1>
 			<div class="row justify-content-between">
 				<div class="col-md-auto me-auto my-2">
 
-					<button class="disabled btn rounded-pill">
-						Sorties
-					</button>
 					<a href="{{ path('app_planning_index')}}" class="btn btn-primary rounded-pill">
 						Toutes
 					</a>
@@ -24,7 +21,7 @@
 					</a>
 				</div>
 				<div class="col-md-auto my-2">
-					<a href="{{ path('app_trip_new') }}" class="btn btn-primary rounded-pill">
+					<a href="{{ path('app_trip_new') }}" class="btn btn-success rounded-pill">
 						Nouvelle sortie
 					</a>
 				</div>
