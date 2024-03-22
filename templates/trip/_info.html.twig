@@ -1,4 +1,4 @@
-<section class="card">
+<section class="card mb-2">
 	<div class="card-body">
 		<div class="d-flex justify-content-between align-items-baseline">
 			<h2 class="card-title">{{ trip.title|capitalize }}</h2>
@@ -41,7 +41,7 @@
 	<div id="map" class="rounded-bottom-5" style="height:360px" data-controller="map-trip"></div>
 </section>
 {% if trip.member != app.user %}
-	<div class="ms-4 my-2">
+	<div class="ms-4 mb-2">
 		<a href="{{ path('app_signalment_index', {type: 'trip', id: trip.id}) }}" class="text-secondary">signaler</a>
 	</div>
 {% endif %}

@@ -10,16 +10,15 @@
 			{% endif %}
 		</a>
 	</div>
-	<div class="col-md-6">
+	<div class="col-md-6 px-4">
 		<div class="row align-items-center">
-			<div class="col text-muted text-center">
+			<div class="col-md-6 text-muted text-center">
 				{{ trip.location|capitalize }}
-			</div>
-			<div class="col text-muted text-center">
+				&ensp;
 				<i>{{ trip.activity|capitalize }}</i>
 			</div>
 			{% if status is defined %}
-				<div class="col bg-light rounded-pill text-center">
+				<div class="col-md-6 bg-light rounded-pill text-center">
 					{% include "table/_table_status.html.twig" %}
 				</div>
 			{% endif %}

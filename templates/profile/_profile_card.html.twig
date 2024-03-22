@@ -1,4 +1,4 @@
-<section class="card mb-3">
+<section class="card mb-2">
 	<div class="card-body text-center">
 		<div class="mt-3 mb-4">
 			{% if user.avatar %}
@@ -76,5 +76,7 @@
 </section>
 
 {% if user != app.user %}
-	<a href="{{ path('app_signalment_index', {type: 'user', id: user.id}) }}" class="ms-4 text-secondary">signaler</a>
+	<div class="ms-4 mb-2">
+		<a href="{{ path('app_signalment_index', {type: 'user', id: user.id}) }}" class="text-secondary">signaler</a>
+	</div>
 {% endif %}
