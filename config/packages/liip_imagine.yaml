@@ -4,6 +4,8 @@ liip_imagine:
     driver: "gd"
     default_filter_set_settings:
         format: webp
+    twig:
+        mode: lazy
 
     # Filters
     filter_sets:
