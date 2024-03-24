@@ -17,15 +17,12 @@
 	<div
 		class="d-flex justify-content-between align-items-center mt-3">
 		{# Retour #}
-		<div class="">
-			<a href="{{ path('app_trip_show', {id: tripRequest.trip.id})}}" class="btn btn-secondary rounded-pill">
-				Retour aux demandes
-			</a>
-		</div>
+		<a href="{{ path('app_trip_show', {id: tripRequest.trip.id})}}" class="btn btn-secondary rounded-pill">
+			Retour aux demandes
+		</a>
 
 		{# Buttons action #}
-		<div
-			class="text-center">
+		<div>
 			{# Button Accept #}
 			{% if tripRequest.status == 'PENDING' or tripRequest.status == 'REFUSED'  %}
 				<a

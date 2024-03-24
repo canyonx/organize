@@ -2,9 +2,8 @@
 {% for message in tripRequest.messages %}
 	{# Si le message n'est pas lu #}
 	{# Si le message n'est pas écrit par user #}
-	{% if message.member != app.user and message.isRead == false %}
-		<span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
-			<span class="visually-hidden">New alerts</span>
-		</span>	
+		{% if message.member != app.user and message.isRead == false %}
+			<span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger rounded-circle"> <span class="visually-hidden">New alerts</span>
+		</span>
 	{% endif %}
 {% endfor %}
