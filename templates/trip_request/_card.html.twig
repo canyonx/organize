@@ -1,21 +1,19 @@
-<turbo-frame id="request_card">
-	<section class="card">
-		<div class="card bg-{{tripRequest.color}} bg-opacity-10">
-			<div
-				class="card-body">
-				{# Status of the request #}
-				{% include "trip_request/_status.html.twig" %}
-			</div>
-
-			{% if tripRequest.status != 'REFUSED' %}
-				<div
-					class="card-body border-top">
-					{# Collection of messages associates to the trip request #}
-					{% include "trip_request/_message_list.html.twig" %}
-					{# Message form #}
-					{% include "message/_form.html.twig" %}
-				</div>
-			{% endif %}
+<section class="card">
+	<div class="card bg-{{tripRequest.color}} bg-opacity-10">
+		<div
+			class="card-body">
+			{# Status of the request #}
+			{% include "trip_request/_status.html.twig" %}
 		</div>
-	</section>
-</turbo-frame>
+
+		{% if tripRequest.status != 'REFUSED' %}
+			<div
+				class="card-body border-top">
+				{# Collection of messages associates to the trip request #}
+				{% include "trip_request/_message_list.html.twig" %}
+				{# Message form #}
+				{% include "message/_form.html.twig" %}
+			</div>
+		{% endif %}
+	</div>
+</section>

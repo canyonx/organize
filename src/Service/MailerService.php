@@ -35,7 +35,7 @@ class MailerService
             ->from($this->adminMail)
             ->to($to)
             ->subject($subject)
-            ->htmlTemplate("email/$template.html.twig")
+            ->htmlTemplate("email/$template")
             ->context($context);
 
         $this->mailer->send($email);

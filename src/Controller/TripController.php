@@ -65,7 +65,7 @@ class TripController extends AbstractController
                     $mailerService->send(
                         $f->getMember()->getEmail(),
                         $trip->getMember() . ' a crée une nouvelle sortie',
-                        'notification',
+                        'notification.html.twig',
                         [
                             'title' => $trip->getMember() . ' a crée une nouvelle sortie',
                             'message' => $trip->getTitle()
@@ -162,10 +162,11 @@ class TripController extends AbstractController
                 // Send email trip request notification : ' $user is interested by your $trip'
                 $mailerService->send(
                     $trip->getMember()->getEmail(),
-                    $tr->getMember() . ' demande à rejoindre votre sortie',
-                    'notification',
+                    'Nouvelle demande de participation',
+
+                    'notification.html.twig',
                     [
-                        'title' => 'Nouvelle demande de participation de ' . $tr->getMember(),
+                        'title' => $tr->getMember() . ' demande à rejoindre ' . $trip->getTitle(),
                         'message' => $message->getContent()
                     ]
                 );

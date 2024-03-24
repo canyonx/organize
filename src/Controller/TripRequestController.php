@@ -7,11 +7,12 @@ use App\Form\MessageType;
 use App\Entity\TripRequest;
 use App\Service\MailerService;
 use App\Repository\MessageRepository;
-use App\Repository\TripRequestRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\TripRequestRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -29,8 +30,8 @@ class TripRequestController extends AbstractController
         /** @var User */
         $user = $this->getUser();
 
-        // Join not found
-        // User is not join user and or not trip user
+        // TripRequest not found
+        // User is not the triprequest user or not the trip user
         if (!$tripRequest || (($tripRequest->getMember() || $tripRequest->getTrip()->getMember()) != $user)) {
             throw new AccessDeniedException();
         }
@@ -75,8 +76,8 @@ class TripRequestController extends AbstractController
                 // Send email Message Notification
                 $mailerService->send(
                     $to->getEmail(),
-                    'Nouveau message de ' . $from,
-                    'notification',
+                    'Nouveau message',
+                    'notification.html.twig',
                     [
                         'title' => 'Nouveau message de ' . $from,
                         'message' => $message->getContent()
@@ -100,7 +101,8 @@ class TripRequestController extends AbstractController
         Request $request,
         TripRequest $tripRequest,
         EntityManagerInterface $em,
-        MailerService $mailerService
+        MailerService $mailerService,
+        TranslatorInterface $translator
     ): Response {
         if (!$tripRequest) {
             return $this->redirectToRoute('app_planning_index');
@@ -127,11 +129,11 @@ class TripRequestController extends AbstractController
                 // Send email Message Notification
                 $mailerService->send(
                     $to->getEmail(),
-                    'Changement de status d\'une demande',
-                    'notification',
+                    'Changement de status',
+                    'notification.html.twig',
                     [
                         'title' => 'Changement de status pour ' . $tripRequest->getTrip()->getTitle(),
-                        'message' => 'Votre demande à maintenant le status ' . $tripRequest->getStatus()
+                        'message' => 'Votre demande à maintenant le status ' . $translator->trans($tripRequest->getStatus())
                     ]
                 );
             }
@@ -147,12 +149,14 @@ class TripRequestController extends AbstractController
         EntityManagerInterface $em
     ): Response {
         // Cannot delete trip request with a refused status
-        // if ($tripRequest->getStatus() != TripRequest::REFUSED) {
-        if ($this->isCsrfTokenValid('delete' . $tripRequest->getId(), $request->request->get('_token'))) {
-            $em->remove($tripRequest);
-            $em->flush();
+        if ($tripRequest->getStatus() != TripRequest::REFUSED) {
+            if ($this->isCsrfTokenValid('delete' . $tripRequest->getId(), $request->request->get('_token'))) {
+                $em->remove($tripRequest);
+                $em->flush();
+            }
+        } else {
+            $this->addFlash('warning', 'Impossible de supprimer une demande refusée');
         }
-        // }
 
         return $this->redirectToRoute('app_trip_show', ['id' => $tripRequest->getTrip()->getId()], Response::HTTP_SEE_OTHER);
     }

@@ -3,7 +3,7 @@
 	{# For Trip owner, show trip Request status/actions #}
 	<div class="d-flex justify-content-between align-items-baseline">
 		<h2 class="card-title">Demande de
-			<a href="{{ path('app_profile_show', {slug: tripRequest.member.slug}) }}" {# class="btn btn-primary rounded-pill" #} data-turbo-frame="_top">
+			<a href="{{ path('app_profile_show', {slug: tripRequest.member.slug}) }}" class="btn btn-primary rounded-pill" data-turbo-frame="_top">
 				{{ tripRequest.member|title }}
 			</a>
 		</h2>
@@ -15,10 +15,10 @@
 	</div>
 
 	<div
-		class="d-flex justify-content-between align-items-baseline mt-3">
+		class="d-flex justify-content-between align-items-center mt-3">
 		{# Retour #}
 		<div class="">
-			<a href="{{ path('app_trip_show', {id: tripRequest.trip.id})}}" class="btn btn-link rounded-pill">
+			<a href="{{ path('app_trip_show', {id: tripRequest.trip.id})}}" class="btn btn-secondary rounded-pill">
 				Retour aux demandes
 			</a>
 		</div>

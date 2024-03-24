@@ -9,7 +9,9 @@
 			{% include "trip/_info.html.twig" %}
 		</div>
 		<div class="col-md-6 mb-3">
-			{% include "trip_request/_card.html.twig" %}
+			<turbo-frame id="request_card">
+				{% include "trip_request/_card.html.twig" %}
+			</turbo-frame>
 		</div>
 	</div>
 {% endblock %}
