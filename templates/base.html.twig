@@ -15,8 +15,9 @@
 		<meta name="description" content="Partenaires d'activités">
 
 		{% block stylesheets %}
+			<link rel="stylesheet" href="{{ asset('styles/app.scss') }}">
 			<link
-			rel="stylesheet" href="{{ asset('styles/app.scss') }}">
+			rel="stylesheet" href="https://unpkg.com/@webgeodatavore/photon-geocoder-autocomplete@2.0.1/dist/photon-geocoder-autocomplete.min.css" type="text/css">
 		{# {{ ux_controller_link_tags() }} #}
 		{% endblock %}
 
@@ -24,14 +25,15 @@
 			{% block importmap %}
 				{{ importmap('app') }}
 			{% endblock %}
+			 <script src="https://unpkg.com/@webgeodatavore/photon-geocoder-autocomplete@2.0.1/dist/photon-geocoder-autocomplete.min.js"></script>
 		{% endblock %}
 	</head>
 
 	{# {% set values = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']%}
-										{% set color = '#' ~ random(values)~ random(values)~ random(values) %} #}
+												{% set color = '#' ~ random(values)~ random(values)~ random(values) %} #}
 
 	<body
-		class="background" data-controller="serviceWorker">
+		class="background" data-controller="serviceorker">
 
 		{# Navbar #}
 		{% include "shared/_navbar.html.twig" %}

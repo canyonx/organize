@@ -49,6 +49,13 @@ export default class extends Controller {
             console.log(feature);
         }
 
+        // Delete existing fields (when use return or next in browser)
+        var fields = document.getElementsByClassName('photon-geocoder-autocomplete');
+        for (let index = 0; index < fields.length; index++) {
+            const element = fields[index];
+            element.remove();
+        }
+
         // Create search by adresses component
         var container = new Photon.Search({
             resultsHandler: myHandler,
@@ -70,7 +77,6 @@ export default class extends Controller {
 
         // Add class from-control to search field
         var inputAddress = document.getElementsByClassName('photon-input');
-        inputAddress[0].classList.add("form-control");
 
         // Get the form name
         let form = document.getElementsByTagName('form');

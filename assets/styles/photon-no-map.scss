@@ -18,6 +18,7 @@
           color: #343a40;
           display: block;
           padding: 7px; */
+          @extend .form-control;
           width: 100%; 
       }
 /* 
@@ -29,5 +30,6 @@
 
       /* Set parameters on controls (geocoder and reverse)*/
       input.photon-input {
+        @extend .form-control;
           width: 100%;
       }

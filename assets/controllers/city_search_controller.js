@@ -5,7 +5,7 @@ import Photon from '@webgeodatavore/photon-geocoder-autocomplete';
  * Choose a city in search
  */
 export default class extends Controller {
-    connect(){
+    initialize(){
         // Format result in the search input autocomplete
         function formatResult(feature, el) {
 
@@ -47,11 +47,18 @@ export default class extends Controller {
             console.log(feature);
         }
 
+        // Delete existing fields (when use return or next in browser)
+        var fields = document.getElementsByClassName('photon-geocoder-autocomplete');
+        for (let index = 0; index < fields.length; index++) {
+            const element = fields[index];
+            element.remove();
+        }
+
         // Create search by adresses component
         var container = new Photon.Search({
             resultsHandler: myHandler,
             onSelected: onSelected,
-            placeholder: "Entrez une adresse",
+            placeholder: document.getElementById('search_location').value,
             formatResult: formatResult,
             url: "https://api-adresse.data.gouv.fr/search/?type=municipality&autocomplete=1&",
             feedbackEmail: null,
@@ -64,15 +71,6 @@ export default class extends Controller {
             element.appendChild(container);
 
         // Where to show search field
-        document.getElementById('city_search').appendChild(element);
-
-        // Add class from-control to search field
-        var inputAddress = document.getElementsByClassName('photon-input');
-        inputAddress[0].classList.add("form-control");
-
-        if (document.getElementById('search_location').value) {
-            inputAddress[0].setAttribute('placeholder', document.getElementById('search_location').value);
-        }
-        
+        document.getElementById('city_search').appendChild(element);        
     }
 }
