@@ -1,34 +1,80 @@
 {
-    "lang": "fr",
-    "name": "OrganiZe",
-    "short_name": "OrganiZe",
-    "description": "L'application qui vous aide à trouver des partenaires d'activités !",
-    "start_url": "https://zazoo.ddns.net/login",
-    "icons": [
-        {
-            "src": "https://zazoo.ddns.net/images/icons/android-chrome-192x192.png",
-            "sizes": "192x192",
-            "type": "image/png"
-        },
-        {
-            "src": "https://zazoo.ddns.net/images/icons/android-chrome-512x512.png",
-            "sizes": "512x512",
-            "type": "image/png"
-        },
-        {
-            "src": "https://zazoo.ddns.net/images/icons/apple-touch-icon.png",
-            "sizes": "180x180",
-            "type": "image/png"
-        },
-        {
-            "src": "https://zazoo.ddns.net/images/icons/favicon-32x32.png",
-            "sizes": "32x32",
-            "type": "image/png"
-        }
-    ],
-    "theme_color": "#345995",
-    "background_color": "#345995",
-    "display": "standalone",
-    "orientation": "portrait-primary"
-
+  "lang": "fr",
+  "name": "OrganiZe",
+  "short_name": "OrganiZe",
+  "description": "L'application qui vous aide à trouver des partenaires d'activités !",
+  "start_url": "https://zazoo.ddns.net/login",
+  "icons": [
+    {
+      "src": "https://zazoo.ddns.net/images/icons/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://zazoo.ddns.net/images/icons/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "https://zazoo.ddns.net/images/icons/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "https://zazoo.ddns.net/images/icons/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#345995",
+  "background_color": "#345995",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "id": "OrganiZe",
+  "dir": "auto",
+  "display_override": [
+    "standalone",
+    "minimal-ui",
+    "window-controls-overlay"
+  ],
+  "categories": [
+    "entertainment",
+    "social",
+    "sports"
+  ],
+  "screenshots" : [
+    {
+      "src": "https://zazoo.ddns.net/images/screenshots/search.png",
+      "sizes": "541x1203",
+      "type": "image/jpg",
+      "platform": "narrow"
+    },
+    {
+      "src": "https://zazoo.ddns.net/images/screenshots/planning.png",
+      "sizes": "541x1203",
+      "type": "image/jpg",
+      "platform": "narrow"
+    },
+    {
+      "src": "https://zazoo.ddns.net/images/screenshots/profile.png",
+      "sizes": "541x1203",
+      "type": "image/jpg",
+      "platform": "narrow"
+    },
+    {
+      "src": "https://zazoo.ddns.net/images/screenshots/requests.png",
+      "sizes": "541x1203",
+      "type": "image/jpg",
+      "platform": "narrow"
+    },
+    {
+      "src": "https://zazoo.ddns.net/images/screenshots/trip.png",
+      "sizes": "541x1203",
+      "type": "image/jpg",
+      "platform": "narrow"
+    }
+  ],
+  "launch_handler": {
+    "client_mode": ["focus-existing", "auto"]
+  }
 }
