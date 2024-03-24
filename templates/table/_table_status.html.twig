@@ -1,13 +1,10 @@
 {% if app.user == trip.member %}
 
-	{# {% if trip.isAvailable == false %}
-							        <button class="btn btn-danger" disabled>Fermée</button>
-							    {% endif %} #}
-
-	{# Trip join requests status #}
-		{% for status, data in status[trip.id] %}
-			{% if data.qty > 0 and status != 'OWNER' %}
-				<button class="btn btn-{{ data.color }} rounded-pill" disabled> {{ data.qty }}
+	{# Status of request for the user trip #}
+	{% for status, data in status[trip.id] %}
+		{% if data.qty > 0 and status != 'OWNER' %}
+			<button class="btn btn-{{ data.color }} rounded-circle" disabled>
+				{{ data.qty }}
 				{# {{ status|title|trans }} #}
 			</button>
 		{% endif %}
@@ -15,7 +12,7 @@
 
 {% else %}
 
-	{# User trip request status #}
+	{# Status of user requests #}
 	{% for tripRequest in trip.tripRequests %}
 		{% if tripRequest.member == app.user %}
 			<div class="py-2">

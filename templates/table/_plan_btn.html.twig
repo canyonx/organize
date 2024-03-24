@@ -12,7 +12,7 @@
 	</div>
 	<div class="col-md-6 px-4">
 		<div class="row align-items-center">
-			<div class="col-md-6 text-muted text-center">
+			<div class="col-md-6 title text-center">
 				{{ trip.location|capitalize }}
 				&ensp;
 				<i>{{ trip.activity|capitalize }}</i>
@@ -20,6 +20,14 @@
 			{% if status is defined %}
 				<div class="col-md-6 bg-light rounded-pill text-center">
 					{% include "table/_table_status.html.twig" %}
+				</div>
+			{% else %}
+				<div class="col-md-6 text-center">
+					{% if trip.createdBy != app.user %}
+						<a href="{{ path('app_profile_show', {'slug': trip.createdBy.slug}) }}" class="w-100 btn btn-light rounded-pill text-primary" data-turbo-frame="_top">
+							{{ trip.createdBy }}
+						</a>
+					{% endif %}
 				</div>
 			{% endif %}
 		</div>

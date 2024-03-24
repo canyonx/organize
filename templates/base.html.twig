@@ -28,10 +28,10 @@
 	</head>
 
 	{# {% set values = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']%}
-								{% set color = '#' ~ random(values)~ random(values)~ random(values) %} #}
+										{% set color = '#' ~ random(values)~ random(values)~ random(values) %} #}
 
 	<body
-		style="background-image: linear-gradient(140deg, #f0f4f9 20%, #d4e2d4 100%);" data-controller="serviceWorker">
+		class="background" data-controller="serviceWorker">
 
 		{# Navbar #}
 		{% include "shared/_navbar.html.twig" %}
@@ -39,7 +39,7 @@
 		{# Main container #}
 		{% block main %}
 			<div
-				class="container my-4" style="min-height:88vh">
+				class="container" style="min-height:88vh">
 				{# Flash messages #}
 				{% for type, messages in app.flashes %}
 					{% for message in messages %}

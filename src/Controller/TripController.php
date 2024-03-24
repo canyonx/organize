@@ -22,14 +22,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/trip')]
 class TripController extends AbstractController
 {
-    #[Route('/', name: 'app_trip_index', methods: ['GET'])]
-    public function index(TripRepository $tripRepository): Response
-    {
-        return $this->render('trip/index.html.twig', [
-            'trips' => $tripRepository->findAll(),
-        ]);
-    }
-
     /**
      * Create a new trip
      *
