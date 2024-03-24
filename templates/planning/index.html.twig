@@ -33,11 +33,14 @@
 			{# {% include "table/_table.html.twig" %} #}
 			{% include "table/_plan.html.twig" %}
 		</div>
-		<div class="m-3 d-flex align-items-baseline justify-content-end">
-			<span class="me-2">Légende</span>
-			<button class="btn btn-info rounded-pill me-1" disabled="disabled">Attente</button>
-			<button class="btn btn-success rounded-pill me-1" disabled="disabled">Acceptée</button>
-			<button class="btn btn-secondary rounded-pill me-1" disabled="disabled">Refusée</button>
+		<div class="row m-3">
+			<div class="col-auto me-auto"></div>
+			<div class="col-auto">
+				<span class="me-2">Légende</span>
+				<button class="btn btn-info rounded-pill me-1" disabled="disabled">Attente</button>
+				<button class="btn btn-success rounded-pill me-1" disabled="disabled">Acceptée</button>
+				<button class="btn btn-secondary rounded-pill me-1" disabled="disabled">Refusée</button>
+			</div>
 		</div>
 	</section>
 
