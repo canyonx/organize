@@ -7,7 +7,7 @@ import './bootstrap.js';
  * which should already be in your base.html.twig.
  */
 
-// Bootstrap js 
+// Bootstrap framework js 
 import './vendor/bootstrap/dist/js/bootstrap.min.js'; 
 
 import './vendor/leaflet/dist/leaflet.min.css';

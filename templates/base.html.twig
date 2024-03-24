@@ -14,9 +14,11 @@
 
 		<meta name="description" content="OrganiZe, l'application qui vous aide à trouver des partenaires d'activités !">
 		<meta name="author" content="Mattéo Dauchez"/>
-		<meta name="copyright" content="Mattéo Dauchez"/>
+		<meta
+		name="copyright" content="Mattéo Dauchez"/>
 
-
+		{# <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> #}
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
 		{% block stylesheets %}
 			<link
 			rel="stylesheet" href="{{ asset('styles/app.scss') }}">
@@ -32,7 +34,7 @@
 	</head>
 
 	{# {% set values = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']%}
-																		{% set color = '#' ~ random(values)~ random(values)~ random(values) %} #}
+																													{% set color = '#' ~ random(values)~ random(values)~ random(values) %} #}
 
 	<body
 		class="background" data-controller="serviceWorker">

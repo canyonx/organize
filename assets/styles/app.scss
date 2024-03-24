@@ -1,6 +1,3 @@
-@import './photon-geocoder-autocomplete.scss';
-@import './photon-geocoder-autocomplete.scss';
-
 h1, h2, h3, .title {
     color: #464b69;
     // color: #34495e;
@@ -74,6 +71,11 @@ $card-title-color: #464b69;
 // Alert
 $alert-border-radius: 1rem;
 
+// Nav
+$nav-pills-border-radius: 2rem;
 
 // Scss Bootstrap - CORRECT
 @import '../../vendor/twbs/bootstrap/scss/bootstrap';
+
+// Scss photon geocoder custom - CORRECT
+@import './photon-geocoder-autocomplete.scss';

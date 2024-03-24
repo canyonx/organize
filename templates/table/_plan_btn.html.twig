@@ -4,21 +4,22 @@
 			{{ trip.title|capitalize }}
 			{% include "table/_notif.html.twig" %}
 			{% if trip.isAvailable == false %}
+				&ensp;
 				<b class="text-danger" disabled>
-					:Fermée
+					Fermée
 				</b>
 			{% endif %}
 		</a>
 	</div>
 	<div class="col-md-6 px-4">
 		<div class="row align-items-center">
-			<div class="col-md-6 title text-center">
+			<div class="col-md-6 title text-center my-1">
 				{{ trip.location|capitalize }}
 				&ensp;
 				<i>{{ trip.activity|capitalize }}</i>
 			</div>
 			{% if status is defined %}
-				<div class="col-md-6 bg-light rounded-pill text-center">
+				<div class="col-md-6 bg-light rounded-pill text-center my-1">
 					{% include "table/_table_status.html.twig" %}
 				</div>
 			{% else %}

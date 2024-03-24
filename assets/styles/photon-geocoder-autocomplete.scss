@@ -51,6 +51,6 @@ ul.photon-autocomplete {
 }
 
 input.photon-input {
-    @extend .form-control;
+    @extend .form-control !optional;
     width: 100%;
 }
