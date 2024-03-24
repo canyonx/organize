@@ -9,10 +9,13 @@
 		<meta name="turbo-refresh-method">
 		<link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="theme-color" content="#00758f">
+		<meta name="theme-color" content="#345995">
 		<link rel="manifest" href="{{ asset('manifest.json')}}">
 
-		<meta name="description" content="Partenaires d'activités">
+		<meta name="description" content="OrganiZe, l'application qui vous aide à trouver des partenaires d'activités !">
+		<meta name="author" content="Mattéo Dauchez"/>
+		<meta name="copyright" content="Mattéo Dauchez"/>
+
 
 		{% block stylesheets %}
 			<link rel="stylesheet" href="{{ asset('styles/app.scss') }}">
@@ -30,10 +33,10 @@
 	</head>
 
 	{# {% set values = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']%}
-												{% set color = '#' ~ random(values)~ random(values)~ random(values) %} #}
+																	{% set color = '#' ~ random(values)~ random(values)~ random(values) %} #}
 
 	<body
-		class="background" data-controller="serviceorker">
+		class="background" data-controller="serviceWorker">
 
 		{# Navbar #}
 		{% include "shared/_navbar.html.twig" %}

@@ -1,6 +1,8 @@
 {
+    "lang": "fr",
     "name": "OrganiZe",
     "short_name": "OrganiZe",
+    "description": "L'application qui vous aide à trouver des partenaires d'activités !",
     "start_url": "https://zazoo.ddns.net/login",
     "icons": [
         {
@@ -12,9 +14,21 @@
             "src": "https://zazoo.ddns.net/images/icons/android-chrome-512x512.png",
             "sizes": "512x512",
             "type": "image/png"
+        },
+        {
+            "src": "https://zazoo.ddns.net/images/icons/apple-touch-icon.png",
+            "sizes": "180x180",
+            "type": "image/png"
+        },
+        {
+            "src": "https://zazoo.ddns.net/images/icons/favicon-32x32.png",
+            "sizes": "32x32",
+            "type": "image/png"
         }
     ],
     "theme_color": "#345995",
     "background_color": "#345995",
-    "display": "portrait"
+    "display": "standalone",
+    "orientation": "portrait-primary"
+
 }
