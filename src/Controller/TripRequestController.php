@@ -84,7 +84,7 @@ class TripRequestController extends AbstractController
                 );
             }
 
-            return $this->redirectToRoute('app_trip_request_show', ['id' => $tripRequest->getId()], Response::HTTP_CONTINUE);
+            return $this->redirectToRoute('app_trip_request_show', ['id' => $tripRequest->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('trip_request/show.html.twig', [
@@ -138,7 +138,7 @@ class TripRequestController extends AbstractController
             }
         }
 
-        return $this->redirectToRoute('app_trip_request_show', ['id' => $tripRequest->getId()], Response::HTTP_CONTINUE);
+        return $this->redirectToRoute('app_trip_request_show', ['id' => $tripRequest->getId()], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/delete/{id}', name: 'app_trip_request_delete', methods: ['POST'])]
