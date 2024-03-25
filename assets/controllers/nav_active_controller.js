@@ -6,13 +6,13 @@ import { Controller } from '@hotwired/stimulus';
 export default class extends Controller {
     connect() {
         const activePage = window.location.pathname;
-        console.log(activePage);
+        // console.log(activePage);
         const navLinks = document.querySelectorAll('.nav-link');
 
         navLinks.forEach(link => {
             if (link.href.includes(activePage) && activePage != '/') {
                 link.classList.add('active');
-            }else{
+            } else {
                 link.classList.remove('active');
             }
         });

@@ -1,6 +1,6 @@
-h1, h2, h3, .title {
+h1, h2, h3, h4, h5, .title {
     // color: #464b69;
-    color: #345995;
+    color: #31364a;
 }
 
 .btn {
@@ -9,32 +9,32 @@ h1, h2, h3, .title {
 }
 
 .reveal{
-  position: relative;
-  transform: scale(0.8);
-  opacity: 0;
-  transition: 0.8s all ease;
+    position: relative;
+    transform: scale(0.8);
+    opacity: 0;
+    transition: 0.8s all ease;
 }
 
 .reveal.active{
-  transform: scale(1);
-  opacity: 1;
+    transform: scale(1);
+    opacity: 1;
 }
 
 .text-shadow {
-  text-shadow: 0 0 5px #fff;
+    text-shadow: 0 0 5px #fff;
 }
 
 // Backgrounds
 .background {
-  background-image: linear-gradient(140deg, #f0f4f9 20%, #d4e2d4 100%);
+    background-image: linear-gradient(140deg, #f0f4f9 20%, #d4e2d4 100%);
 }
 
 .background-nav {
-  background-image: linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.25) 69%);
+    background-image: linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.25) 69%);
 }
 
 .background_footer {
-  background-image: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.25) 69%); 
+    background-image: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.25) 69%); 
 }
 
 @media (min-width: 992px) {
@@ -43,17 +43,25 @@ h1, h2, h3, .title {
     }
 }
 
+// Link color on navbar small mobile
+#nav_small .nav-link {
+    color: #f9f9f9;
+}
+
+// Calculate full height container
+#main_container {
+    min-height: 90vh; /* Fallback for browsers that do not support Custom Properties */
+    /* --vh in SW initialize, 2rem padding container*/
+    min-height: calc(var(--vh) - 2rem) ;
+}
+
 // Bootstrap vars
 // My Colors
 $primary: #345995;
-$secondary:  #aeb6bf;
 $success:  #80CBC4;
 $info:  #82AAFF;
 $warning: #ffcb6b;
-// $warning: #F78C6C;
 $danger: #ff5572;
-$light: #f9f9f9;
-$dark: #697098;
 
 // Active Shadows
 // $enable-shadows: true;
@@ -67,7 +75,7 @@ $card-cap-padding-x: 1rem;
 $card-cap-padding-y: 1rem;
 // $card-box-shadow: 0 5px 10px #0000001a;
 // $card-title-color: #464b69;
-$card-title-color: #345995;
+$card-title-color: #31364a;
 
 // Alert
 $alert-border-radius: 1rem;
