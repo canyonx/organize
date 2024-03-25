@@ -34,7 +34,7 @@ class TripVoter extends Voter
                 if ($user === $subject->getMember()) return true;
                 // return true or false
                 break;
-            case self::EDIT:
+            case self::OWNER:
                 // logic to determine if the user can EDIT
                 if ($user === $subject->getMember()) return true;
                 break;

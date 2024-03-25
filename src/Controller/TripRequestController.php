@@ -84,7 +84,7 @@ class TripRequestController extends AbstractController
                 );
             }
 
-            return $this->redirectToRoute('app_trip_request_show', ['id' => $tripRequest->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_trip_request_show', ['id' => $tripRequest->getId()], Response::HTTP_CONTINUE);
         }
 
         return $this->render('trip_request/show.html.twig', [
@@ -107,11 +107,11 @@ class TripRequestController extends AbstractController
             return $this->redirectToRoute('app_planning_index');
         }
 
-        /** @var User */
-        $user = $this->getUser();
-
         // Deny if not owner of the trip
         $this->denyAccessUnlessGranted('TRIP_OWNER', $tripRequest->getTrip());
+
+        /** @var User */
+        $user = $this->getUser();
 
         if ($this->getUser() == $tripRequest->getTrip()->getMember()) {
             $tripRequest->setStatus($request->get('status'));
@@ -138,7 +138,7 @@ class TripRequestController extends AbstractController
             }
         }
 
-        return $this->redirectToRoute('app_trip_request_show', ['id' => $tripRequest->getId()], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_trip_request_show', ['id' => $tripRequest->getId()], Response::HTTP_CONTINUE);
     }
 
     #[Route('/delete/{id}', name: 'app_trip_request_delete', methods: ['POST'])]
