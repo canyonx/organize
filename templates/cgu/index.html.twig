@@ -11,7 +11,7 @@
 		<div class="card-body">
 			{% for cgu in cgus %}
 				<div class="p-3">
-					<h2 class="text-primary">{{ cgu.title|title }}</h2>
+					<h2 class="text-primary">{{ cgu.title|capitalize }}</h2>
 					<p>{{ cgu.content|raw }}</p>
 				</div>
 			{% endfor %}

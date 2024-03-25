@@ -11,7 +11,7 @@
 		<div class="card-body">
 			{% for faq in faqs %}
 				<div class="p-3">
-					<h2 class="text-primary">{{ faq.title|title }}</h2>
+					<h2 class="text-primary">{{ faq.title|capitalize }}</h2>
 					<p>{{ faq.content|raw }}</p>
 				</div>
 			{% endfor %}
