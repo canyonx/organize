@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Message;
 use App\Form\MessageType;
 use App\Entity\TripRequest;
-use App\Service\MailerService;
 use App\Service\MailjetService;
 use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,7 +23,6 @@ class TripRequestController extends AbstractController
         TripRequest $tripRequest = null,
         Request $request,
         MessageRepository $messageRepository,
-        MailerService $mailerService,
         EntityManagerInterface $em,
         MailjetService $mailjet
     ): Response {
@@ -102,7 +100,6 @@ class TripRequestController extends AbstractController
         Request $request,
         TripRequest $tripRequest,
         EntityManagerInterface $em,
-        MailerService $mailerService,
         TranslatorInterface $translator,
         MailjetService $mailjet
     ): Response {

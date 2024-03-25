@@ -9,12 +9,11 @@ use App\Entity\Message;
 use App\Entity\TripRequest;
 use App\Service\DateService;
 use App\Form\TripRequestType;
-use App\Repository\FriendRepository;
 use App\Service\MailerService;
-use App\Repository\TripRepository;
+use App\Service\MailjetService;
+use App\Repository\FriendRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\TripRequestRepository;
-use App\Service\MailjetService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -34,7 +33,6 @@ class TripController extends AbstractController
     public function new(
         Request $request,
         EntityManagerInterface $entityManager,
-        MailerService $mailerService,
         FriendRepository $friendRepository,
         MailjetService $mailjet
     ): Response {
@@ -58,15 +56,15 @@ class TripController extends AbstractController
 
             // Send email to each user who follow trip member
             // And have activated emails 
-            foreach ($friendsOf as $f) {
+            foreach ($friendsOf as $to) {
                 if (
-                    $f->getMember()->getSetting() &&
-                    $f->getMember()->getSetting()->isIsFriendNewTrip()
+                    $to->getMember()->getSetting() &&
+                    $to->getMember()->getSetting()->isIsFriendNewTrip()
                 ) {
                     // Send email friend create new trip notification
                     $mailjet->sendNotification(
-                        $f->getMember()->getEmail(),
-                        $f->getMember()->getPseudo(),
+                        $to->getMember()->getEmail(),
+                        $to->getMember()->getPseudo(),
                         $trip->getMember() . ' a crée une nouvelle sortie',
                         [
                             'title' => $trip->getMember() . ' a crée une nouvelle sortie',
