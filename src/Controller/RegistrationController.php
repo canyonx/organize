@@ -26,7 +26,6 @@ class RegistrationController extends AbstractController
     public function __construct(EmailVerifier $emailVerifier)
     {
         $this->emailVerifier = $emailVerifier;
-
     }
 
     /**
@@ -44,6 +43,11 @@ class RegistrationController extends AbstractController
         EntityManagerInterface $entityManager,
         SluggerInterface $slugger
     ): Response {
+
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_profile_index');
+        }
+
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);

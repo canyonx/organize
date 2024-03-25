@@ -1,18 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mentions légales
+{% block title %}Foire aux questions
 {% endblock %}
 
 {% block body %}
 	<section class="card">
 		<div class="card-header">
-			<h1 class="card-title">Mentions légales</h1>
+			<h1 class="card-title">Foire aux questions</h1>
 		</div>
 		<div class="card-body">
-			{% for legal in legals %}
+			{% for faq in faqs %}
 				<div class="p-3">
-					<h2 class="text-primary">{{ legal.title|title }}</h2>
-					<p>{{ legal.content|raw }}</p>
+					<h2 class="text-primary">{{ faq.title|title }}</h2>
+					<p>{{ faq.content|raw }}</p>
 				</div>
 			{% endfor %}
 		</div>

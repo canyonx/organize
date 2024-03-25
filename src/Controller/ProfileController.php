@@ -8,8 +8,6 @@ use App\Entity\Setting;
 use App\Form\SettingType;
 use App\Service\FileUploader;
 use App\Form\ChangePasswordType;
-use App\Repository\UserRepository;
-use App\Repository\SettingRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,15 +20,6 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 #[Route('/profil')]
 class ProfileController extends AbstractController
 {
-    // list all users for dev
-    #[Route('/list', name: 'app_profile_list', methods: ['GET'])]
-    public function list(UserRepository $userRepository): Response
-    {
-        return $this->render('profile/list.html.twig', [
-            'users' => $userRepository->findAll()
-        ]);
-    }
-
     /**
      * Personal profile of connected user
      */

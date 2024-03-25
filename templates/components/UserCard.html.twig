@@ -4,8 +4,7 @@
 			{% if user.avatar %}
 				<img src="{{ asset(images_dir ~ user.avatar)|imagine_filter('user_card') }}" alt="Photo de {{ user }}" class="img-fluid rounded-circle me-2" width="50" height="50">
 			{% else %}
-				<div class="rounded-circle bg-light border me-2" style="height: 50px; width: 50px"></div>
-				{# <img src="https://placehold.co/50" alt="{{ user.pseudo|title }}" class="img-fluid rounded-circle me-2">  #}
+				<img src="{{ asset('images/icons/android-chrome-192x192.png')|imagine_filter('user_card') }}" alt="{{ user.pseudo|title }}" class="img-fluid rounded-circle me-2">
 			{% endif %}
 		</div>
 		<div class="">

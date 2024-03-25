@@ -5,6 +5,8 @@ namespace App\Controller\Admin;
 use App\Entity\Trip;
 use App\Entity\User;
 use App\Entity\Activity;
+use App\Entity\Cgu;
+use App\Entity\Faq;
 use App\Entity\Feature;
 use App\Entity\Homepage;
 use App\Entity\Legal;
@@ -83,9 +85,11 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Users', 'fas fa-user', User::class);
 
         yield MenuItem::section('Settings');
-        yield MenuItem::linkToCrud('Activities', 'fas fa-bicycle', Activity::class);
         yield MenuItem::linkToCrud('Homepage', 'fas fa-house', Homepage::class);
         yield MenuItem::linkToCrud('Features', 'fas fa-list', Feature::class);
+        yield MenuItem::linkToCrud('Activities', 'fas fa-bicycle', Activity::class);
         yield MenuItem::linkToCrud('Legal', 'fas fa-gavel', Legal::class);
+        yield MenuItem::linkToCrud('CGU', 'fas fa-file-contract', Cgu::class);
+        yield MenuItem::linkToCrud('FAQ', 'fas fa-question', Faq::class);
     }
 }
