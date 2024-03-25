@@ -1,18 +1,16 @@
 <section class="card">
 	<div class="card bg-{{tripRequest.color}} bg-opacity-10">
-		<div
-			class="card-body">
-			{# Status of the request #}
+		<div class="card-body">
 			{% include "trip_request/_status.html.twig" %}
+			{# Status of the request #}
 		</div>
 
 		{% if tripRequest.status != 'REFUSED' %}
-			<div
-				class="card-body border-top">
-				{# Collection of messages associates to the trip request #}
+			<div class="card-body border-top">
 				{% include "trip_request/_message_list.html.twig" %}
-				{# Message form #}
+				{# Collection of messages associates to the trip request #}
 				{% include "message/_form.html.twig" %}
+				{# Message form #}
 			</div>
 		{% endif %}
 	</div>

@@ -6,17 +6,11 @@
 
 {% block body %}
 	<div class="row">
-		<div
-			class="col-md-6 order-last order-md-first mb-3">
-			{# Show trip details #}
+		<div class="col-md-6 order-last order-md-first mb-3">
 			{% include "trip/_info.html.twig" %}
 		</div>
-		<div
-			class="col-md-6 mb-3">
-			{# Recharge uniquement la request_card #}
-			<turbo-frame
-				id="request_card">
-				{# Show requests for the trip #}
+		<div class="col-md-6 mb-3">
+			<turbo-frame id="request_card">
 				{% include "trip/_requests.html.twig" %}
 			</turbo-frame>
 		</div>
