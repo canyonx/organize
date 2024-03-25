@@ -61,9 +61,9 @@
 			{{ tripRequest.status|title|trans }}
 		</b>
 	</div>
-	{% if tripRequest.status != 'REFUSED' %}
-		<div class="text-end">
-			{% include 'trip_request/_delete_form.html.twig' %}
-		</div>
-	{% endif %}
+	{# {% if tripRequest.status != 'REFUSED' %}
+			<div class="text-end">
+				{% include 'trip_request/_delete_form.html.twig' %}
+			</div>
+		{% endif %} #}
 {% endif %}

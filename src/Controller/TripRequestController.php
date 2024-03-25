@@ -6,9 +6,9 @@ use App\Entity\Message;
 use App\Form\MessageType;
 use App\Entity\TripRequest;
 use App\Service\MailerService;
+use App\Service\MailjetService;
 use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\TripRequestRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -25,7 +25,8 @@ class TripRequestController extends AbstractController
         Request $request,
         MessageRepository $messageRepository,
         MailerService $mailerService,
-        EntityManagerInterface $em
+        EntityManagerInterface $em,
+        MailjetService $mailjet
     ): Response {
         /** @var User */
         $user = $this->getUser();
@@ -74,6 +75,17 @@ class TripRequestController extends AbstractController
                 $to->getSetting()->isIsNewMessage()
             ) {
                 // Send email Message Notification
+                // TODO use mailjet templated
+                $mailjet->sendNotification(
+                    $to->getEmail(),
+                    $to->getPseudo(),
+                    'Nouveau message',
+                    [
+                        'title' => 'Nouveau message de ' . $from,
+                        'message' => $message->getContent()
+                    ]
+                );
+                // TODO remove when mailjet works
                 $mailerService->send(
                     $to->getEmail(),
                     'Nouveau message',
@@ -102,7 +114,8 @@ class TripRequestController extends AbstractController
         TripRequest $tripRequest,
         EntityManagerInterface $em,
         MailerService $mailerService,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        MailjetService $mailjet
     ): Response {
         if (!$tripRequest) {
             return $this->redirectToRoute('app_planning_index');
@@ -127,6 +140,17 @@ class TripRequestController extends AbstractController
                 $to->getSetting()->isIsTripRequestStatusChange()
             ) {
                 // Send email Message Notification
+                // TODO use mailjet templated
+                $mailjet->sendNotification(
+                    $to->getEmail(),
+                    $to->getPseudo(),
+                    'Changement de status',
+                    [
+                        'title' => 'Changement de status pour ' . $tripRequest->getTrip()->getTitle(),
+                        'message' => 'Votre demande à maintenant le status ' . $translator->trans($tripRequest->getStatus())
+                    ]
+                );
+                // TODO remove when mailjet works
                 $mailerService->send(
                     $to->getEmail(),
                     'Changement de status',
