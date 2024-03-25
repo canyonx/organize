@@ -14,6 +14,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class TripRequestController extends AbstractController
 {
     /**
+     * TODO :unused
+     *
      * Change status of a TripRequest
      * @param TripRequest $tripRequest
      */

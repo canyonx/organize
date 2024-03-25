@@ -5,7 +5,6 @@ namespace App\Controller\Api;
 use App\Entity\User;
 use App\Service\DateService;
 use App\Repository\TripRepository;
-use App\Repository\TripRequestRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

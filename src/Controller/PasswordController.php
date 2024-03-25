@@ -4,11 +4,10 @@ namespace App\Controller;
 
 use App\Form\NewPasswordType;
 use App\Form\LostPasswordType;
-use App\Service\MailerService;
+use App\Service\MailjetService;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,7 +27,7 @@ class PasswordController extends AbstractController
         UserRepository $userRepository,
         EntityManagerInterface $em,
         TokenGeneratorInterface $tokenGenerator,
-        MailerService $mailerService
+        MailjetService $mailjetService
     ) {
         $form = $this->createForm(LostPasswordType::class);
 
@@ -48,12 +47,13 @@ class PasswordController extends AbstractController
             $url = $this->generateUrl('app_password_new', ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL);
 
             // Envoi un mail avec le new mdp
-            $mailerService->send(
+            $mailjetService->sendNotification(
                 $user->getEmail(),
-                "Organize - Mot de passe perdu",
-                "lost_password",
+                $user->getPseudo(),
+                "Mot de passe perdu",
                 [
-                    'url' => $url
+                    'title' => 'Mot de passe perdu',
+                    'message' => 'Lien de réinitialisation ' . $url
                 ]
             );
 

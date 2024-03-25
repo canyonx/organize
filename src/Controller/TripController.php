@@ -9,7 +9,6 @@ use App\Entity\Message;
 use App\Entity\TripRequest;
 use App\Service\DateService;
 use App\Form\TripRequestType;
-use App\Service\MailerService;
 use App\Service\MailjetService;
 use App\Repository\FriendRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,10 +23,6 @@ class TripController extends AbstractController
 {
     /**
      * Create a new trip
-     *
-     * @param Request $request
-     * @param EntityManagerInterface $entityManager
-     * @return Response
      */
     #[Route('/nouveau', name: 'app_trip_new', methods: ['GET', 'POST'])]
     public function new(
@@ -92,7 +87,6 @@ class TripController extends AbstractController
         DateService $dateService,
         Request $request,
         EntityManagerInterface $em,
-        MailerService $mailerService,
         TripRequestRepository $tripRequestRepository,
         MailjetService $mailjet
     ): Response {

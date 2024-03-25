@@ -7,7 +7,6 @@ use App\Entity\User;
 use App\Repository\FriendRepository;
 use App\Repository\TripRequestRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -19,8 +18,11 @@ class FriendController extends AbstractController
      * @param User $myFriend, user to create a relation with
      */
     #[Route('/api/friend/add/{id}', name: 'app_api_friend_add')]
-    public function add(User $myFriend, FriendRepository $friendRepository, EntityManagerInterface $em): JsonResponse
-    {
+    public function add(
+        User $myFriend,
+        FriendRepository $friendRepository,
+        EntityManagerInterface $em
+    ): JsonResponse {
         $this->denyAccessUnlessGranted('USER_VIEW', $myFriend);
 
         /** @var User */
@@ -44,8 +46,12 @@ class FriendController extends AbstractController
      * @param User $myFriend, user to create a relation with
      */
     #[Route('/api/friend/block/{id}', name: 'app_api_friend_block')]
-    public function block(User $myFriend, FriendRepository $friendRepository, TripRequestRepository $tripRequestRepository, EntityManagerInterface $em): JsonResponse
-    {
+    public function block(
+        User $myFriend,
+        FriendRepository $friendRepository,
+        TripRequestRepository $tripRequestRepository,
+        EntityManagerInterface $em
+    ): JsonResponse {
         $this->denyAccessUnlessGranted('USER_VIEW', $myFriend);
 
         /** @var User */
@@ -84,8 +90,11 @@ class FriendController extends AbstractController
      * @param User $user
      */
     #[Route('/api/friend/remove/{id}', name: 'app_api_friend_remove')]
-    public function remove(User $user, FriendRepository $friendRepository, EntityManagerInterface $em): JsonResponse
-    {
+    public function remove(
+        User $user,
+        FriendRepository $friendRepository,
+        EntityManagerInterface $em
+    ): JsonResponse {
         $friend = $friendRepository->findOneBy(['member' => $this->getUser(), 'friend' => $user]);
         if ($friend) $em->remove($friend);
         $em->flush();

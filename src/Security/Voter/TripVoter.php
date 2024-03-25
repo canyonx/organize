@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class TripVoter extends Voter
 {
     public const EDIT = 'TRIP_EDIT';
-    // public const VIEW = 'POST_VIEW';
+    public const OWNER = 'TRIP_OWNER';
 
     protected function supports(string $attribute, mixed $subject): bool
     {
@@ -33,6 +33,10 @@ class TripVoter extends Voter
                 // logic to determine if the user can EDIT
                 if ($user === $subject->getMember()) return true;
                 // return true or false
+                break;
+            case self::EDIT:
+                // logic to determine if the user can EDIT
+                if ($user === $subject->getMember()) return true;
                 break;
         }
 

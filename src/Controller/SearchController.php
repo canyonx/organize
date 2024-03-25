@@ -6,7 +6,6 @@ use App\Entity\Trip;
 use App\Entity\User;
 use App\Form\SearchType;
 use App\Service\SearchService;
-use App\Service\PlanningService;
 use App\Repository\TripRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +17,6 @@ class SearchController extends AbstractController
     #[Route('/search', name: 'app_search_index')]
     public function index(
         TripRepository $tripRepository,
-        PlanningService $planningService,
         SearchService $searchService,
         Request $request,
     ): Response {

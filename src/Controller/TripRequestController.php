@@ -110,8 +110,8 @@ class TripRequestController extends AbstractController
         /** @var User */
         $user = $this->getUser();
 
-        // TODO: Deny if not owner of the trip
-        // $this->denyAccessUnlessGranted('TRIP_OWNER', $myFriend);
+        // Deny if not owner of the trip
+        $this->denyAccessUnlessGranted('TRIP_OWNER', $tripRequest->getTrip());
 
         if ($this->getUser() == $tripRequest->getTrip()->getMember()) {
             $tripRequest->setStatus($request->get('status'));
