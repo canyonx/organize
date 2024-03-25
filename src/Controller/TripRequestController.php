@@ -74,22 +74,11 @@ class TripRequestController extends AbstractController
                 $to->getSetting() &&
                 $to->getSetting()->isIsNewMessage()
             ) {
-                // Send email Message Notification
-                // TODO use mailjet templated
+                // Send email New Message Notification
                 $mailjet->sendNotification(
                     $to->getEmail(),
                     $to->getPseudo(),
                     'Nouveau message',
-                    [
-                        'title' => 'Nouveau message de ' . $from,
-                        'message' => $message->getContent()
-                    ]
-                );
-                // TODO remove when mailjet works
-                $mailerService->send(
-                    $to->getEmail(),
-                    'Nouveau message',
-                    'notification.html.twig',
                     [
                         'title' => 'Nouveau message de ' . $from,
                         'message' => $message->getContent()
@@ -139,25 +128,14 @@ class TripRequestController extends AbstractController
                 $to->getSetting() &&
                 $to->getSetting()->isIsTripRequestStatusChange()
             ) {
-                // Send email Message Notification
-                // TODO use mailjet templated
+                // Send email Status Change Notification
                 $mailjet->sendNotification(
                     $to->getEmail(),
                     $to->getPseudo(),
                     'Changement de status',
                     [
                         'title' => 'Changement de status pour ' . $tripRequest->getTrip()->getTitle(),
-                        'message' => 'Votre demande à maintenant le status ' . $translator->trans($tripRequest->getStatus())
-                    ]
-                );
-                // TODO remove when mailjet works
-                $mailerService->send(
-                    $to->getEmail(),
-                    'Changement de status',
-                    'notification.html.twig',
-                    [
-                        'title' => 'Changement de status pour ' . $tripRequest->getTrip()->getTitle(),
-                        'message' => 'Votre demande à maintenant le status ' . $translator->trans($tripRequest->getStatus())
+                        'message' => 'Votre demande à maintenant le status ' . $translator->trans($tripRequest->getStatus(), [], null, 'fr')
                     ]
                 );
             }

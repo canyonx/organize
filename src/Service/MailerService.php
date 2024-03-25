@@ -41,3 +41,18 @@ class MailerService
         $this->mailer->send($email);
     }
 }
+
+
+/**
+ * Envoyer un email simple
+ */
+// $mailerService->send(
+//      $to->getEmail(), // to
+//     'Nouveau message', // subject
+//     'notification.html.twig', // template
+//      // vars
+//     [
+//         'title' => 'Nouveau message de ' . $from,
+//         'message' => $message->getContent()
+//     ]
+// );

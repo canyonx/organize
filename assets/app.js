@@ -11,3 +11,5 @@ import './bootstrap.js';
 import './vendor/bootstrap/dist/js/bootstrap.min.js'; 
 
 import './vendor/leaflet/dist/leaflet.min.css';
+
+import 'mailjet';

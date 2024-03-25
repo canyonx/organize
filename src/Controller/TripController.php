@@ -63,22 +63,11 @@ class TripController extends AbstractController
                     $f->getMember()->getSetting() &&
                     $f->getMember()->getSetting()->isIsFriendNewTrip()
                 ) {
-                    // Send email trip request notification : ' $user is interested by your $trip'
-                    // TODO use mailjet templated
+                    // Send email friend create new trip notification
                     $mailjet->sendNotification(
                         $f->getMember()->getEmail(),
                         $f->getMember()->getPseudo(),
                         $trip->getMember() . ' a crée une nouvelle sortie',
-                        [
-                            'title' => $trip->getMember() . ' a crée une nouvelle sortie',
-                            'message' => $trip->getTitle()
-                        ]
-                    );
-                    // TODO remove when mailjet works
-                    $mailerService->send(
-                        $f->getMember()->getEmail(),
-                        $trip->getMember() . ' a crée une nouvelle sortie',
-                        'notification.html.twig',
                         [
                             'title' => $trip->getMember() . ' a crée une nouvelle sortie',
                             'message' => $trip->getTitle()
@@ -172,22 +161,11 @@ class TripController extends AbstractController
                 $trip->getMember()->getSetting() &&
                 $trip->getMember()->getSetting()->isIsNewTripRequest()
             ) {
-                // Send email trip request notification : ' $user is interested by your $trip'
-                // TODO use mailjet templated
+                // Send email trip request notification
                 $mailjet->sendNotification(
                     $trip->getMember()->getEmail(),
                     $trip->getMember()->getPseudo(),
                     'Nouvelle demande de participation',
-                    [
-                        'title' => $tr->getMember() . ' demande à rejoindre ' . $trip->getTitle(),
-                        'message' => $message->getContent()
-                    ]
-                );
-                // TODO remove when mailjet works
-                $mailerService->send(
-                    $trip->getMember()->getEmail(),
-                    'Nouvelle demande de participation',
-                    'notification.html.twig',
                     [
                         'title' => $tr->getMember() . ' demande à rejoindre ' . $trip->getTitle(),
                         'message' => $message->getContent()
