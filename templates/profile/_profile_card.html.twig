@@ -47,9 +47,14 @@
 				</div>
 			</div>
 		{% else %}
-			<div class="mb-4 pb-2">
+			<div class="pb-2">
 				<a href="{{ path('app_profile_edit_password') }}" class="btn btn-primary rounded-pill">Changer de mot de passe</a>
 				<a href="{{ path('app_profile_edit') }}" class="btn btn-primary rounded-pill">Editer mon profil</a>
+			</div>
+			<div class="mb-4 pb-2">
+				<a href="{{ path('app_logout') }}" class="btn btn-danger rounded-pill">
+					Déconnexion
+				</a>
 			</div>
 		{% endif %}
 	</div>

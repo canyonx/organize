@@ -1,4 +1,4 @@
-<nav class="nav nav-pills nav-fill bg-light p-2" data-controller="nav-active">
+<nav class="nav nav-pills nav-fill bg-white p-2" data-controller="nav-active">
 	{% if is_granted('ROLE_ADMIN') %}
 		<a href="{{ path('app_admin') }}" class="nav-link">
 			<i class="fa-solid fa-gear fs-5"></i>
@@ -17,12 +17,11 @@
 		<a href="{{ path('app_profile_index') }}" class="nav-link text-center">
 			<i class="fa-solid fa-user fs-5"></i>
 		</a>
-		<a href="{{ path('app_logout') }}" class="nav-link text-center">
-			<i class="fa-solid fa-right-from-bracket fs-5"></i>
-			<span class="d-none d-md-block ms-2">Déconnexion</span>
-		</a>
 	{% else %}
 		<a href="{{ path('app_register') }}" class="nav-link text-center">Créer un compte</a>
+		<a href="{{ path('app_home') }}" class="nav-link text-center">
+			<i class="fa-solid fa-home fs-5"></i>
+		</a>
 		<a href="{{ path('app_login') }}" class="nav-link text-center">Se connecter</a>
 	{% endif %}
 </nav>
