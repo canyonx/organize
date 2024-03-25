@@ -34,18 +34,20 @@
 	</head>
 
 	{# {% set values = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']%}
-																													{% set color = '#' ~ random(values)~ random(values)~ random(values) %} #}
+																																															{% set color = '#' ~ random(values)~ random(values)~ random(values) %} #}
 
 	<body
 		class="background" data-controller="serviceWorker">
 
 		{# Navbar #}
-		{% include "shared/_navbar.html.twig" %}
+		<div class="d-none d-md-block">
+			{% include "shared/_navbar.html.twig" %}
+		</div>
 
 		{# Main container #}
 		{% block main %}
 			<div
-				class="container" style="min-height:88vh">
+				class="container my-3" style="min-height:88vh">
 				{# Flash messages #}
 				{% for type, messages in app.flashes %}
 					{% for message in messages %}
@@ -59,6 +61,9 @@
 		{% endblock %}
 
 		{# Footer #}
-		{% include "shared/_footer.html.twig" %}
+		{# {% include "shared/_footer.html.twig" %} #}
+		<div class="sticky-bottom d-block d-md-none">
+			{% include 'shared/_navbar_small.html.twig' %}
+		</div>
 	</body>
-</html>
+</html></body></html>
