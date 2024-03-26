@@ -1,3 +1,7 @@
+body {
+    font-family: Ubuntu, Arial, Helvetica, sans-serif;
+}
+
 h1, h2, h3, h4, h5, .title {
     // color: #464b69;
     color: #31364a;
@@ -24,7 +28,7 @@ h1, h2, h3, h4, h5, .title {
     text-shadow: 0 0 5px #fff;
 }
 
-.img-shadow {
+.shadow {
     box-shadow: 0 5px 10px #0000001a;
 }
 
@@ -68,18 +72,19 @@ $warning: #ffcb6b;
 $danger: #ff5572;
 
 // Active Shadows
-// $enable-shadows: true;
+$enable-shadows: true;
 
 // Card
 $card-border-radius: 2rem;
 $card-border-width: 0px;
-// $card-cap-bg: #eaeef4;
 $card-cap-bg: #ffffff;
 $card-cap-padding-x: 1rem;
 $card-cap-padding-y: 1rem;
 // $card-box-shadow: 0 5px 10px #0000001a;
-// $card-title-color: #464b69;
 $card-title-color: #31364a;
+
+// shadow
+$box-shadow: 0 5px 10px #0000001a;
 
 // Alert
 $alert-border-radius: 1rem;
