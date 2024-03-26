@@ -6,12 +6,14 @@ use App\Entity\User;
 use Symfony\Component\Mime\Address;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\BodyRendererInterface;
 
 class NotificationService
 {
     public function __construct(
         private string $adminMail, // Declaration in service.yaml
         private MailerInterface $mailer,
+        private BodyRendererInterface $bodyRenderer
     ) {
     }
 
@@ -30,6 +32,8 @@ class NotificationService
             ->subject('Notification')
             ->htmlTemplate("email/notification.html.twig")
             ->context($context);
+
+        $this->bodyRenderer->render($email);
 
         $this->mailer->send($email);
     }
