@@ -1,10 +1,14 @@
-<b class="text-muted">
-	Participants
-</b>
-<br>
-{% for acceptedUser in trip.acceptedUsers %}
-	{# {% if not loop.first %}, {% endif %} #}
-	<a href="{{ path('app_profile_show', {slug: acceptedUser.slug}) }}" class="btn btn-primary rounded-pill mt-2">
-		{{ acceptedUser }}
-	</a>
-{% endfor %}
+<div id="accepted_user">
+	{% if trip.acceptedUsers %}
+		<b class="text-muted">
+			Participants
+		</b>
+		<br>
+		{% for acceptedUser in trip.acceptedUsers %}
+			{# {% if not loop.first %}, {% endif %} #}
+			<a href="{{ path('app_profile_show', {slug: acceptedUser.slug}) }}" class="btn btn-primary rounded-pill mt-2">
+				{{ acceptedUser }}
+			</a>
+		{% endfor %}
+	{% endif %}
+</div>

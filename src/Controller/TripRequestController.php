@@ -5,8 +5,6 @@ namespace App\Controller;
 use App\Entity\Message;
 use App\Form\MessageType;
 use App\Entity\TripRequest;
-use App\Message\Notification;
-use App\Service\MailjetService;
 use App\Repository\MessageRepository;
 use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,8 +14,6 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Messenger\MessageBus;
-use Symfony\Component\Messenger\MessageBusInterface;
 
 #[Route('/trip/request')]
 class TripRequestController extends AbstractController
@@ -29,7 +25,7 @@ class TripRequestController extends AbstractController
         MessageRepository $messageRepository,
         EntityManagerInterface $em,
         NotificationService $notificationService,
-        MessageBusInterface $messageBus
+        TranslatorInterface $translator,
     ): Response {
         /** @var User */
         $user = $this->getUser();
@@ -41,6 +37,30 @@ class TripRequestController extends AbstractController
         }
 
         $trip = $tripRequest->getTrip();
+
+        // !
+        if ($request->get('status')) {
+            // Deny if not owner of the trip
+            $this->denyAccessUnlessGranted('TRIP_OWNER', $trip);
+
+            $tripRequest->setStatus($request->get('status'));
+            $em->flush();
+
+            $to = ($user == $tripRequest->getMember()) ? $tripRequest->getTrip()->getMember() : $tripRequest->getMember();
+
+            // If $to user setting isIsNewMessage
+            if ($to->getSetting() && $to->getSetting()->isIsTripRequestStatusChange()) {
+                // ! Status Change Notification
+                $notificationService->send(
+                    $to,
+                    [
+                        'title' => 'Changement de status pour ' . $tripRequest->getTrip()->getTitle(),
+                        'message' => 'Votre demande à maintenant le status ' . $translator->trans(ucfirst(strtolower($tripRequest->getStatus())))
+                    ]
+                );
+            }
+        }
+        // !
 
         // Get messages from tripR$tripRequest request
         $discution = $messageRepository->findBy(['tripRequest' => $tripRequest], ['createdAt' => 'ASC']);
@@ -113,28 +133,24 @@ class TripRequestController extends AbstractController
         /** @var User */
         $user = $this->getUser();
 
-        if ($this->getUser() == $tripRequest->getTrip()->getMember()) {
-            $tripRequest->setStatus($request->get('status'));
-            $em->flush();
-            // JoinEventListener : send mail on update, status change
+        $tripRequest->setStatus($request->get('status'));
+        $em->flush();
+        // JoinEventListener : send mail on update, status change
 
-            $to = ($user == $tripRequest->getMember()) ? $tripRequest->getTrip()->getMember() : $tripRequest->getMember();
+        $to = ($user == $tripRequest->getMember()) ? $tripRequest->getTrip()->getMember() : $tripRequest->getMember();
 
-            dump($translator->trans($tripRequest->getStatus()));
-            // If $to user setting isIsNewMessage
-            if ($to->getSetting() && $to->getSetting()->isIsTripRequestStatusChange()) {
-                // ! Send email Status Change Notification
-                $notificationService->send(
-                    $to,
-                    [
-                        'title' => 'Changement de status pour ' . $tripRequest->getTrip()->getTitle(),
-                        'message' => 'Votre demande à maintenant le status ' . $translator->trans($tripRequest->getStatus())
-                    ]
-                );
-            }
+        // If $to user setting isIsNewMessage
+        if ($to->getSetting() && $to->getSetting()->isIsTripRequestStatusChange()) {
+            // ! Status Change Notification
+            $notificationService->send(
+                $to,
+                [
+                    'title' => 'Changement de status pour ' . $tripRequest->getTrip()->getTitle(),
+                    'message' => 'Votre demande à maintenant le status ' . $translator->trans(ucfirst(strtolower($tripRequest->getStatus())))
+                ]
+            );
         }
-
-        return $this->redirectToRoute('app_trip_request_show', ['id' => $tripRequest->getId()], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_trip_request_show', ['id' => $tripRequest->getId()]);
     }
 
     #[Route('/delete/{id}', name: 'app_trip_request_delete', methods: ['POST'])]

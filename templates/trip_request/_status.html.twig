@@ -26,7 +26,7 @@
 			{# Button Accept #}
 			{% if tripRequest.status == 'PENDING' or tripRequest.status == 'REFUSED'  %}
 				<a
-					href="{{ path('app_trip_request_status', {id: tripRequest.id , status: 'ACCEPTED'}) }}" class="btn btn-success rounded-pill">
+					href="{{ path('app_trip_request_show', {id: tripRequest.id , status: 'ACCEPTED'}) }}" class="btn btn-success rounded-pill">
 					{# Turbo stream update participant list #}
 					<turbo-stream action="update" target="accepted_user">
 						<template>
@@ -40,7 +40,7 @@
 			{# Button Refuse #}
 			{% if tripRequest.status == 'PENDING' or tripRequest.status == 'ACCEPTED' %}
 				<a
-					href="{{ path('app_trip_request_status', {id: tripRequest.id , status: 'REFUSED'}) }}" class="btn btn-secondary rounded-pill">
+					href="{{ path('app_trip_request_show', {id: tripRequest.id , status: 'REFUSED'}) }}" class="btn btn-secondary rounded-pill">
 					{# Turbo stream update participant list #}
 					<turbo-stream action="update" target="accepted_user">
 						<template>

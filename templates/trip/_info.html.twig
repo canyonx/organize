@@ -35,11 +35,9 @@
 		<input id="trip_lat" type="hidden" value="{{ trip.lat }}"/>
 		<input id="trip_lng" type="hidden" value="{{ trip.lng }}"/>
 
-		{% if trip.acceptedUsers %}
-			<div id="accepted_user">
-				{% include 'trip/_accepted_user.html.twig' %}
-			</div>
-		{% endif %}
+
+		{% include 'trip/_accepted_user.html.twig' %}
+
 	</div>
 
 	<div id="map" class="rounded-bottom-5" style="height:360px" data-controller="map-trip"></div>

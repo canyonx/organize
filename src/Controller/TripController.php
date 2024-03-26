@@ -9,7 +9,6 @@ use App\Entity\Message;
 use App\Entity\TripRequest;
 use App\Service\DateService;
 use App\Form\TripRequestType;
-use App\Service\MailjetService;
 use App\Repository\FriendRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\TripRequestRepository;
@@ -54,7 +53,7 @@ class TripController extends AbstractController
             // And have activated emails 
             foreach ($friendsOf as $to) {
                 if ($to->getMember()->getSetting() && $to->getMember()->getSetting()->isIsFriendNewTrip()) {
-                    // ! Send email friend create new trip notification
+                    // ! Friend create new trip notification
                     $notificationService->send(
                         $to->getMember(),
                         [
@@ -129,7 +128,6 @@ class TripController extends AbstractController
             // Write trip request in DB
             $em->persist($tr);
             $em->flush();
-            // dd($tr, $form->get('message')->getData());
 
             // Create message associate to the trip request
             if ($form->get('message')->getData()) {
@@ -146,7 +144,7 @@ class TripController extends AbstractController
 
             // If trip owner setting notification is true
             if ($trip->getMember()->getSetting() && $trip->getMember()->getSetting()->isIsNewTripRequest()) {
-                // ! Send email trip request notification
+                // ! Trip request notification
                 $notificationService->send(
                     $trip->getMember(),
                     [
