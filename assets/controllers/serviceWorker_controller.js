@@ -23,7 +23,9 @@ export default class extends Controller {
 
 
     connect() {
-        if ('serviceWorker' in navigator) {
+        const activePage = window.location.pathname;
+
+        if (('serviceWorker' in navigator) && (activePage == '/')) {
             navigator.serviceWorker.register('https://zazoo.ddns.net/sw.js')
                 .then(function () {console.log('Enregistrement reussi.')})
                 .catch(function (e) {console.error(e)});

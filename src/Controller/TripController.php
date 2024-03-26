@@ -9,10 +9,8 @@ use App\Entity\Message;
 use App\Entity\TripRequest;
 use App\Service\DateService;
 use App\Form\TripRequestType;
-use App\Repository\FriendRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\TripRequestRepository;
-use App\Service\NotificationService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,9 +25,7 @@ class TripController extends AbstractController
     #[Route('/nouveau', name: 'app_trip_new', methods: ['GET', 'POST'])]
     public function new(
         Request $request,
-        EntityManagerInterface $entityManager,
-        FriendRepository $friendRepository,
-        NotificationService $notificationService
+        EntityManagerInterface $entityManager
     ): Response {
         /** @var User */
         $user = $this->getUser();
@@ -65,8 +61,7 @@ class TripController extends AbstractController
         DateService $dateService,
         Request $request,
         EntityManagerInterface $em,
-        TripRequestRepository $tripRequestRepository,
-        NotificationService $notificationService
+        TripRequestRepository $tripRequestRepository
     ): Response {
         /** @var User */
         $user = $this->getUser();
@@ -92,7 +87,6 @@ class TripController extends AbstractController
         // Check if user have already planified a trip for that day
         // If true show Info subscribe
         $dateFrom = new \DateTimeImmutable($trip->getDateAt()->format('Y-m-d'));
-
         // If userTripThatDay or userTripRequestThatDay -> show warning limitation
         $alreadyTrip = $dateService->isTripThatDay($user, $dateFrom) ?: false;
 
@@ -122,12 +116,9 @@ class TripController extends AbstractController
 
                 $em->persist($message);
             }
-
             $em->flush();
             //* TripRequestListener : postPersist send new TR notification
 
-
-            // $this->addFlash('success', 'A join request sent to ' . $trip->getUser()->getUserName());
             return $this->redirectToRoute('app_trip_show', ['id' => $trip->getId()], Response::HTTP_SEE_OTHER);
             // return $this->redirectToRoute('app_trip_request_show', ['id' => $tr->getId()], Response::HTTP_SEE_OTHER);
         }
