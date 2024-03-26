@@ -48,7 +48,7 @@ class MailjetService
                 ]
             ]
         ];
-        // $response = $mj->post(Resources::$Email, ['body' => $body]);
-        // $response->success() && dump($response->getData());
+        $response = $mj->post(Resources::$Email, ['body' => $body]);
+        $response->success() && dump($response->getData());
     }
 }
