@@ -13,6 +13,7 @@ use App\Service\MailjetService;
 use App\Repository\FriendRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\TripRequestRepository;
+use App\Service\NotificationService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,7 +30,7 @@ class TripController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager,
         FriendRepository $friendRepository,
-        MailjetService $mailjet
+        NotificationService $notificationService
     ): Response {
         /** @var User */
         $user = $this->getUser();
@@ -52,15 +53,10 @@ class TripController extends AbstractController
             // Send email to each user who follow trip member
             // And have activated emails 
             foreach ($friendsOf as $to) {
-                if (
-                    $to->getMember()->getSetting() &&
-                    $to->getMember()->getSetting()->isIsFriendNewTrip()
-                ) {
-                    // Send email friend create new trip notification
-                    $mailjet->sendNotification(
-                        $to->getMember()->getEmail(),
-                        $to->getMember()->getPseudo(),
-                        $trip->getMember() . ' a crée une nouvelle sortie',
+                if ($to->getMember()->getSetting() && $to->getMember()->getSetting()->isIsFriendNewTrip()) {
+                    // ! Send email friend create new trip notification
+                    $notificationService->send(
+                        $to->getMember(),
                         [
                             'title' => $trip->getMember() . ' a crée une nouvelle sortie',
                             'message' => $trip->getTitle()
@@ -88,7 +84,7 @@ class TripController extends AbstractController
         Request $request,
         EntityManagerInterface $em,
         TripRequestRepository $tripRequestRepository,
-        MailjetService $mailjet
+        NotificationService $notificationService
     ): Response {
         /** @var User */
         $user = $this->getUser();
@@ -149,15 +145,10 @@ class TripController extends AbstractController
             }
 
             // If trip owner setting notification is true
-            if (
-                $trip->getMember()->getSetting() &&
-                $trip->getMember()->getSetting()->isIsNewTripRequest()
-            ) {
-                // Send email trip request notification
-                $mailjet->sendNotification(
-                    $trip->getMember()->getEmail(),
-                    $trip->getMember()->getPseudo(),
-                    'Nouvelle demande de participation',
+            if ($trip->getMember()->getSetting() && $trip->getMember()->getSetting()->isIsNewTripRequest()) {
+                // ! Send email trip request notification
+                $notificationService->send(
+                    $trip->getMember(),
                     [
                         'title' => $tr->getMember() . ' demande à rejoindre ' . $trip->getTitle(),
                         'message' => $message->getContent()

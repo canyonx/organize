@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Message;
 use App\Form\MessageType;
 use App\Entity\TripRequest;
+use App\Message\Notification;
 use App\Service\MailjetService;
 use App\Repository\MessageRepository;
+use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,6 +16,8 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Messenger\MessageBus;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 #[Route('/trip/request')]
 class TripRequestController extends AbstractController
@@ -24,7 +28,8 @@ class TripRequestController extends AbstractController
         Request $request,
         MessageRepository $messageRepository,
         EntityManagerInterface $em,
-        MailjetService $mailjet
+        NotificationService $notificationService,
+        MessageBusInterface $messageBus
     ): Response {
         /** @var User */
         $user = $this->getUser();
@@ -68,15 +73,10 @@ class TripRequestController extends AbstractController
             $to = ($user == $tripRequest->getMember()) ? $tripRequest->getTrip()->getMember() : $tripRequest->getMember();
 
             // If $to user setting isIsNewMessage
-            if (
-                $to->getSetting() &&
-                $to->getSetting()->isIsNewMessage()
-            ) {
-                // Send email New Message Notification
-                $mailjet->sendNotification(
-                    $to->getEmail(),
-                    $to->getPseudo(),
-                    'Nouveau message',
+            if ($to->getSetting() && $to->getSetting()->isIsNewMessage()) {
+                // ! New Message Notification
+                $notificationService->send(
+                    $to,
                     [
                         'title' => 'Nouveau message de ' . $from,
                         'message' => $message->getContent()
@@ -101,7 +101,7 @@ class TripRequestController extends AbstractController
         TripRequest $tripRequest,
         EntityManagerInterface $em,
         TranslatorInterface $translator,
-        MailjetService $mailjet
+        NotificationService $notificationService
     ): Response {
         if (!$tripRequest) {
             return $this->redirectToRoute('app_planning_index');
@@ -120,19 +120,15 @@ class TripRequestController extends AbstractController
 
             $to = ($user == $tripRequest->getMember()) ? $tripRequest->getTrip()->getMember() : $tripRequest->getMember();
 
+            dump($translator->trans($tripRequest->getStatus()));
             // If $to user setting isIsNewMessage
-            if (
-                $to->getSetting() &&
-                $to->getSetting()->isIsTripRequestStatusChange()
-            ) {
-                // Send email Status Change Notification
-                $mailjet->sendNotification(
-                    $to->getEmail(),
-                    $to->getPseudo(),
-                    'Changement de status',
+            if ($to->getSetting() && $to->getSetting()->isIsTripRequestStatusChange()) {
+                // ! Send email Status Change Notification
+                $notificationService->send(
+                    $to,
                     [
                         'title' => 'Changement de status pour ' . $tripRequest->getTrip()->getTitle(),
-                        'message' => 'Votre demande à maintenant le status ' . $translator->trans($tripRequest->getStatus(), [], null, 'fr')
+                        'message' => 'Votre demande à maintenant le status ' . $translator->trans($tripRequest->getStatus())
                     ]
                 );
             }

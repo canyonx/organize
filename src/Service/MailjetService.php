@@ -48,7 +48,21 @@ class MailjetService
                 ]
             ]
         ];
+        // TODO : uncomment to send emails
         $response = $mj->post(Resources::$Email, ['body' => $body]);
         $response->success() && dump($response->getData());
     }
 }
+
+/**
+ * Usecase
+ */
+// $mailjet->sendNotification(
+//     $to->getEmail(),
+//     $to->getPseudo(),
+//     'Nouveau message',
+//     [
+//         'title' => 'Nouveau message de ' . $from,
+//         'message' => $message->getContent()
+//     ]
+// );

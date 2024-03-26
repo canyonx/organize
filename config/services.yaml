@@ -31,6 +31,11 @@ services:
         arguments:
              $adminMail: '%app_admin_mail%'
 
+    # Service de notification email
+    App\Service\NotificationService:
+        arguments:
+             $adminMail: '%app_admin_mail%'
+
     # Argument pour le constructeur de FileUploader
     App\Service\FileUploader:
         arguments:
