@@ -5,9 +5,8 @@ namespace App\EventListener;
 use App\Entity\Trip;
 use Doctrine\ORM\Events;
 use App\Entity\TripRequest;
-use App\Service\MailerService;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\TripRequestRepository;
+use App\Service\NotificationService;
 use Doctrine\ORM\Event\PostUpdateEventArgs;
 use Doctrine\ORM\Event\PostPersistEventArgs;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
@@ -18,8 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class TripListener extends AbstractController
 {
     public function __construct(
-        private MailerService $mailerService,
-        private TripRequestRepository $tripRequestRepository,
+        private NotificationService $notificationService,
         private EntityManagerInterface $em
     ) {
     }
@@ -35,16 +33,27 @@ class TripListener extends AbstractController
         $this->em->persist($tr);
         $this->em->flush();
 
-        // TODO : send notification to my friends
+        $friendWith = $trip->getMember()->getFriendsWithMe();
+        foreach ($friendWith as $to) {
+            if ($to->getMember()->getSetting() && $to->getMember()->getSetting()->isIsFriendNewTrip()) {
+                $this->notificationService->send(
+                    $to->getMember(),
+                    [
+                        'title' => $trip->getMember() . ' a crée une nouvelle sortie',
+                        'message' => $trip->getTitle()
+                    ]
+                );
+            }
+        }
     }
 
     // Send email when trip is updated
     public function postUpdate(Trip $trip, PostUpdateEventArgs $event): void
     {
-        foreach ($trip->getTripRequests() as $tr) {
-            if ($tr->getStatus() == TripRequest::ACCEPTED || $tr->getStatus() == TripRequest::PENDING) {
-                // $this->mailerService->updatedTripNotification($tr->getMember()->getEmail(), $trip);
-            }
-        }
+        // foreach ($trip->getTripRequests() as $tr) {
+        //     if ($tr->getStatus() == TripRequest::ACCEPTED || $tr->getStatus() == TripRequest::PENDING) {
+        //         // $this->mailerService->updatedTripNotification($tr->getMember()->getEmail(), $trip);
+        //     }
+        // }
     }
 }

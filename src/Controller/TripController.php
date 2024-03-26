@@ -45,24 +45,7 @@ class TripController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($trip);
             $entityManager->flush();
-
-            // Friends relations where trip member is followed
-            $friendsOf = $friendRepository->findBy(['friend' => $trip->getMember()]);
-
-            // Send email to each user who follow trip member
-            // And have activated emails 
-            foreach ($friendsOf as $to) {
-                if ($to->getMember()->getSetting() && $to->getMember()->getSetting()->isIsFriendNewTrip()) {
-                    // ! Friend create new trip notification
-                    $notificationService->send(
-                        $to->getMember(),
-                        [
-                            'title' => $trip->getMember() . ' a crée une nouvelle sortie',
-                            'message' => $trip->getTitle()
-                        ]
-                    );
-                }
-            }
+            //* TripListener : send new tripnotification to each user who follow trip member
 
             return $this->redirectToRoute('app_trip_show', ['id' => $trip->getId()], Response::HTTP_SEE_OTHER);
         }
@@ -127,7 +110,6 @@ class TripController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // Write trip request in DB
             $em->persist($tr);
-            $em->flush();
 
             // Create message associate to the trip request
             if ($form->get('message')->getData()) {
@@ -139,24 +121,15 @@ class TripController extends AbstractController
                     ->setIsRead(false);
 
                 $em->persist($message);
-                $em->flush();
             }
 
-            // If trip owner setting notification is true
-            if ($trip->getMember()->getSetting() && $trip->getMember()->getSetting()->isIsNewTripRequest()) {
-                // ! Trip request notification
-                $notificationService->send(
-                    $trip->getMember(),
-                    [
-                        'title' => $tr->getMember() . ' demande à rejoindre ' . $trip->getTitle(),
-                        'message' => $message->getContent()
-                    ]
-                );
-            }
+            $em->flush();
+            //* TripRequestListener : postPersist send new TR notification
+
 
             // $this->addFlash('success', 'A join request sent to ' . $trip->getUser()->getUserName());
-            // return $this->redirectToRoute('app_trip_show', ['id' => $trip->getId()], Response::HTTP_SEE_OTHER);
-            return $this->redirectToRoute('app_trip_request_show', ['id' => $tr->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_trip_show', ['id' => $trip->getId()], Response::HTTP_SEE_OTHER);
+            // return $this->redirectToRoute('app_trip_request_show', ['id' => $tr->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('trip/show.html.twig', [

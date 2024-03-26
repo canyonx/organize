@@ -38,42 +38,22 @@ class TripRequestController extends AbstractController
 
         $trip = $tripRequest->getTrip();
 
-        // !
         if ($request->get('status')) {
-            // Deny if not owner of the trip
-            $this->denyAccessUnlessGranted('TRIP_OWNER', $trip);
-
+            $this->denyAccessUnlessGranted('TRIP_OWNER', $trip); // Deny if not owner of the trip
             $tripRequest->setStatus($request->get('status'));
             $em->flush();
-
-            $to = ($user == $tripRequest->getMember()) ? $tripRequest->getTrip()->getMember() : $tripRequest->getMember();
-
-            // If $to user setting isIsNewMessage
-            if ($to->getSetting() && $to->getSetting()->isIsTripRequestStatusChange()) {
-                // ! Status Change Notification
-                $notificationService->send(
-                    $to,
-                    [
-                        'title' => 'Changement de status pour ' . $tripRequest->getTrip()->getTitle(),
-                        'message' => 'Votre demande à maintenant le status ' . $translator->trans(ucfirst(strtolower($tripRequest->getStatus())))
-                    ]
-                );
-            }
+            //* TripRequestListener : postUpdate send new status change notification
         }
-        // !
 
         // Get messages from tripR$tripRequest request
         $discution = $messageRepository->findBy(['tripRequest' => $tripRequest], ['createdAt' => 'ASC']);
 
         // Add isRead to true when opening join request
         foreach ($discution as $message) {
-            if ($message->getMember() != $user) {
-                $message->setIsRead(true);
-            }
-            // Comment next line for notif test
-            $em->persist($message);
-            $em->flush();
+            if ($message->getMember() != $user) $message->setIsRead(true);
+            $em->persist($message); // Comment line for notif test
         }
+        $em->flush();
 
         // Create new message and message form
         $message = new Message();
@@ -87,22 +67,7 @@ class TripRequestController extends AbstractController
                 ->setIsRead(false);
             $em->persist($message);
             $em->flush();
-
-            // MessageEventListener : send newMessageNotification
-            $from = ($user == $tripRequest->getMember()) ? $tripRequest->getMember() : $tripRequest->getTrip()->getMember();
-            $to = ($user == $tripRequest->getMember()) ? $tripRequest->getTrip()->getMember() : $tripRequest->getMember();
-
-            // If $to user setting isIsNewMessage
-            if ($to->getSetting() && $to->getSetting()->isIsNewMessage()) {
-                // ! New Message Notification
-                $notificationService->send(
-                    $to,
-                    [
-                        'title' => 'Nouveau message de ' . $from,
-                        'message' => $message->getContent()
-                    ]
-                );
-            }
+            //* MessageListener : postPersist send new Message Notification
 
             return $this->redirectToRoute('app_trip_request_show', ['id' => $tripRequest->getId()], Response::HTTP_SEE_OTHER);
         }
@@ -115,43 +80,43 @@ class TripRequestController extends AbstractController
         ]);
     }
 
-    #[Route('/status/{id}', name: 'app_trip_request_status', methods: ['GET', 'POST'])]
-    public function edit(
-        Request $request,
-        TripRequest $tripRequest,
-        EntityManagerInterface $em,
-        TranslatorInterface $translator,
-        NotificationService $notificationService
-    ): Response {
-        if (!$tripRequest) {
-            return $this->redirectToRoute('app_planning_index');
-        }
+    // #[Route('/status/{id}', name: 'app_trip_request_status', methods: ['GET', 'POST'])]
+    // public function edit(
+    //     Request $request,
+    //     TripRequest $tripRequest,
+    //     EntityManagerInterface $em,
+    //     TranslatorInterface $translator,
+    //     NotificationService $notificationService
+    // ): Response {
+    //     if (!$tripRequest) {
+    //         return $this->redirectToRoute('app_planning_index');
+    //     }
 
-        // Deny if not owner of the trip
-        $this->denyAccessUnlessGranted('TRIP_OWNER', $tripRequest->getTrip());
+    //     // Deny if not owner of the trip
+    //     $this->denyAccessUnlessGranted('TRIP_OWNER', $tripRequest->getTrip());
 
-        /** @var User */
-        $user = $this->getUser();
+    //     /** @var User */
+    //     $user = $this->getUser();
 
-        $tripRequest->setStatus($request->get('status'));
-        $em->flush();
-        // JoinEventListener : send mail on update, status change
+    //     $tripRequest->setStatus($request->get('status'));
+    //     $em->flush();
+    //     // JoinEventListener : send mail on update, status change
 
-        $to = ($user == $tripRequest->getMember()) ? $tripRequest->getTrip()->getMember() : $tripRequest->getMember();
+    //     $to = ($user == $tripRequest->getMember()) ? $tripRequest->getTrip()->getMember() : $tripRequest->getMember();
 
-        // If $to user setting isIsNewMessage
-        if ($to->getSetting() && $to->getSetting()->isIsTripRequestStatusChange()) {
-            // ! Status Change Notification
-            $notificationService->send(
-                $to,
-                [
-                    'title' => 'Changement de status pour ' . $tripRequest->getTrip()->getTitle(),
-                    'message' => 'Votre demande à maintenant le status ' . $translator->trans(ucfirst(strtolower($tripRequest->getStatus())))
-                ]
-            );
-        }
-        return $this->redirectToRoute('app_trip_request_show', ['id' => $tripRequest->getId()]);
-    }
+    //     // If $to user setting isIsNewMessage
+    //     if ($to->getSetting() && $to->getSetting()->isIsTripRequestStatusChange()) {
+    //         // ! Status Change Notification
+    //         $notificationService->send(
+    //             $to,
+    //             [
+    //                 'title' => 'Changement de status pour ' . $tripRequest->getTrip()->getTitle(),
+    //                 'message' => 'Votre demande à maintenant le status ' . $translator->trans(ucfirst(strtolower($tripRequest->getStatus())))
+    //             ]
+    //         );
+    //     }
+    //     return $this->redirectToRoute('app_trip_request_show', ['id' => $tripRequest->getId()]);
+    // }
 
     #[Route('/delete/{id}', name: 'app_trip_request_delete', methods: ['POST'])]
     public function delete(
