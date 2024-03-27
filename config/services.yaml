@@ -6,6 +6,7 @@
 parameters:
     app_timezone: 'Europe/Paris'
     app_admin_mail: "%env(string:APP_ADMIN_MAIL)%"
+    app_site_name: "%env(string:APP_SITE_NAME)%"
     app_planning_week: 7
     app_images_directory: '%kernel.project_dir%/public/images/uploads/'
 
@@ -35,6 +36,7 @@ services:
     App\Service\NotificationService:
         arguments:
              $adminMail: '%app_admin_mail%'
+             $siteName: '%app_site_name%'
 
     # Argument pour le constructeur de FileUploader
     App\Service\FileUploader:

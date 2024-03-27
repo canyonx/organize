@@ -6,14 +6,13 @@ use App\Entity\User;
 use Symfony\Component\Mime\Address;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\BodyRendererInterface;
 
 class NotificationService
 {
     public function __construct(
         private string $adminMail, // Declaration in service.yaml
-        private MailerInterface $mailer,
-        private BodyRendererInterface $bodyRenderer
+        private string $siteName, // Declaration in service.yaml
+        private MailerInterface $mailer
     ) {
     }
 
@@ -24,16 +23,15 @@ class NotificationService
      * @param array $context array variables for the template
      * @return void
      */
-    public function send(User $to, array $context)
+    public function send(User $to, array $context): void
     {
         $email = (new TemplatedEmail())
-            ->from($this->adminMail)
+            ->from(new Address($this->adminMail, $this->siteName))
             ->to(new Address($to->getEmail(), $to->getPseudo()))
-            ->subject('Notification')
+            ->locale('fr_FR')
+            ->subject($context['title'])
             ->htmlTemplate("email/notification.html.twig")
             ->context($context);
-
-        $this->bodyRenderer->render($email);
 
         $this->mailer->send($email);
     }

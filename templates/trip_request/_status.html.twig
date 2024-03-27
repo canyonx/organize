@@ -22,7 +22,8 @@
 		</a>
 
 		{# Buttons action #}
-		<div>
+		<div
+			class="text-end">
 			{# Button Accept #}
 			{% if tripRequest.status == 'PENDING' or tripRequest.status == 'REFUSED'  %}
 				<a

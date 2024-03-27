@@ -1,20 +1,42 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AboutController!{% endblock %}
+{% block title %}A propos
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<section class="card">
+		<div class="card-header">
+			<h1 class="card-title">A propos</h1>
+		</div>
+		<div class="card-body">
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+			<div class="p-3">
+				<h2 class="text-primary">L'idée</h2>
+				<p>
+					Une application simple d'utilisation qui permet à ses utilisateurs d'organiser des sorties, de trouver des partenaires d'activités, de se rencontrer autour de passions communes.
+					<br>
+					Un planning pour publier ses sorties ou demander à participer à une sortie organisée par une autre personne.
+				</p>
+			</div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/home/matteo/formation/organize/src/Controller/AboutController.php</code></li>
-        <li>Your template at <code>/home/matteo/formation/organize/templates/about/index.html.twig</code></li>
-    </ul>
-</div>
+			<div class="p-3">
+				<h2 class="text-primary">Le développeur</h2>
+				<p>
+					L'application est développée et maintenue par Mattéo Dauchez.
+					<br>
+					<br>
+					Vos retours sont les bienvenus, n'hésitez pas à me contacter !
+					<br>
+					<br>
+					<a href="https://wa.me/33676201257">Whatsapp</a>
+					&ensp;
+					<a href="https://www.malt.fr/profile/matteodauchez">malt</a>
+					&ensp;
+					<a href="https://www.linkedin.com/in/matteo-dauchez-96b4262b5/">Linkedin</a>
+				</p>
+				<div class=""></div>
+			</div>
+
+		</div>
+	</section>
 {% endblock %}
