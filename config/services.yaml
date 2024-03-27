@@ -7,6 +7,7 @@ parameters:
     app_timezone: 'Europe/Paris'
     app_admin_mail: "%env(string:APP_ADMIN_MAIL)%"
     app_site_name: "%env(string:APP_SITE_NAME)%"
+    app_site_url: "%env(string:APP_SITE_URL)%"
     app_planning_week: 7
     app_images_directory: '%kernel.project_dir%/public/images/uploads/'
 

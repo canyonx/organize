@@ -1,7 +1,8 @@
 twig:
     globals:
         images_dir: 'images/uploads/'
-        site_name: 'OrganiZe'
+        site_name: '%app_site_name%'
+        site_url: '%app_site_url%'
     default_path: '%kernel.project_dir%/templates'
     form_themes: ['bootstrap_5_layout.html.twig']
 
