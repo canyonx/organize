@@ -1,23 +1,21 @@
 {% set colors = ['danger', 'info', 'success'] %}
 {% set a = [20, 30, 10] %}
 {% set b = [80, 50, 100] %}
-<div id="features" class="container px-5 mb-3" data-controller="reveal">
+<div id="features" class="mb-3" data-controller="reveal">
 	{% for key, feature in features %}
-		<section class="feature py-4 mx-auto {{ key != 0 ? 'reveal'}}">
+		<section class="feature py-4 col-8 mx-auto {{ key != 0 ? 'reveal'}}">
 			<div class="row align-items-center">
 
-				<div class="col-md-10 col-lg-6 py-2 px-5 {{ key == 0 ? 'mt-5'}}  {{ ((key + 1) / 2) matches '/^\\d+$/' ? 'order-md-2' }}">
+				<div class="col-md-6 py-2 px-5 mx-auto {{ ((key + 1) / 2) matches '/^\\d+$/' ? 'order-md-2' }}">
 					<h1 class="text-{{ colors[key] }}">{{ feature.title }}</h1>
 					<p class="border-top border-5 border-{{ colors[key] }}">
 						{{ feature.subtitle|raw }}
 					</p>
 				</div>
 
-				<div class="col-md-10 col-lg-6 {{ ((key + 1) / 2) matches '/^\\d+$/' ? 'order-md-1' }}">
+				<div class="col-md-6 mx-auto {{ ((key + 1) / 2) matches '/^\\d+$/' ? 'order-md-1' }}">
 					{% if feature.picture %}
-						<img src="{{ asset('images/' ~ feature.picture) }}" alt="{{ feature.title }}" class="shadow img-fluid rounded-5" width="500" height="500">
-					{% else %}
-						<img src="https://placehold.co/300" alt="" class="rounded-4">
+						<img src="{{ asset('images/' ~ feature.picture) }}" alt="{{ feature.title }}" class="img-fluid rounded-5" width="500" height="500">
 					{% endif %}
 				</div>
 
