@@ -29,23 +29,12 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-    App\Service\MailerService:
-        arguments:
-             $adminMail: '%app_admin_mail%'
-
-    # Service de notification email
-    App\Service\NotificationService:
-        arguments:
-             $adminMail: '%app_admin_mail%'
-             $siteName: '%app_site_name%'
-
     # Argument pour le constructeur de FileUploader
     App\Service\FileUploader:
         arguments:
             $targetDirectory: '%app_images_directory%'
 
-    # Déclaration des clés de MailjetService
-    App\Service\MailjetService:
+     # Service envoi de email
+    App\Service\MailerService:
         arguments:
-            $mjSecretKey: "%env(MJ_SECRET)%"
-            $mjPublicKey: "%env(MJ_PUBLIC)%"
+             $adminMail: '%app_admin_mail%'

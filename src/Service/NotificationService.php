@@ -3,15 +3,16 @@
 namespace App\Service;
 
 use App\Entity\User;
+use Symfony\Bridge\Twig\Mime\NotificationEmail;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Mime\Address;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 
 class NotificationService
 {
     public function __construct(
-        private string $adminMail, // Declaration in service.yaml
-        private string $siteName, // Declaration in service.yaml
+        #[Autowire('%app_admin_mail%')] private string $adminMail,
+        #[Autowire('%app_site_name%')] private string $siteName,
         private MailerInterface $mailer
     ) {
     }
@@ -25,10 +26,11 @@ class NotificationService
      */
     public function send(User $to, array $context): void
     {
-        $email = (new TemplatedEmail())
+        $email = (new NotificationEmail())
             ->from(new Address($this->adminMail, $this->siteName))
             ->to(new Address($to->getEmail(), $to->getPseudo()))
-            ->locale('fr_FR')
+            ->locale('fr-FR')
+            ->importance('')
             ->subject($context['title'])
             ->htmlTemplate("email/notification.html.twig")
             ->context($context);
@@ -42,7 +44,7 @@ class NotificationService
  * Usecase
  */
 // $notificationService->send(
-//      $to->getEmail(), // to
+//      $to, // to User
 //      // vars
 //     [
 //         'title' => 'Nouveau message de ' . $from,

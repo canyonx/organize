@@ -29,15 +29,11 @@
 			{# {% include "table/_table.html.twig" %} #}
 			{% include "table/_plan.html.twig" %}
 		</div>
-		<div class="row m-3">
-			<div class="col-auto me-auto"></div>
-			<div class="col-auto">
-				<span class="me-2">Légende</span>
-				<button class="btn btn-info rounded-pill me-1" disabled="disabled">Attente</button>
-				<button class="btn btn-success rounded-pill me-1" disabled="disabled">Acceptée</button>
-				<button class="btn btn-secondary rounded-pill me-1" disabled="disabled">Refusée</button>
-			</div>
+		<div class="text-end m-3">
+			<button class="btn btn-sm btn-light rounded-pill" disabled="disabled">Légende</button>
+			<button class="btn btn-sm btn-info rounded-pill" disabled="disabled">Attente</button>
+			<button class="btn btn-sm btn-success rounded-pill" disabled="disabled">Acceptée</button>
+			<button class="btn btn-sm btn-secondary rounded-pill" disabled="disabled">Refusée</button>
 		</div>
-	</section>
-
-{% endblock %}
+	</div>
+</section>{% endblock %}

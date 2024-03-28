@@ -50,10 +50,16 @@ class TripListener extends AbstractController
     // Send email when trip is updated
     public function postUpdate(Trip $trip, PostUpdateEventArgs $event): void
     {
-        // foreach ($trip->getTripRequests() as $tr) {
-        //     if ($tr->getStatus() == TripRequest::ACCEPTED || $tr->getStatus() == TripRequest::PENDING) {
-        //         // $this->mailerService->updatedTripNotification($tr->getMember()->getEmail(), $trip);
-        //     }
-        // }
+        foreach ($trip->getTripRequests() as $tr) {
+            if ($tr->getStatus() == TripRequest::ACCEPTED || $tr->getStatus() == TripRequest::PENDING) {
+                $this->notificationService->send(
+                    $tr->getMember(),
+                    [
+                        'title' => $trip->getMember() . ' a modifié la sortie ' . $trip->getTitle(),
+                        'message' => $trip->getMember() . ' a modifié une sortie à laquelle vous avez demander à participer. ' . "\r\n" . 'Veuillez vérifier votre planning pour que cette sortie corresponde toujours avec vos disponibilités !'
+                    ]
+                );
+            }
+        }
     }
 }

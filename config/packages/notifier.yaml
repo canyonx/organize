@@ -8,5 +8,6 @@ framework:
             high: ['email']
             medium: ['email']
             low: ['email']
+            '': ['email']
         admin_recipients:
-            - { email: admin@example.com }
+            - { email: "%app_admin_mail%" }

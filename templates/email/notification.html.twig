@@ -1,50 +1,20 @@
-{% apply inky_to_html|inline_css %}
-<html>
-	<head>
-		<style>
-			{% block style %}
-				{{source("@email/zurb_2/main.css")}}
-				{{source("@email/zurb_2/notification/local.css")}}
-			{% endblock %}
-		</style>
-	</head>
-	<body>
-		<spacer size="32"></spacer>
-		<wrapper class="body">
-			<container>
-				{# Header #}
-				<spacer size="20"></spacer>
-				<row>
-					<columns>
-						<p>
-							Notification
-							<br>
-							<b>{{ title }}</b>
-						</p>
-					</columns>
-				</row>
-				<row>
-					<columns>
-						<p>
-							{{ message }}
-						</p>
-					</columns>
-				</row>
-				<row>
-					<columns>
-						<center>
-							<spacer size="20"></spacer>
-							<button href="{{ site_url }}" class="rounded">
-								Aller sur
-								{{ site_name }}
-							</button>
-							<spacer size="20"></spacer>
-						</center>
-					</columns>
-				</row>
-				{# Footer #}
-			</container>
-		</wrapper>
-	</body>
-</html>
-{% endapply %}
+{% extends '@email/default/notification/body.html.twig' %}
+
+{% block content %}
+	<container>
+		<row>
+			<columns>
+				{{ message|raw|nl2br }}
+			</columns>
+		</row>
+	</container>
+{% endblock %}
+
+{% block action %}
+	<button href="{{ site_url }}" class="rounded">
+		Aller sur
+		{{ site_name }}
+	</button>
+{% endblock %}
+
+{% set footer_text = 'Notification email envoyé par ' ~ site_name %}
