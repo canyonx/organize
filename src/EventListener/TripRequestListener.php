@@ -4,11 +4,10 @@ namespace App\EventListener;
 
 use Doctrine\ORM\Events;
 use App\Entity\TripRequest;
+use App\Repository\MessageRepository;
 use App\Service\NotificationService;
 use Doctrine\ORM\Event\PostUpdateEventArgs;
 use Doctrine\ORM\Event\PostPersistEventArgs;
-use Symfony\Component\Notifier\NotifierInterface;
-use Symfony\Component\Notifier\Recipient\Recipient;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Notifier\Notification\Notification;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
@@ -21,7 +20,7 @@ class TripRequestListener extends AbstractController
     public function __construct(
         private NotificationService $notificationService,
         private TranslatorInterface $translator,
-        private NotifierInterface $notifier,
+        private MessageRepository $messageRepository,
     ) {
     }
 
@@ -29,8 +28,7 @@ class TripRequestListener extends AbstractController
     public function postPersist(TripRequest $tripRequest, PostPersistEventArgs $event): void
     {
         $trip = $tripRequest->getTrip();
-        $message = $tripRequest->getMessages();
-        $message = $message->key(0);
+        $message = $this->messageRepository->findOneBy(['tripRequest' => $tripRequest, 'member' => $this->getUser()]);
 
         if ($tripRequest->getStatus() == TripRequest::OWNER) {
             return;
@@ -41,11 +39,9 @@ class TripRequestListener extends AbstractController
                 $trip->getMember(),
                 [
                     'title' => $tripRequest->getMember() . ' demande à rejoindre ' . $trip->getTitle(),
-                    'message' => $message
+                    'message' => $message->getContent()
                 ]
             );
-
-            $this->notifier->send(new Notification('Thank you for the feedback; your comment will be posted after moderation.', ['browser']));
         }
     }
 

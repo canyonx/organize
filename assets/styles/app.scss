@@ -30,8 +30,8 @@ h1, h2, h3, h4, h5, .title {
 
 // Backgrounds
 .background {
-    // background-color: #d4e2d4;
     background-image: linear-gradient(140deg, #f0f4f9 20%, #d4e2d4 100%);
+    background-image: linear-gradient(140deg, #ffcb6b 20%, #ff5572 100%);
 }
 
 // .background-nav {
@@ -74,11 +74,12 @@ $enable-shadows: true;
 // Card
 $card-border-radius: 2rem;
 $card-border-width: 0px;
+$card-title-color: #31364a;
 $card-cap-bg: #ffffff;
 $card-cap-padding-x: 1rem;
 $card-cap-padding-y: 1rem;
+$card-bg: #ffffff;
 // $card-box-shadow: 0 5px 10px #0000001a;
-$card-title-color: #31364a;
 
 // shadow
 $box-shadow: 0 5px 10px #0000001a;

@@ -12,6 +12,7 @@ use App\Entity\Homepage;
 use App\Entity\Legal;
 use App\Entity\Message;
 use App\Entity\Signal;
+use App\Entity\TripRequest;
 use App\Repository\TripRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -79,6 +80,7 @@ class DashboardController extends AbstractDashboardController
             ->setBadge(count($this->tripRepository->findByPeriod(">=")));
 
         yield MenuItem::section('Messages');
+        yield MenuItem::linkToCrud('TripRequests', 'fas fa-arrow-right', TripRequest::class);
         yield MenuItem::linkToCrud('Messages', 'fas fa-comment', Message::class);
 
         yield MenuItem::section('Users');
