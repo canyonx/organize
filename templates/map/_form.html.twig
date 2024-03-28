@@ -1,0 +1,30 @@
+{{ form_start(form) }}
+{{ form_errors(form) }}
+
+{{ form_row(form.location, {value: search.location ?: app.user.city}) }}
+{{ form_row(form.lat, {value: search.lat ?: app.user.lat}) }}
+{{ form_row(form.lng, {value: search.lng ?: app.user.lng}) }}
+{{ form_widget(form.isFriend, {attr: {'class': 'form-check-input'}}) }}
+
+<div class="row">
+	<div class="col-md-3">
+		<div class="mb-3" data-controller="city-search">
+			<label for="city_search" class="form-label">Ville</label>
+			<div id="city_search"></div>
+		</div>
+	</div>
+	<div class=" col-md-3">
+		{{ form_row(form.distance, {value: distance}) }}
+	</div>
+	<div class="col-md-3">
+		{{ form_row(form.dateAt, {value: search.dateAt|date('Y-m-d')}) }}
+	</div>
+	<div class="col-md-3 d-flex">
+		<button type="submit" class="btn btn-primary rounded-pill w-100">
+			Rechercher dans
+			{{ totalTrips }}
+			sorties
+		</button>
+	</div>
+</div>
+{{ form_end(form) }}

@@ -13,6 +13,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -58,7 +59,7 @@ class TripCrudController extends AbstractCrudController
             TextField::new('title'),
             BooleanField::new('isAvailable'),
             TextField::new('location'),
-            TextEditorField::new('description')
+            TextareaField::new('description')
                 ->hideOnIndex(),
             CollectionField::new('tripRequests')
                 ->hideOnForm()

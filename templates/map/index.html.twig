@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Carte
+{% endblock %}
+
+{% block body %}
+	<turbo-frame id="searchForm">
+		<section class="card" data-controller="map">
+			<div class="card-header">
+				<h1 class="card-title">Carte</h1>
+				{% include "map/_form.html.twig" %}
+			</div>
+			<div id="map" class="rounded-bottom-5" style="height:480px"></div>
+		</section>
+	</turbo-frame>
+{% endblock %}

@@ -6,6 +6,9 @@ import Photon from '@webgeodatavore/photon-geocoder-autocomplete';
  */
 export default class extends Controller {
     connect(){
+        const form = document.getElementsByTagName('form');
+        const formName = form[0].name;
+        
         // Format result in the search input autocomplete
         function formatResult(feature, el) {
 
@@ -39,8 +42,6 @@ export default class extends Controller {
             let input = document.getElementsByClassName('photon-input');
             input[0].setAttribute('placeholder', feature.properties.city);
 
-            let form = document.getElementsByTagName('form');
-            let formName = form[0].name;
             
             document.getElementById(formName + '_city').setAttribute('value', feature.properties.city);
             document.getElementById(formName + '_lat').setAttribute('value', feature.geometry.coordinates[1].toFixed(4));
@@ -60,7 +61,7 @@ export default class extends Controller {
         var container = new Photon.Search({
             resultsHandler: myHandler,
             onSelected: onSelected,
-            placeholder: "Entrez une ville",
+            placeholder: document.getElementById(formName + '_city').value,
             formatResult: formatResult,
             url: "https://api-adresse.data.gouv.fr/search/?type=municipality&autocomplete=1&",
             feedbackEmail: null,
@@ -75,16 +76,16 @@ export default class extends Controller {
         // Where to show search field
         document.getElementById('city_profile').appendChild(element);
 
-        // Add class from-control to search field
-        var inputAddress = document.getElementsByClassName('photon-input');
+        // // Add class from-control to search field
+        // var inputAddress = document.getElementsByClassName('photon-input');
 
-        // Get the form name
-        let form = document.getElementsByTagName('form');
-        let formName = form[0].name;
+        // // Get the form name
+        // let form = document.getElementsByTagName('form');
+        // let formName = form[0].name;
 
-        if (document.getElementById(formName + '_city').value) {
-            inputAddress[0].setAttribute('placeholder', document.getElementById(formName + '_city').value);
-        }
+        // if (document.getElementById(formName + '_city').value) {
+        //     inputAddress[0].setAttribute('placeholder', document.getElementById(formName + '_city').value);
+        // }
         
     }
 }

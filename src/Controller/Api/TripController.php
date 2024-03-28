@@ -5,9 +5,12 @@ namespace App\Controller\Api;
 use App\Entity\User;
 use App\Service\DateService;
 use App\Repository\TripRepository;
+use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TripController extends AbstractController
@@ -50,5 +53,41 @@ class TripController extends AbstractController
         }
 
         return $this->json($alreadyTrip);
+    }
+
+    #[Route('/api/alltripthatday', methods: ['GET', 'POST'], name: 'api_all_trip_that_day')]
+    public function getAllTripThatDay(
+        Request $request,
+        TripRepository $tripRepository,
+        SerializerInterface $serializer,
+    ): Response {
+        /** @var User */
+        $user = $this->getUser();
+
+        // Get POST data from axios
+        $postData = json_decode($request->getContent());
+        $location = $postData->location;
+        $date = $postData->date;
+        $lat = $postData->lat;
+        $lng = $postData->lng;
+        $distance = $postData->distance;
+
+        $dateFrom = new \DateTimeImmutable($date);
+        $dateTo = new \DateTimeImmutable($date . ' + 1 day');
+
+        $trips = $tripRepository->findBySearchFields(
+            user: $this->getUser(),
+            location: $location,
+            dateFrom: $dateFrom,
+            dateTo: $dateTo,
+            lat: $lat,
+            lng: $lng,
+            distance: $distance,
+        );
+
+        $trips = $serializer->serialize($trips, 'json', [AbstractNormalizer::ATTRIBUTES => ['id', 'title', 'lat', 'lng', 'activity' => ['name']]]);
+
+
+        return $this->json($trips);
     }
 }

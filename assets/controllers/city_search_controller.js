@@ -6,6 +6,9 @@ import Photon from '@webgeodatavore/photon-geocoder-autocomplete';
  */
 export default class extends Controller {
     initialize(){
+        const form = document.getElementsByTagName('form');
+        const formName = form[0].name;
+        
         // Format result in the search input autocomplete
         function formatResult(feature, el) {
 
@@ -38,11 +41,10 @@ export default class extends Controller {
         function onSelected(feature) {
             let input = document.getElementsByClassName('photon-input');
             input[0].setAttribute('placeholder', feature.properties.city);
-            input[0].classList.add("form-control");
             
-            document.getElementById('search_location').setAttribute('value', feature.properties.city);
-            document.getElementById('search_lat').setAttribute('value', feature.geometry.coordinates[1].toFixed(4));
-            document.getElementById('search_lng').setAttribute('value', feature.geometry.coordinates[0].toFixed(4));
+            document.getElementById(formName + '_location').setAttribute('value', feature.properties.city);
+            document.getElementById(formName + '_lat').setAttribute('value', feature.geometry.coordinates[1].toFixed(4));
+            document.getElementById(formName + '_lng').setAttribute('value', feature.geometry.coordinates[0].toFixed(4));
             
             console.log(feature);
         }
@@ -58,7 +60,7 @@ export default class extends Controller {
         var container = new Photon.Search({
             resultsHandler: myHandler,
             onSelected: onSelected,
-            placeholder: document.getElementById('search_location').value,
+            placeholder: document.getElementById(formName + '_location').value,
             formatResult: formatResult,
             url: "https://api-adresse.data.gouv.fr/search/?type=municipality&autocomplete=1&",
             feedbackEmail: null,
@@ -71,6 +73,6 @@ export default class extends Controller {
             element.appendChild(container);
 
         // Where to show search field
-        document.getElementById('city_search').appendChild(element);        
+        document.getElementById('city_search').appendChild(element);       
     }
 }
