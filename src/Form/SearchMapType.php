@@ -25,6 +25,8 @@ class SearchMapType extends AbstractType
 
         $builder
             ->add('dateAt', DateType::class, [
+                'label' => false,
+                // 'label' => 'Date',
                 'widget' => 'single_text',
                 'required' => true,
                 'placeholder' => (new \DateTime('today'))->format('d/m/Y'),
@@ -44,6 +46,7 @@ class SearchMapType extends AbstractType
                 'label' => false
             ])
             ->add('distance', ChoiceType::class, [
+                'label' => false,
                 'mapped' => false,
                 // 'required' => false,
                 'choices' => $choices,

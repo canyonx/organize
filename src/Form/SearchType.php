@@ -47,13 +47,18 @@ class SearchType extends AbstractType
                 'label' => false
             ])
             ->add('distance', ChoiceType::class, [
+                'label' => false,
                 'mapped' => false,
                 // 'required' => false,
                 'choices' => $choices,
                 // 'empty_data' => null
             ])
             ->add('activity', EntityType::class, [
-                'label' => 'Activité',
+                'label' => false,
+                // 'label' => 'Activité',
+                'attr' => [
+                    'placeholder' => 'Activité'
+                ],
                 'class' => Activity::class,
                 'choice_label' => function (Activity $activity): string {
                     return ucfirst($activity->getName());

@@ -18,6 +18,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 
 class TripCrudController extends AbstractCrudController
 {
@@ -53,8 +54,9 @@ class TripCrudController extends AbstractCrudController
         return [
             IdField::new('id')
                 ->hideOnForm(),
-            DateField::new('dateAt')
+            DateTimeField::new('dateAt')
                 ->setFormat("dd MMMM - HH'h'mm"),
+            AssociationField::new('member'),
             AssociationField::new('activity'),
             TextField::new('title'),
             BooleanField::new('isAvailable'),

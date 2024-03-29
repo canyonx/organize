@@ -9,6 +9,22 @@ export default class extends Controller {
     initialize() {
         var lat = document.getElementById('search_map_lat').value;
         var lng = document.getElementById('search_map_lng').value;
+        var layer = L.layerGroup();
+
+        const icon = this.defaultMarker();
+
+        const map = this.loadmap(lat, lng, layer, icon);
+
+        this.getTrips(map, layer, icon);
+
+    }
+
+    // Initialize map
+    loadmap(lat, lng, layer){
+        const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 17,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        });
 
         var map = L.map('map', {
             center : [lat, lng],
@@ -16,15 +32,15 @@ export default class extends Controller {
             minZoom: 5,
             maxZoom: 17,
             dragging: true, 
-            scrollWheelZoom: false
+            scrollWheelZoom: false,
+            layers: [tiles, layer]
         })
 
-        const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 17,
-            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        }).addTo(map);
-
-        // Initialize icon
+        return map;
+    }
+    
+    // Define marker icon
+    defaultMarker(){
         var defaultMarker = L.icon({
             iconUrl: '../../images/marker-icon.png',
 
@@ -33,10 +49,12 @@ export default class extends Controller {
             popupAnchor:  [0, -40] // point from which the popup should open relative to the iconAnchor
         });
 
-        // const marker = L.marker([lat, lng], {icon: defaultMarker}).addTo(map)
-        // 	.bindPopup('<a href="https://maps.google.com/?q=' + lat + ',' + lng + '">Ouvrir avec Google map</a>');
+        return defaultMarker;
+    }   
 
-       // axios /api/alltripthatday
+    // get Trips to show
+    getTrips(map, layer, icon){        
+        // axios /api/alltripthatday
         axios.post('/api/alltripthatday', {
             date: document.getElementById('search_map_dateAt').value,
             location: document.getElementById('search_map_location').value,
@@ -46,17 +64,22 @@ export default class extends Controller {
         })
         .then(function (response) {
             // Foreach trip add marker
-                // console.log(response);
+            // console.log(response);
             response =JSON.parse(response.data);
             for (let index = 0; index < response.length; index++) {
                 const element = response[index];
-                const marker = L.marker([element.lat, element.lng], {icon: defaultMarker}).addTo(map)
-                        .bindPopup('<a href="https://127.0.0.1:8000/trip/' + element.id + '" data-turbo-frame="_top">' + element.title + '</a><br>' + element.activity.name);
+                // console.log(element);
+                const markers = (L.marker([element.lat, element.lng], {icon: icon})
+                        .bindPopup('<div class="text-center"><a href="https://127.0.0.1:8000/trip/' + element.id + '" data-turbo-frame="_top">'
+                         + element.title + '</a><br>'
+                         + element.activity.name + '</div>')
+                        .addTo(layer));
             }
+            layer.addTo(map);
         })
         .catch(function (error) {
             // handle error
             console.log(error);
-        }); 
+        });
     }
 }

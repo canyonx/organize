@@ -5,31 +5,30 @@
 {{ form_row(form.lat, {value: search.lat ?: app.user.lat}) }}
 {{ form_row(form.lng, {value: search.lng ?: app.user.lng}) }}
 
-<div class="row">
-	<div class="col-md-4">
-		<div class="mb-3" data-controller="city-search">
-			<label for="city_search" class="form-label">Ville</label>
+<div class="row align-items-baseline">
+	<div class="col-md-3">
+		<div
+			class="mb-3" data-controller="city-search">
+			{# <label for="city_search" class="form-label">Ville</label> #}
 			<div id="city_search"></div>
 		</div>
 	</div>
-	<div class=" col-md-4">
+	<div class=" col-md-3">
 		{{ form_row(form.distance, {value: distance}) }}
 		{# {{ form_row(form.distance, {value: distance, attr: {'data-controller': 'search-distance'}}) }} #}
 	</div>
-	<div class="col-md-4">
+	<div class="col-md-3">
 		{{ form_row(form.activity) }}
+	</div>
+	<div class="col-md-3 mb-2 form-check form-switch">
+		{{ form_row(form.isFriend, {attr: {'class': 'form-check-input'}}) }}
 	</div>
 	{# <div class="col">{{ form_row(form.dateAt, {value: search.dateAt|date('Y-m-d')}) }}</div> #}
 </div>
 <div class="row align-items-baseline justify-content-center">
-	<div class="col-md-3 mb-2 form-check form-switch">
-		{{ form_widget(form.isFriend, {attr: {'class': 'form-check-input'}}) }}
-	</div>
-	<div class="col-md-9">
+	<div class="col">
 		<button type="submit" class="btn btn-primary rounded-pill w-100">
-			Rechercher dans
-			{{ totalTrips }}
-			sorties
+			Rechercher
 		</button>
 	</div>
 </div>
