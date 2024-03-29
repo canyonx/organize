@@ -71,6 +71,7 @@ class TripController extends AbstractController
         $lat = $postData->lat;
         $lng = $postData->lng;
         $distance = $postData->distance;
+        $isFriend = $postData->isFriend ? true : false;
 
         $dateFrom = new \DateTimeImmutable($date);
         $dateTo = new \DateTimeImmutable($date . ' + 1 day');
@@ -83,6 +84,7 @@ class TripController extends AbstractController
             lat: $lat,
             lng: $lng,
             distance: $distance,
+            isFriend: $isFriend,
         );
 
         $trips = $serializer->serialize($trips, 'json', [AbstractNormalizer::ATTRIBUTES => ['id', 'title', 'lat', 'lng', 'activity' => ['name']]]);

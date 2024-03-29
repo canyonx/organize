@@ -29,7 +29,7 @@ class NotificationService
         $email = (new NotificationEmail())
             ->from(new Address($this->adminMail, $this->siteName))
             ->to(new Address($to->getEmail(), $to->getPseudo()))
-            ->locale('fr-FR')
+            ->locale('fr')
             ->importance('')
             ->subject($context['title'])
             ->htmlTemplate("email/notification.html.twig")

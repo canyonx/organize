@@ -4,39 +4,41 @@
 {% endblock %}
 
 {% block body %}
-	<section class="card col-md-8 col-lg-6 mx-auto">
-		<div class="card-header">
-			<h1 class="card-title">Se connecter</h1>
+	<section class="col-md-8 col-lg-6 mx-auto">
+		<div class="card">
+			<div class="card-header">
+				<h1 class="card-title">Se connecter</h1>
 
-			<form method="post">
-				{% if error %}
-					<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-				{% endif %}
+				<form method="post">
+					{% if error %}
+						<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+					{% endif %}
 
-				{% if app.user %}
-					<div class="mb-3">
-						Connecté en tant que
-						{{ app.user.userIdentifier }},
-						<a href="{{ path('app_logout') }}">Déconnexion</a>
-					</div>
-				{% endif %}
-			</div>
-			<div class="card-body">
-				<label class="mb-1" for="inputEmail">Adresse email</label>
-				<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control mb-4" autocomplete="email" required autofocus>
-
-				<label class="mb-1" for="inputPassword">Mot de passe</label>
-				<input type="password" name="password" id="inputPassword" class="form-control mb-4" autocomplete="current-password" required>
-
-				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-				<div class="d-flex justify-content-between align-items-baseline">
-					<button class="btn btn-primary rounded-pill p-2" type="submit">
-						Se connecter
-					</button>
-					<a class="text-decoration-none" href="{{ path("app_password_lost") }}">Mot de passe oublié ?</a>
+					{% if app.user %}
+						<div class="mb-3">
+							Connecté en tant que
+							{{ app.user.userIdentifier }},
+							<a href="{{ path('app_logout') }}">Déconnexion</a>
+						</div>
+					{% endif %}
 				</div>
-			</form>
+				<div class="card-body">
+					<label class="mb-1" for="inputEmail">Adresse email</label>
+					<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control mb-4" autocomplete="email" required autofocus>
+
+					<label class="mb-1" for="inputPassword">Mot de passe</label>
+					<input type="password" name="password" id="inputPassword" class="form-control mb-4" autocomplete="current-password" required>
+
+					<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+					<div class="d-flex justify-content-between align-items-baseline">
+						<button class="btn btn-primary rounded-pill p-2" type="submit">
+							Se connecter
+						</button>
+						<a class="text-decoration-none" href="{{ path("app_password_lost") }}">Mot de passe oublié ?</a>
+					</div>
+				</form>
+			</div>
 		</div>
 	</section>
 {% endblock %}

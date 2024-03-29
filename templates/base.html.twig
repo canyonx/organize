@@ -54,12 +54,12 @@
 				{# Body #}
 				{% block body %}{% endblock %}
 			</div>
+			{# Footer #}
+			<div class="d-none d-md-block">
+				{% include "shared/_footer.html.twig" %}
+			</div>
 		{% endblock %}
 
-		{# Footer #}
-		<div class="d-none d-md-block">
-			{% include "shared/_footer.html.twig" %}
-		</div>
 		<div class="sticky-bottom d-block d-md-none">
 			{% include 'shared/_navbar_small.html.twig' %}
 		</div>

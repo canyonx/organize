@@ -27,7 +27,7 @@ class SearchController extends AbstractController
         $search = new Trip();
         $search->setDateAt(new \DateTimeImmutable('today'));
 
-        $form = $this->createForm(SearchType::class, $search);
+        $form = $this->createForm(SearchType::class, $search, ['page' => 'search']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -82,8 +82,6 @@ class SearchController extends AbstractController
             'calendar' => $searchService->getSearchCalendar($trips, $search->getDateAt(), $this->getParameter('app_planning_week')),
             // Form search
             'form' => $form,
-            // Total trips in app
-            'totalTrips' => $tripRepository->countTotalTrips($user, (new \DateTime('today')))
         ]);
     }
 }

@@ -1,20 +1,30 @@
-<h1>
-	Bienvenue
-	{{ username }}
-	!
-</h1>
+{% extends '@email/default/notification/body.html.twig' %}
 
-<p>
-	Tu t'es enregistré avec l'email suivant
-	<br>
-	<code>{{ email.to[0].address }}</code>
-</p>
+{% block content %}
+	<h1>
+		Bienvenue
+		{{ username }}
+		!
+	</h1>
 
-<p>
-	Merci de vérifier ton email en cliquant sur ce lien avant de pouvoir te connecter
-	<br>
-	<a href="{{ signedUrl|raw }}">Confirmer mon email</a>. Ce lien expire dans
-	{{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
-</p>
+	<p>
+		Tu t'es enregistré avec l'email
+		<code>{{ email.to[0].address }}</code>
+	</p>
 
-<p>OrganiZe</p>
+	<p>
+		Merci de vérifier ton email en cliquant sur ce lien avant de pouvoir te connecter. Ce lien expire dans
+		{{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
+	</p>
+{% endblock %}
+
+{% block action %}
+	<button href="{{ signedUrl|raw }}" class="rounded">Confirmer mon email</button>
+{% endblock %}
+
+
+{% block footer %}
+	<p>
+		<small>Inscription</small>
+	</p>
+{% endblock %}

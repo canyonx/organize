@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Form\NewPasswordType;
 use App\Form\LostPasswordType;
-use App\Service\MailjetService;
 use App\Repository\UserRepository;
+use Symfony\Component\Mime\Address;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Bridge\Twig\Mime\NotificationEmail;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,7 +29,7 @@ class PasswordController extends AbstractController
         UserRepository $userRepository,
         EntityManagerInterface $em,
         TokenGeneratorInterface $tokenGenerator,
-        MailjetService $mailjetService
+        MailerInterface $mailer
     ) {
         $form = $this->createForm(LostPasswordType::class);
 
@@ -47,15 +49,18 @@ class PasswordController extends AbstractController
             $url = $this->generateUrl('app_password_new', ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL);
 
             // Envoi un mail avec le new mdp
-            $mailjetService->sendNotification(
-                $user->getEmail(),
-                $user->getPseudo(),
-                "Mot de passe perdu",
-                [
-                    'title' => 'Mot de passe perdu',
-                    'message' => 'Lien de réinitialisation ' . $url
-                ]
-            );
+            $email = (new NotificationEmail())
+                ->from(new Address($this->getParameter('app_admin_mail'), $this->getParameter('app_site_name')))
+                ->to($user->getEmail())
+                ->importance('')
+                ->subject('Mot de passe perdu')
+                ->htmlTemplate("email/lost_password.html.twig")
+                ->context([
+                    'message' => 'Clique ici pour choisir un nouveau mot de passe',
+                    'url' => $url
+                ]);
+
+            $mailer->send($email);
 
             $this->addFlash('success', 'Un lien de changement de mot de passe à été envoyé a votre adresse');
             return $this->redirectToRoute('app_login');

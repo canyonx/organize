@@ -4,7 +4,6 @@
 {{ form_row(form.location, {value: search.location ?: app.user.city}) }}
 {{ form_row(form.lat, {value: search.lat ?: app.user.lat}) }}
 {{ form_row(form.lng, {value: search.lng ?: app.user.lng}) }}
-{{ form_widget(form.isFriend, {attr: {'class': 'form-check-input'}}) }}
 
 <div class="row align-items-baseline">
 	<div class="col-md-3">
@@ -20,10 +19,11 @@
 	<div class="col-md-3">
 		{{ form_row(form.dateAt, {value: search.dateAt|date('Y-m-d')}) }}
 	</div>
-	<div class="col-md-3">
-		<button type="submit" class="btn btn-primary rounded-pill w-100" data-controller="map#refresh">
-			Rechercher
-		</button>
+	<div class="col-md-3 form-check form-switch">
+		{{ form_row(form.isFriend, {attr: {'class': 'form-check-input'}}) }}
 	</div>
 </div>
+<button type="submit" class="btn btn-primary rounded-pill w-100">
+	Rechercher
+</button>
 {{ form_end(form) }}

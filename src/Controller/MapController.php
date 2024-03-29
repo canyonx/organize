@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Trip;
 use App\Entity\User;
+use App\Form\SearchType;
 use App\Form\SearchMapType;
 use App\Repository\TripRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +26,7 @@ class MapController extends AbstractController
         $search = new Trip();
         $search->setDateAt(new \DateTimeImmutable('today'));
 
-        $form = $this->createForm(SearchMapType::class, $search);
+        $form = $this->createForm(SearchType::class, $search, ['page' => 'map']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -78,8 +79,6 @@ class MapController extends AbstractController
             'search' => $search,
             // Distance value
             'distance' => $distance,
-            // Total trips in app
-            'totalTrips' => $tripRepository->countTotalTrips($user, (new \DateTime('today')))
         ]);
     }
 }

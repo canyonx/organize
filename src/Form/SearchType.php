@@ -27,16 +27,6 @@ class SearchType extends AbstractType
         }
 
         $builder
-            // ->add('dateAt', DateType::class, [
-            //     'widget' => 'single_text',
-            //     'required' => false,
-            //     'placeholder' => (new \DateTime('today'))->format('d/m/Y'),
-            //     'empty_data' => (new \DateTime('today'))->format('Y-m-d'),
-            //     'attr' => [
-            //         'class' => 'js-datepicker',
-            //         'min' => date('d/m/Y')
-            //     ]
-            // ])
             ->add('location', HiddenType::class, [
                 'label' => false
             ])
@@ -53,35 +43,57 @@ class SearchType extends AbstractType
                 'choices' => $choices,
                 // 'empty_data' => null
             ])
-            ->add('activity', EntityType::class, [
-                'label' => false,
-                // 'label' => 'Activité',
-                'attr' => [
-                    'placeholder' => 'Activité'
-                ],
-                'class' => Activity::class,
-                'choice_label' => function (Activity $activity): string {
-                    return ucfirst($activity->getName());
-                },
-                // 'multiple' => true,
-                'autocomplete' => true, // Symfony-ux Autocomplete
-                'query_builder' => function (EntityRepository $er): QueryBuilder {
-                    return $er->createQueryBuilder('a')
-                        ->orderBy('a.name', 'ASC');
-                },
-                'required' => false
-            ])
             ->add('isFriend', CheckboxType::class, [
                 'mapped' => false,
                 'label' => 'Utilisateurs suivis',
                 'required' => false
             ]);
+
+        // If use search form from search
+        if ($options['page'] == 'search') {
+            $builder
+                ->add('activity', EntityType::class, [
+                    'label' => false,
+                    // 'label' => 'Activité',
+                    'attr' => [
+                        'placeholder' => 'Activité'
+                    ],
+                    'class' => Activity::class,
+                    'choice_label' => function (Activity $activity): string {
+                        return ucfirst($activity->getName());
+                    },
+                    // 'multiple' => true,
+                    'autocomplete' => true, // Symfony-ux Autocomplete
+                    'query_builder' => function (EntityRepository $er): QueryBuilder {
+                        return $er->createQueryBuilder('a')
+                            ->orderBy('a.name', 'ASC');
+                    },
+                    'required' => false
+                ]);
+        }
+
+        // If use search form from map
+        if ($options['page'] == 'map') {
+            $builder
+                ->add('dateAt', DateType::class, [
+                    'label' => false,
+                    'widget' => 'single_text',
+                    'required' => false,
+                    'placeholder' => (new \DateTime('today'))->format('d/m/Y'),
+                    'empty_data' => (new \DateTime('today'))->format('Y-m-d'),
+                    'attr' => [
+                        'class' => 'js-datepicker',
+                        'min' => date('d/m/Y')
+                    ]
+                ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Trip::class,
+            'page' => 'search',
         ]);
     }
 }

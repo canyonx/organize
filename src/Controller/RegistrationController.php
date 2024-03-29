@@ -8,6 +8,7 @@ use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use Symfony\Component\Mime\Address;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\NotificationEmail;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -71,10 +72,11 @@ class RegistrationController extends AbstractController
             $this->emailVerifier->sendEmailConfirmation(
                 'app_verify_email',
                 $user,
-                (new TemplatedEmail())
-                    ->from(new Address($this->getParameter('app_admin_mail'), 'OrganiZe'))
+                (new NotificationEmail())
+                    ->from(new Address($this->getParameter('app_admin_mail'), $this->getParameter('app_site_name')))
                     ->to($user->getEmail())
-                    ->subject('Confirme ton email - Organize')
+                    ->importance('')
+                    ->subject('Confirme ton email - ' . $this->getParameter('app_site_name'))
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
 

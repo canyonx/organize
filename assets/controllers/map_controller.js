@@ -7,8 +7,8 @@ import L from '../vendor/leaflet/leaflet.index.js';
  */
 export default class extends Controller {
     initialize() {
-        var lat = document.getElementById('search_map_lat').value;
-        var lng = document.getElementById('search_map_lng').value;
+        var lat = document.getElementById('search_lat').value;
+        var lng = document.getElementById('search_lng').value;
         var layer = L.layerGroup();
 
         const icon = this.defaultMarker();
@@ -28,7 +28,7 @@ export default class extends Controller {
 
         var map = L.map('map', {
             center : [lat, lng],
-            zoom: 9,
+            zoom: 10,
             minZoom: 5,
             maxZoom: 17,
             dragging: true, 
@@ -57,11 +57,12 @@ export default class extends Controller {
         const baseUrl = window.location.origin;
         // axios /api/alltripthatday
         axios.post('/api/alltripthatday', {
-            date: document.getElementById('search_map_dateAt').value,
-            location: document.getElementById('search_map_location').value,
-            lat: document.getElementById('search_map_lat').value,
-            lng: document.getElementById('search_map_lng').value,
-            distance: document.getElementById('search_map_distance').value,
+            date: document.getElementById('search_dateAt').value,
+            location: document.getElementById('search_location').value,
+            lat: document.getElementById('search_lat').value,
+            lng: document.getElementById('search_lng').value,
+            distance: document.getElementById('search_distance').value,
+            isFriend: document.getElementById('search_isFriend').checked,
         })
         .then(function (response) {
             // Foreach trip add marker
