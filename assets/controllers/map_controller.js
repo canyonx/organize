@@ -54,6 +54,7 @@ export default class extends Controller {
 
     // get Trips to show
     getTrips(map, layer, icon){        
+        const baseUrl = window.location.origin;
         // axios /api/alltripthatday
         axios.post('/api/alltripthatday', {
             date: document.getElementById('search_map_dateAt').value,
@@ -70,9 +71,11 @@ export default class extends Controller {
                 const element = response[index];
                 // console.log(element);
                 const markers = (L.marker([element.lat, element.lng], {icon: icon})
-                        .bindPopup('<div class="text-center"><a href="https://127.0.0.1:8000/trip/' + element.id + '" data-turbo-frame="_top">'
-                         + element.title + '</a><br>'
-                         + element.activity.name + '</div>')
+                        .bindPopup(
+                            '<div class="text-center"><a href="' + baseUrl + '/trip/' + element.id + '" data-turbo-frame="_top">'
+                            + element.title + '</a><br>'
+                            + element.activity.name + '</div>'
+                         )
                         .addTo(layer));
             }
             layer.addTo(map);
