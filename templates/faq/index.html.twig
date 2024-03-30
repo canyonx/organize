@@ -9,12 +9,41 @@
 			<h1 class="card-title">Foire aux questions</h1>
 		</div>
 		<div class="card-body">
+
+			<div class="p-3">
+				<h2 class="text-primary">Activités</h2>
+				<p>
+					{% for activity in activities %}
+						{{ activity.name|capitalize }}
+						&ensp;
+					{% endfor %}
+				</p>
+				<div class="alert alert-info">
+					Il est possible d'ajouter des activités sur demande !
+				</div>
+			</div>
+
 			{% for faq in faqs %}
 				<div class="p-3">
 					<h2 class="text-primary">{{ faq.title|capitalize }}</h2>
 					<p>{{ faq.content|raw }}</p>
 				</div>
 			{% endfor %}
+
+			<div class="p-3">
+				<h2 class="text-primary">Contact</h2>
+				<p>
+					Mattéo Dauchez
+					<br>
+					<br>
+					<a href="https://wa.me/33676201257" class="btn btn-primary rounded-pill">Whatsapp</a>
+					&ensp;
+					<a href="https://www.malt.fr/profile/matteodauchez" class="btn btn-primary rounded-pill">malt</a>
+					&ensp;
+					<a href="https://www.linkedin.com/in/matteo-dauchez-96b4262b5/" class="btn btn-primary rounded-pill">Linkedin</a>
+				</p>
+			</div>
+
 		</div>
 	</section>
 {% endblock %}

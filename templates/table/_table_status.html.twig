@@ -1,26 +1,28 @@
 {% if app.user == trip.member %}
 
 	{# Status of request for the user trip #}
-	{% for status, data in status[trip.id] %}
-		{% if data.qty > 0 and status != 'OWNER' %}
-			<button class="btn btn-{{ data.color }} rounded-circle" disabled>
-				{{ data.qty }}
-				{# {{ status|title|trans }} #}
-			</button>
-		{% endif %}
-	{% endfor %}
+	<div class="bg-light rounded-pill">
+		{% for status, data in status[trip.id] %}
+			{% if data.qty > 0 and status != 'OWNER' %}
+				<button class="btn btn-{{ data.color }} rounded-circle" disabled>
+					{{ data.qty }}
+					{# {{ status|title|trans }} #}
+				</button>
+			{% endif %}
+		{% endfor %}
+	</div>
 
 {% else %}
 
 	{# Status of user requests #}
-	{% for tripRequest in trip.tripRequests %}
-		{% if tripRequest.member == app.user %}
-			<div class="py-2">
-				<b class="text-{{ tripRequest.color }}" disabled>
+	<div class="py-2 rounded-pill bg-light">
+		{% for tripRequest in trip.tripRequests %}
+			{% if tripRequest.member == app.user %}
+				<b class="text-{{ tripRequest.color }}">
 					{{ tripRequest.status|title|trans }}
 				</b>
-			</div>
-		{% endif %}
-	{% endfor %}
+			{% endif %}
+		{% endfor %}
+	</div>
 
 {% endif %}
