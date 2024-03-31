@@ -29,7 +29,7 @@ class RegistrationFormType extends AbstractType
             ->add('pseudo', TextType::class, [
                 'constraints' => [
                     new NotBlank(),
-                    new Length(['min' => 5, 'max' => 50]),
+                    // new Length(['min' => 5, 'max' => 50]),
                 ],
             ])
             // ->add('agreeTerms', CheckboxType::class, [

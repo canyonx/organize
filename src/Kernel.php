@@ -9,16 +9,16 @@ use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 
-class Kernel extends BaseKernel implements CompilerPassInterface
+class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
 
-    public function process(ContainerBuilder $container): void
-    {
-        $container
-            ->getDefinition("doctrine.orm.configuration")
-            ->addMethodCall("setIdentityGenerationPreferences", [[PostgreSQLPlatform::class => ClassMetadata::GENERATOR_TYPE_SEQUENCE]]);
-    }
+    // public function process(ContainerBuilder $container): void
+    // {
+    //     $container
+    //         ->getDefinition("doctrine.orm.configuration")
+    //         ->addMethodCall("setIdentityGenerationPreferences", [[PostgreSQLPlatform::class => ClassMetadata::GENERATOR_TYPE_SEQUENCE]]);
+    // }
 
     public function boot(): void
     {
