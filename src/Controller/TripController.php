@@ -143,14 +143,28 @@ class TripController extends AbstractController
      * Edit trip for the owner
      */
     #[Route('/{id}/edit', name: 'app_trip_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Trip $trip, EntityManagerInterface $entityManager): Response
-    {
+    public function edit(
+        Request $request,
+        Trip $trip,
+        EntityManagerInterface $entityManager,
+        DateService $dateService
+    ): Response {
         $this->denyAccessUnlessGranted('TRIP_EDIT', $trip);
+
+        /* @var User */
+        $user = $this->getUser();
 
         $form = $this->createForm(TripType::class, $trip, ['edit' => true]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            // In case user pass the js limit
+            if ($dateService->isTripThatDay($user, new \DateTimeImmutable($trip->getDateAt()->format('Y-m-d')))) {
+                $this->addFlash('warning', 'Une sortie a déjà lieu ce jour !');
+                return $this->redirectToRoute('app_trip_edit', ['id' => $trip->getId()]);
+            }
+
             $entityManager->flush();
 
             return $this->redirectToRoute('app_trip_show', ['id' => $trip->getId()], Response::HTTP_SEE_OTHER);
