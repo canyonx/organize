@@ -6,9 +6,13 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Entity\Setting;
 use App\Form\SettingType;
+use App\Entity\TripRequest;
 use App\Service\FileUploader;
 use App\Form\ChangePasswordType;
+use App\Service\PlanningService;
+use App\Repository\TripRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\TripRequestRepository;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -128,12 +132,18 @@ class ProfileController extends AbstractController
      * Public profile of a user
      */
     #[Route('/{slug}', name: 'app_profile_show', methods: ['GET'])]
-    public function show(User $user): Response
-    {
+    public function show(
+        User $user,
+        TripRequestRepository $tripRequestRepository,
+        PlanningService $planningService
+    ): Response {
         $this->denyAccessUnlessGranted('USER_VIEW', $user);
+
+        $tripRequests = $tripRequestRepository->findByUserAndBetweenDateAndStatus($user, null, null, [TripRequest::OWNER]);
 
         return $this->render('profile/show.html.twig', [
             'user' => $user,
+            'calendar' => $planningService->getPlanning($tripRequests),
         ]);
     }
 

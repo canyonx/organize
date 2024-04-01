@@ -21,14 +21,14 @@ class SettingType extends AbstractType
                 'required' => false,
             ])
             ->add('isNewMessage', CheckboxType::class, [
-                'label' => 'Nouveau message',
+                'label' => 'Nouveau message reçu',
                 'attr' => [
                     'class' => 'form-check-input'
                 ],
                 'required' => false,
             ])
             ->add('isTripRequestStatusChange', CheckboxType::class, [
-                'label' => 'Changement de status pour mes demandes',
+                'label' => 'Ma demande change de statut',
                 'attr' => [
                     'class' => 'form-check-input'
                 ],

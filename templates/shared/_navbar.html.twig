@@ -6,7 +6,7 @@
 			src="{{ asset('images/icons/android-chrome-192x192.png') }}" width="40" height="40" alt="Logo">
 		{# <span class="fs-4 ms-2">{{ site_name }}</span> #}
 		</a>
-		<ul class="nav nav-pills" data-controller="nav-active">
+		<ul class="nav nav-pills">
 			{% if is_granted('ROLE_ADMIN') %}
 				<li class="nav-item">
 					<a href="{{ path('app_admin') }}" class="nav-link">
@@ -83,8 +83,8 @@
 </nav>
 
  <script>
-	const activePage = window.location.pathname;
-	const navLinks = document.querySelectorAll('.nav-link');
+	var activePage = window.location.pathname;
+	var navLinks = document.querySelectorAll('.nav-link');
 	navLinks.forEach(link => {
 		if (link.href.includes(activePage) && activePage != '/') {
 			if (!link.classList.contains('active')){

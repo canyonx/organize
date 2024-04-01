@@ -55,6 +55,18 @@
 				<a href="{{ path('app_logout') }}" class="btn btn-danger rounded-pill">Déconnexion</a>
 			</div>
 		{% endif %}
+		<div class="pb-2">
+			{% if user.facebook %}
+				<a href="{{ user.facebook }}" class="btn btn-link rounded-pill">
+					<i class="fa-brands fa-facebook fs-2"></i>
+				</a>
+			{% endif %}
+			{% if user.instagram %}
+				<a href="{{ user.instagram }}" class="btn btn-link rounded-pill">
+					<i class="fa-brands fa-instagram fs-2"></i>
+				</a>
+			{% endif %}
+		</div>
 	</div>
 	<div class="card-footer bg-light">
 		<div class="d-flex justify-content-around text-center my-2">

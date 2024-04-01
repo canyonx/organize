@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 
 class UserType extends AbstractType
 {
@@ -70,6 +71,12 @@ class UserType extends AbstractType
                     return $er->createQueryBuilder('a')
                         ->orderBy('a.name', 'ASC');
                 },
+            ])
+            ->add('facebook', UrlType::class, [
+                'label' => 'Facebook'
+            ])
+            ->add('instagram', UrlType::class, [
+                'label' => 'Instagram'
             ]);
     }
 
