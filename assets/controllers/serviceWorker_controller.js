@@ -26,7 +26,7 @@ export default class extends Controller {
         const activePage = window.location.pathname;
 
         if (('serviceWorker' in navigator) && (activePage == '/')) {
-            navigator.serviceWorker.register('https://zazoo.ddns.net/sw.js')
+            navigator.serviceWorker.register('https://organize-app.fr/sw.js')
                 .then(function () {console.log('Enregistrement reussi.')})
                 .catch(function (e) {console.error(e)});
         }

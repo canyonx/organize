@@ -1,0 +1,9 @@
+Sitemap: https://www.immersioncanyon.com/sitemap.xml
+
+User-agent: *
+Disallow: /legal
+Disallow: /cgv
+Disallow: /planning
+Disallow: /carte
+Disallow: /password/lost
+Disallow: /admin

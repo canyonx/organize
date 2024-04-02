@@ -160,10 +160,10 @@ class TripController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             // In case user pass the js limit
-            if ($dateService->isTripThatDay($user, new \DateTimeImmutable($trip->getDateAt()->format('Y-m-d')))) {
-                $this->addFlash('warning', 'Une sortie a déjà lieu ce jour !');
-                return $this->redirectToRoute('app_trip_edit', ['id' => $trip->getId()]);
-            }
+            // if ($dateService->isTripThatDay($user, new \DateTimeImmutable($trip->getDateAt()->format('Y-m-d')))) {
+            //     $this->addFlash('warning', 'Une sortie a déjà lieu ce jour !');
+            //     return $this->redirectToRoute('app_trip_edit', ['id' => $trip->getId()]);
+            // }
 
             $entityManager->flush();
 
