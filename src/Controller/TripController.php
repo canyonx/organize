@@ -25,7 +25,8 @@ class TripController extends AbstractController
     #[Route('/nouveau', name: 'app_trip_new', methods: ['GET', 'POST'])]
     public function new(
         Request $request,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $em,
+        DateService $dateService
     ): Response {
         /** @var User */
         $user = $this->getUser();
@@ -39,8 +40,16 @@ class TripController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($trip);
-            $entityManager->flush();
+
+            // In case user pass the js limit
+            if ($dateService->isTripThatDay($user, new \DateTimeImmutable($trip->getDateAt()->format('Y-m-d')))) {
+                $this->addFlash('danger', '<i class="fa-solid fa-circle-xmark fa-xl"></i> Une sortie est déjà prévue le ' . $trip->getDateAt()->format('d/m/Y') . ' !!');
+                return $this->redirectToRoute('app_trip_new');
+            }
+
+            $em->persist($trip);
+            $em->flush();
+            $this->addFlash('success', '<i class="fa-solid fa-circle-check fa-xl"></i> Sortie crée');
             //* TripListener : send new tripnotification to each user who follow trip member
 
             return $this->redirectToRoute('app_trip_show', ['id' => $trip->getId()], Response::HTTP_SEE_OTHER);
@@ -115,6 +124,7 @@ class TripController extends AbstractController
                     ->setIsRead(false);
 
                 $em->persist($message);
+                $this->addFlash('success', '<i class="fa-solid fa-circle-check fa-xl"></i> Demande envoyée à ' . $trip->getMember());
             }
             $em->flush();
             //* TripRequestListener : postPersist send new TR notification
@@ -142,11 +152,11 @@ class TripController extends AbstractController
     /**
      * Edit trip for the owner
      */
-    #[Route('/{id}/edit', name: 'app_trip_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/modifier', name: 'app_trip_edit', methods: ['GET', 'POST'])]
     public function edit(
         Request $request,
         Trip $trip,
-        EntityManagerInterface $entityManager,
+        EntityManagerInterface $em,
         DateService $dateService
     ): Response {
         $this->denyAccessUnlessGranted('TRIP_EDIT', $trip);
@@ -154,18 +164,27 @@ class TripController extends AbstractController
         /* @var User */
         $user = $this->getUser();
 
+        $tripDayOrigin = $trip->getDateAt()->format('Y-m-d');
+
         $form = $this->createForm(TripType::class, $trip, ['edit' => true]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             // In case user pass the js limit
-            // if ($dateService->isTripThatDay($user, new \DateTimeImmutable($trip->getDateAt()->format('Y-m-d')))) {
-            //     $this->addFlash('warning', 'Une sortie a déjà lieu ce jour !');
-            //     return $this->redirectToRoute('app_trip_edit', ['id' => $trip->getId()]);
-            // }
+            // If new date is different from date origin
+            $tripDayNew = $trip->getDateAt()->format('Y-m-d');
+            if ($tripDayOrigin != $tripDayNew) {
+                // Check for an existing activity
+                if ($dateService->isTripThatDay($user, new \DateTimeImmutable($tripDayNew))) {
+                    $this->addFlash('danger', '<i class="fa-solid fa-circle-xmark fa-xl"></i> Une sortie est déjà prévue le ' . $trip->getDateAt()->format('d/m/Y') . ' !!');
+                    return $this->redirectToRoute('app_trip_edit', ['id' => $trip->getId()]);
+                }
+            }
 
-            $entityManager->flush();
+            $em->flush();
+
+            $this->addFlash('success', '<i class="fa-solid fa-circle-check fa-xl"></i> Sortie modifiée');
 
             return $this->redirectToRoute('app_trip_show', ['id' => $trip->getId()], Response::HTTP_SEE_OTHER);
         }
@@ -199,13 +218,15 @@ class TripController extends AbstractController
      * Delete trip for trip owner connected user
      */
     #[Route('/{id}/delete', name: 'app_trip_delete', methods: ['POST'])]
-    public function delete(Request $request, Trip $trip, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Trip $trip, EntityManagerInterface $em): Response
     {
         $this->denyAccessUnlessGranted('TRIP_EDIT', $trip);
 
         if ($this->isCsrfTokenValid('delete' . $trip->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($trip);
-            $entityManager->flush();
+            $em->remove($trip);
+            $em->flush();
+
+            $this->addFlash('success', '<i class="fa-solid fa-circle-check fa-xl"></i> Sortie supprimée');
         }
 
         return $this->redirectToRoute('app_planning_index', [], Response::HTTP_SEE_OTHER);

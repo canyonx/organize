@@ -38,7 +38,7 @@ class PasswordController extends AbstractController
             $user = $userRepository->findOneBy(['email' => $form["email"]->getData()]);
 
             if (!$user) {
-                $this->addFlash('success', 'Merci de bien vouloir vous enregistrer avant d\'oublier votre mot de passe');
+                $this->addFlash('danger', '<i class="fa-solid fa-circle-xmark fa-xl"></i> Merci de bien vouloir vous enregistrer avant d\'oublier votre mot de passe');
                 return $this->redirectToRoute('app_register');
             }
 
@@ -62,7 +62,7 @@ class PasswordController extends AbstractController
 
             $mailer->send($email);
 
-            $this->addFlash('success', 'Un lien de changement de mot de passe à été envoyé a votre adresse');
+            $this->addFlash('info', '<i class="fa-solid fa-circle-info fa-xl"></i> Un lien de changement de mot de passe a été envoyé à votre adresse');
             return $this->redirectToRoute('app_login');
         }
 
@@ -95,7 +95,7 @@ class PasswordController extends AbstractController
                 $user->setPassword($password);
                 $em->flush();
 
-                $this->addFlash('success', 'Mot de passe changé avec succès');
+                $this->addFlash('success', '<i class="fa-solid fa-circle-check fa-xl"></i> Mot de passe changé');
                 return $this->redirectToRoute('app_login');
             }
 

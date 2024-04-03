@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class SearchController extends AbstractController
 {
-    #[Route('/search', name: 'app_search_index')]
+    #[Route('/recherche', name: 'app_search_index')]
     public function index(
         TripRepository $tripRepository,
         SearchService $searchService,

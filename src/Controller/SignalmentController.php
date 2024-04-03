@@ -6,6 +6,7 @@ use App\Entity\Signal;
 use App\Form\SignalType;
 use App\Repository\TripRepository;
 use App\Repository\UserRepository;
+use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class SignalmentController extends AbstractController
 {
-    #[Route('/signalment/{type}/{id}', name: 'app_signalment_index')]
+    #[Route('/signalement/{type}/{id}', name: 'app_signalment_index')]
     public function index(
         string $type,
         int $id,
@@ -31,7 +32,6 @@ class SignalmentController extends AbstractController
 
         if (!$entity) throw $this->createNotFoundException('Signalement invalide');
 
-
         $signal = new Signal;
         $signal->setMember($this->getUser())
             ->setType($type)
@@ -44,7 +44,9 @@ class SignalmentController extends AbstractController
             $em->persist($signal);
             $em->flush();
 
-            $this->addFlash('success', 'Signalement envoyé');
+            // TODO : send email to admin 
+
+            $this->addFlash('success', '<i class="fa-solid fa-circle-check fa-xl"></i> Signalement envoyé');
 
             return $this->redirectToRoute('app_planning_index');
         }

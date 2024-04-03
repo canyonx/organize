@@ -11,8 +11,6 @@ class OfflineController extends AbstractController
     #[Route('/offline', name: 'app_offline')]
     public function index(): Response
     {
-        return $this->render('offline/index.html.twig', [
-            'controller_name' => 'OfflineController',
-        ]);
+        return $this->render('offline/index.html.twig', []);
     }
 }

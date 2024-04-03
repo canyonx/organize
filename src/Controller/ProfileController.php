@@ -10,7 +10,6 @@ use App\Entity\TripRequest;
 use App\Service\FileUploader;
 use App\Form\ChangePasswordType;
 use App\Service\PlanningService;
-use App\Repository\TripRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\TripRequestRepository;
 use Symfony\Component\Filesystem\Filesystem;
@@ -60,7 +59,7 @@ class ProfileController extends AbstractController
     #[Route('/editer', name: 'app_profile_edit', methods: ['GET', 'POST'])]
     public function edit(
         Request $request,
-        EntityManagerInterface $entityManager,
+        EntityManagerInterface $em,
         Filesystem $filesystem,
         FileUploader $fileUploader
     ): Response {
@@ -86,7 +85,7 @@ class ProfileController extends AbstractController
                 $user->setAvatar($imageFileName);
             }
 
-            $entityManager->flush();
+            $em->flush();
 
             return $this->redirectToRoute('app_profile_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -100,7 +99,7 @@ class ProfileController extends AbstractController
     /**
      * User Edit Password
      */
-    #[Route(path: '/edit-password', name: 'app_profile_edit_password')]
+    #[Route(path: '/editer/mot-de-passe', name: 'app_profile_edit_password')]
     public function editPassword(
         Request $request,
         EntityManagerInterface $em,
@@ -119,7 +118,7 @@ class ProfileController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', 'Le mot de passe à été changé');
+            $this->addFlash('success', '<i class="fa-solid fa-circle-check fa-xl"></i> Le mot de passe à été changé');
             return $this->redirectToRoute('app_profile_index');
         }
 
@@ -154,7 +153,7 @@ class ProfileController extends AbstractController
     public function delete(
         Request $request,
         User $user,
-        EntityManagerInterface $entityManager,
+        EntityManagerInterface $em,
         Filesystem $filesystem
     ): Response {
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
@@ -163,8 +162,9 @@ class ProfileController extends AbstractController
                 // Supprime l'image, chemin complet de l'image
                 $filesystem->remove($this->getParameter('app_images_directory') . '/' . $user->getAvatar());
             }
-            $entityManager->remove($user);
-            $entityManager->flush();
+            $em->remove($user);
+            $em->flush();
+            $this->addFlash('success', '<i class="fa-solid fa-circle-check fa-xl"></i> Votre profil a été supprimé');
         }
 
         return $this->redirectToRoute('app_profile_index', [], Response::HTTP_SEE_OTHER);

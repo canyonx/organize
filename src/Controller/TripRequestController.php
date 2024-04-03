@@ -127,7 +127,7 @@ class TripRequestController extends AbstractController
                 $em->flush();
             }
         } else {
-            $this->addFlash('warning', 'Impossible de supprimer une demande refusée');
+            $this->addFlash('warning', '<i class="fa-solid fa-circle-xmark fa-xl"></i> Impossible de supprimer une demande refusée');
         }
 
         return $this->redirectToRoute('app_trip_show', ['id' => $tripRequest->getTrip()->getId()], Response::HTTP_SEE_OTHER);

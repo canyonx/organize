@@ -8,14 +8,12 @@ use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use Symfony\Component\Mime\Address;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Twig\Mime\NotificationEmail;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bridge\Twig\Mime\NotificationEmail;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
@@ -34,14 +32,14 @@ class RegistrationController extends AbstractController
      *
      * @param Request $request
      * @param UserPasswordHasherInterface $userPasswordHasher
-     * @param EntityManagerInterface $entityManager
+     * @param EntityManagerInterface $em
      * @return Response
      */
-    #[Route('/register', name: 'app_register', methods: ['GET', 'POST'])]
+    #[Route('/inscription', name: 'app_register', methods: ['GET', 'POST'])]
     public function register(
         Request $request,
         UserPasswordHasherInterface $userPasswordHasher,
-        EntityManagerInterface $entityManager,
+        EntityManagerInterface $em,
         SluggerInterface $slugger
     ): Response {
 
@@ -64,9 +62,8 @@ class RegistrationController extends AbstractController
             $user->setCreatedAt(new \DateTimeImmutable())
                 ->setLastConnAt(new \DateTimeImmutable())
                 ->setSlug(strtolower($slugger->slug($user->getPseudo(), '_')));
-
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $em->persist($user);
+            $em->flush();
 
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation(
@@ -80,7 +77,7 @@ class RegistrationController extends AbstractController
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
 
-            $this->addFlash('success', 'Compte crée, confirme ton email avant de te connecter !');
+            $this->addFlash('success', '<i class="fa-solid fa-circle-check fa-xl"></i> Compte crée <br> Confirme ton adresse en cliquant sur le lien reçu par email avant de te connecter !');
             return $this->redirectToRoute('app_login');
         }
 
@@ -128,7 +125,7 @@ class RegistrationController extends AbstractController
         }
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('success', 'Email vérifié ! Tu peux te connecter.');
+        $this->addFlash('success', '<i class="fa-solid fa-circle-check fa-xl"></i> Email vérifié ! Tu peux te connecter');
 
         return $this->redirectToRoute('app_login');
     }
