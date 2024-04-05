@@ -7,11 +7,6 @@
 		</a>
 	{% endif %}
 	{% if is_granted('ROLE_USER') %}
-		<a href="{{ path('app_home') }}" class="nav-link text-center">
-			<i class="fas fa-home"></i>
-			<br>
-			<span class="small visually-hidden">Accueil</span>
-		</a>
 		<a href="{{ path('app_planning_index') }}" class="nav-link text-center">
 			<i class="fa fa-calendar"></i>
 			<br>

@@ -1,0 +1,14 @@
+{% if trip.tripRequests|length > 0 %}
+
+	<div class="mt-2">
+		{{ form_start(form)}}
+		{{ form_label(form.content, 'Ecrire à tous les utilisateurs acceptés') }}
+
+
+		{{ form_widget(form.content) }}
+		<div class="mt-2 text-end">
+			<button class="btn btn-success rounded-pill">{{ button_label|default('Envoyer') }}</button>
+		</div>
+		{{ form_end(form) }}
+	</div>
+{% endif %}

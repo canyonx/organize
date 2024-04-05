@@ -5,9 +5,9 @@
 			Suivis
 		</h2>
 
-		<div class="row d-flex flex-row p-3">
+		<div class="row d-flex flex-row">
 			{% for friend in user.myFriendUsers %}
-				<div class="col-6">
+				<div class="col-md-6 col-lg-12 col-xl-6">
 					{{ component('UserCard', { user: friend }) }}
 				</div>
 			{% else %}

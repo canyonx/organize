@@ -1,16 +1,16 @@
-<div class="card bg-light round p-2 mb-2">
-	<div class="d-md-flex align-items-md-center text-center text-md-start">
-		<div class="col-md-4">
+{# <div class="card bg-info round p-2 mb-2"> #}
+<a href="{{ path('app_profile_show', {slug: user.slug}) }}" class="btn btn-light rounded-pill w-100">
+	<div class="row align-items-center">
+		<div class="col-auto">
 			{% if user.avatar %}
 				<img src="{{ asset(images_dir ~ user.avatar)|imagine_filter('user_card') }}" alt="Photo de {{ user }}" class="rounded-circle me-2" width="50" height="50">
 			{% else %}
 				<img src="{{ asset('images/icons/android-chrome-192x192.png')|imagine_filter('user_card') }}" alt="{{ user.pseudo|title }}" class="rounded-circle me-2">
 			{% endif %}
 		</div>
-		<div class="col-md-8">
-			<a href="{{ path('app_profile_show', {slug: user.slug}) }}" class="btn btn-link">
-				{{ user.pseudo|title }}
-			</a>
+		<div class="col text-start">
+			{{ user.pseudo|length > 20 ? user.pseudo|slice(0, 20) ~ '...' : user.pseudo }}
 		</div>
 	</div>
-</div>
+</a>
+{# </div> #}
