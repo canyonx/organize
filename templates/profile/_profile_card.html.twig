@@ -7,9 +7,9 @@
 				<img src="{{ asset('images/icons/android-chrome-512x512.png')|imagine_filter('avatar') }}" alt="Photo par défaut" class="img-fluid rounded-circle" with="300" height="300">
 			{% endif %}
 		</div>
-		<h4 class="mb-2 card-title">
+		<h2 class="mb-2 card-title">
 			{{ user }}
-		</h4>
+		</h2>
 		<p class="text-muted mb-4">
 			{% if user.age != 'xx' %}
 				{{ user.age }}
