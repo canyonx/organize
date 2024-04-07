@@ -6,13 +6,18 @@
 		</h2>
 
 		<div class="row d-flex flex-row">
-			{% for friend in user.myFriendUsers %}
+			{% for friend in user.myFriendUsers|slice(0, 4) %}
 				<div class="col-md-6 col-lg-12 col-xl-6">
 					{{ component('UserCard', { user: friend }) }}
 				</div>
 			{% else %}
 				Aucun utilisateur suivi !
 			{% endfor %}
+			{% if user.myFriendUsers|length > 4 %}
+				<div class="text-end mt-3">
+					<a href="{{ path('app_friend_followed') }}" class="btn btn-primary rounded-pill">Plus ...</a>
+				</div>
+			{% endif %}
 		</div>
 	</div>
 </section>

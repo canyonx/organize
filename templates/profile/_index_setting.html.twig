@@ -4,24 +4,22 @@
 			<span class="text-muted">Notifications</span>
 			email
 		</h2>
-		<div class="p-3">
-			{{ form_start(formSetting) }}
-			<div class="form-check form-switch">
-				{{ form_widget(formSetting.isNewTripRequest) }}
-			</div>
-			<div class="form-check form-switch">
-				{{ form_widget(formSetting.isNewMessage) }}
-			</div>
-			<div class="form-check form-switch">
-				{{ form_widget(formSetting.isTripRequestStatusChange) }}
-			</div>
-			<div class="form-check form-switch">
-				{{ form_widget(formSetting.isFriendNewTrip) }}
-			</div>
-			<div class="text-end mt-3">
-				<button type="submit" class="btn btn-primary rounded-pill">Enregister</button>
-			</div>
-			{{ form_end(formSetting) }}
+		{{ form_start(formSetting) }}
+		<div class="form-check form-switch">
+			{{ form_widget(formSetting.isNewTripRequest) }}
 		</div>
+		<div class="form-check form-switch">
+			{{ form_widget(formSetting.isNewMessage) }}
+		</div>
+		<div class="form-check form-switch">
+			{{ form_widget(formSetting.isTripRequestStatusChange) }}
+		</div>
+		<div class="form-check form-switch">
+			{{ form_widget(formSetting.isFriendNewTrip) }}
+		</div>
+		<div class="text-end mt-3">
+			<button type="submit" class="btn btn-primary rounded-pill">Enregister</button>
+		</div>
+		{{ form_end(formSetting) }}
 	</div>
 </section>

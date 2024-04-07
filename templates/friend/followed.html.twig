@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Utilisateurs suivis
+{% endblock %}
+
+{% block body %}
+	<section class="card">
+		<div class="card-header">
+			<h1 class="card-title">
+				<span class="text-muted">{{ app.user.myFriendUsers|length }}</span>
+				suivis
+			</h1>
+		</div>
+		<div class="card-body row">
+			{% for friend in friends %}
+				<div class="col-md-6 col-lg-3">
+					{{ component('UserCard', { user: friend.friend }) }}
+				</div>
+			{% endfor %}
+		</div>
+	</section>
+
+{% endblock %}
