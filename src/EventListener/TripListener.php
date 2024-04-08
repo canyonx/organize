@@ -10,10 +10,12 @@ use App\Service\NotificationService;
 use Doctrine\ORM\Event\PostUpdateEventArgs;
 use Doctrine\ORM\Event\PostPersistEventArgs;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
+use Doctrine\ORM\Event\PreRemoveEventArgs;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[AsEntityListener(event: Events::postPersist, method: 'postPersist', entity: Trip::class)]
 #[AsEntityListener(event: Events::postUpdate, method: 'postUpdate', entity: Trip::class)]
+#[AsEntityListener(event: Events::preRemove, method: 'preRemove', entity: Trip::class)]
 class TripListener extends AbstractController
 {
     public function __construct(
@@ -57,6 +59,22 @@ class TripListener extends AbstractController
                     [
                         'title' => $trip->getMember() . ' a modifié la sortie ' . $trip->getTitle(),
                         'message' => $trip->getMember() . ' a modifié une sortie à laquelle vous avez demander à participer. ' . "\r\n" . 'Veuillez vérifier votre planning pour que cette sortie corresponde toujours avec vos disponibilités !'
+                    ]
+                );
+            }
+        }
+    }
+
+    // Send email when trip is updated
+    public function preRemove(Trip $trip, PreRemoveEventArgs $event): void
+    {
+        foreach ($trip->getTripRequests() as $tr) {
+            if ($tr->getStatus() == TripRequest::ACCEPTED || $tr->getStatus() == TripRequest::PENDING) {
+                $this->notificationService->send(
+                    $tr->getMember(),
+                    [
+                        'title' => $trip->getMember() . ' a supprimé la sortie ' . $trip->getTitle(),
+                        'message' => $trip->getMember() . ' a supprimé une sortie à laquelle vous avez demander à participer. ' . "\r\n" . 'Veuillez vérifier votre planning pour que cette sortie corresponde toujours avec vos disponibilités !'
                     ]
                 );
             }
