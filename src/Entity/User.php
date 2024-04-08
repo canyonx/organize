@@ -120,6 +120,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $instagram = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Signalment::class, orphanRemoval: true)]
+    private Collection $signalments;
+
     public function __construct()
     {
         $this->myFriends = new ArrayCollection();
@@ -129,6 +132,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->messages = new ArrayCollection();
         $this->activities = new ArrayCollection();
         $this->signals = new ArrayCollection();
+        $this->signalments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -668,6 +672,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setInstagram(?string $instagram): static
     {
         $this->instagram = $instagram;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Signalment>
+     */
+    public function getSignalments(): Collection
+    {
+        return $this->signalments;
+    }
+
+    public function addSignalment(Signalment $signalment): static
+    {
+        if (!$this->signalments->contains($signalment)) {
+            $this->signalments->add($signalment);
+            $signalment->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSignalment(Signalment $signalment): static
+    {
+        if ($this->signalments->removeElement($signalment)) {
+            // set the owning side to null (unless already changed)
+            if ($signalment->getUser() === $this) {
+                $signalment->setUser(null);
+            }
+        }
 
         return $this;
     }

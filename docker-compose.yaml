@@ -1,15 +1,26 @@
 version: '3'
  
 services:
+  # database:
+    # image: postgres:${POSTGRES_VERSION:-15}-alpine
+    # environment:
+    #   POSTGRES_DB: ${POSTGRES_VERSION:-organize}
+    #   # You should definitely change the password in production
+    #   POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
+    #   POSTGRES_USER: ${POSTGRES_USER:-app}
+    # volumes:
+    #   - database_data:/var/lib/postgresql/data:rw
   database:
-    image: postgres:${POSTGRES_VERSION:-15}-alpine
+    image: 'mariadb:10.11.7'
     environment:
-      POSTGRES_DB: ${POSTGRES_VERSION:-organize}
-      # You should definitely change the password in production
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
-      POSTGRES_USER: ${POSTGRES_USER:-app}
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: organize
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
     volumes:
-      - database_data:/var/lib/postgresql/data:rw
+      - data:/var/lib/mysql
+    ports:
+      - "3306:3306"
 
   adminer:
     image: adminer
@@ -18,4 +29,5 @@ services:
       - 8080:8080
 
 volumes:
-  database_data:
+  # database_data:
+  data:

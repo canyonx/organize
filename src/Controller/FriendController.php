@@ -19,7 +19,7 @@ class FriendController extends AbstractController
         ]);
     }
 
-    #[Route('/bloques', name: 'app_friend_bloqued', methods: ['GET'])]
+    #[Route('/bloques', name: 'app_friend_blocked', methods: ['GET'])]
     public function blocked(FriendRepository $friendRepository): Response
     {
         return $this->render('friend/blocked.html.twig', [

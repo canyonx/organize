@@ -12,6 +12,7 @@ use App\Entity\Homepage;
 use App\Entity\Legal;
 use App\Entity\Message;
 use App\Entity\Signal;
+use App\Entity\Signalment;
 use App\Entity\TripRequest;
 use App\Repository\TripRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -65,6 +66,7 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::section('Signalments');
         yield MenuItem::linkToCrud('Signalments', 'fas fa-triangle-exclamation', Signal::class);
+        yield MenuItem::linkToCrud('Signalments', 'fas fa-triangle-exclamation', Signalment::class);
 
         yield MenuItem::section('Trips');
         // Événements passés

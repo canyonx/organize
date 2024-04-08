@@ -1,22 +1,12 @@
 <section class="card mb-3">
 	<div class="card-body">
-		<h2 class="card-title">
-			<span class="text-muted">{{ user.myBlockedUsers|length }}</span>
-			Bloqués
-		</h2>
-
-		<div class="row d-flex flex-row p-3">
-			{% for blocked in user.myBlockedUsers|slice(0, 4) %}
-				<div class="col-6">
-					{{ component('UserCard', { user: blocked }) }}
-				</div>
-			{% else %}
-				Aucun utilisateur bloqué !
-			{% endfor %}
-			{% if user.myBlockedUsers|length > 4 %}
-				<div class="text-end mt-3">
-					<a href="{{ path('app_friend_blocked') }}" class="btn btn-primary rounded-pill"></a>
-				</div>
+		<div class="d-flex align-items-center justify-content-between">
+			<h2 class="card-title">
+				<span class="text-muted">{{ user.myBlockedUsers|length }}</span>
+				Bloqués
+			</h2>
+			{% if user.myBlockedUsers|length > 0 %}
+				<a href="{{ path('app_friend_blocked') }}" class="btn btn-primary rounded-pill">Voir ...</a>
 			{% endif %}
 		</div>
 	</div>

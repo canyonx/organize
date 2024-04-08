@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Signal;
-use App\Form\SignalType;
+use App\Entity\Signalment;
+use App\Form\SignalmentType;
 use App\Repository\TripRepository;
 use App\Repository\UserRepository;
 use App\Service\NotificationService;
@@ -32,13 +32,13 @@ class SignalmentController extends AbstractController
 
         if (!$entity) throw $this->createNotFoundException('Signalement invalide');
 
-        $signal = new Signal;
+        $signal = new Signalment;
         $signal->setMember($this->getUser())
             ->setType($type)
             ->setNumber($id)
             ->setReason('NOT_CORRECT');
 
-        $form = $this->createForm(SignalType::class, $signal);
+        $form = $this->createForm(SignalmentType::class, $signal);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($signal);
