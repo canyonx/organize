@@ -29,14 +29,18 @@ self.addEventListener('fetch', (event) => {
   if (event.request.mode === 'navigate') {
     event.respondWith((async () => {
       try {
-        const preloadResp = await event.preloadResponse;
+        caches.match(evt.request)
+          .then(function(response) {
+            return response || fetch(evt.request);
+          });
+        // const preloadResp = await event.preloadResponse;
 
-        if (preloadResp) {
-          return preloadResp;
-        }
+        // if (preloadResp) {
+        //   return preloadResp;
+        // }
 
-        const networkResp = await fetch(event.request);
-        return networkResp;
+        // const networkResp = await fetch(event.request);
+        // return networkResp;
       } catch (error) {
 
         const cache = await caches.open(CACHE);
