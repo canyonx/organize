@@ -73,10 +73,12 @@ class UserType extends AbstractType
                 },
             ])
             ->add('facebook', UrlType::class, [
-                'label' => 'Facebook'
+                'label' => 'Facebook',
+                'required' => false,
             ])
             ->add('instagram', UrlType::class, [
-                'label' => 'Instagram'
+                'label' => 'Instagram',
+                'required' => false,
             ]);
     }
 
