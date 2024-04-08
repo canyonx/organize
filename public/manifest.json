@@ -3,7 +3,7 @@
   "name": "OrganiZe, partenaires d'activités",
   "short_name": "OrganiZe",
   "description": "L'application qui vous aide à trouver des partenaires d'activités !",
-  "start_url": "https://organize-app.fr/login",
+  "start_url": "https://organize-app.fr/",
   "icons": [
     {
       "src": "https://organize-app.fr/images/icons/android-chrome-192x192.png",
@@ -45,31 +45,31 @@
   ],
   "screenshots" : [
     {
-      "src": "https://organize-app.fr/images/screenshots/search.png",
+      "src": "https://organize-app.fr/images/screenshot-search.png",
+      "sizes": "541x1202",
+      "type": "image/jpg",
+      "platform": "narrow"
+    },
+    {
+      "src": "https://organize-app.fr/images/screenshot-planning.png",
       "sizes": "541x1203",
       "type": "image/jpg",
       "platform": "narrow"
     },
     {
-      "src": "https://organize-app.fr/images/screenshots/planning.png",
+      "src": "https://organize-app.fr/images/screenshot-profile.png",
       "sizes": "541x1203",
       "type": "image/jpg",
       "platform": "narrow"
     },
     {
-      "src": "https://organize-app.fr/images/screenshots/profile.png",
+      "src": "https://organize-app.fr/images/screenshot-requests.png",
       "sizes": "541x1203",
       "type": "image/jpg",
       "platform": "narrow"
     },
     {
-      "src": "https://organize-app.fr/images/screenshots/requests.png",
-      "sizes": "541x1203",
-      "type": "image/jpg",
-      "platform": "narrow"
-    },
-    {
-      "src": "https://organize-app.fr/images/screenshots/trip.png",
+      "src": "https://organize-app.fr/images/screenshot-trip.png",
       "sizes": "541x1203",
       "type": "image/jpg",
       "platform": "narrow"
