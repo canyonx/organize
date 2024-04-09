@@ -1,22 +1,18 @@
 <section class="card mb-3">
 	<div class="card-body">
-		<h2 class="card-title">
-			<span class="text-muted">{{ user.myFriendUsers|length }}</span>
-			Suivis
-		</h2>
-
-		<div class="row d-flex flex-row">
-			{% for friend in user.myFriendUsers|slice(0, 4) %}
-				<div class="col-md-6 col-lg-12 col-xl-6">
-					{{ component('UserCard', { user: friend }) }}
-				</div>
-			{% else %}
-				Aucun utilisateur suivi !
-			{% endfor %}
-			{% if user.myFriendUsers|length > 4 %}
-				<div class="text-end mt-3">
-					<a href="{{ path('app_friend_followed') }}" class="btn btn-primary rounded-pill">Plus ...</a>
-				</div>
+		<div class="d-flex align-items-center justify-content-between">
+			<div>
+				<h2 class="card-title">
+					{{ user.myFriendUsers|length }}
+					suivis
+					<span class="text-muted fw-lighter fs-5">
+						{{ user.myBlockedUsers|length }}
+						bloqués
+					</span>
+				</h2>
+			</div>
+			{% if user.myFriendUsers|length > 0 %}
+				<a href="{{ path('app_friend_relation') }}" class="btn btn-primary rounded-pill">Relations</a>
 			{% endif %}
 		</div>
 	</div>
