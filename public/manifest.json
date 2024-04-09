@@ -3,7 +3,7 @@
   "name": "OrganiZe, partenaires d'activités",
   "short_name": "OrganiZe",
   "description": "L'application qui vous aide à trouver des partenaires d'activités !",
-  "start_url": "https://organize-app.fr/",
+  "start_url": "https://organize-app.fr/login",
   "icons": [
     {
       "src": "https://organize-app.fr/images/icons/android-chrome-192x192.png",

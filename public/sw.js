@@ -21,21 +21,21 @@ self.addEventListener('install', async (event) => {
   );
 });
 
-// if (workbox.navigationPreload.isSupported()) {
-//   workbox.navigationPreload.enable();
-// }
+if (workbox.navigationPreload.isSupported()) {
+  workbox.navigationPreload.enable();
+}
 
 self.addEventListener('fetch', (event) => {
   if (event.request.mode === 'navigate') {
     event.respondWith((async () => {
       try {
-        // const preloadResp = await event.preloadResponse;
+        const preloadResp = await event.preloadResponse;
 
-        // if (preloadResp) {
-        //   return preloadResp;
-        // }
+        if (preloadResp) {
+          return preloadResp;
+        }
 
-        const networkResp = await fetch('https://organize-app.fr');
+        const networkResp = await fetch('https://organize-app.fr/login');
         return networkResp;
       } catch (error) {
 
