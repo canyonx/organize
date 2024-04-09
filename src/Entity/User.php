@@ -111,16 +111,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?float $lng = null;
 
-    #[ORM\OneToMany(mappedBy: 'member', targetEntity: Signal::class, orphanRemoval: true)]
-    private Collection $signals;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $facebook = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $instagram = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Signalment::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'member', targetEntity: Signalment::class, orphanRemoval: true)]
     private Collection $signalments;
 
     public function __construct()
@@ -131,7 +128,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->tripRequests = new ArrayCollection();
         $this->messages = new ArrayCollection();
         $this->activities = new ArrayCollection();
-        $this->signals = new ArrayCollection();
         $this->signalments = new ArrayCollection();
     }
 
@@ -622,36 +618,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Signal>
-     */
-    public function getSignals(): Collection
-    {
-        return $this->signals;
-    }
-
-    public function addSignal(Signal $signal): static
-    {
-        if (!$this->signals->contains($signal)) {
-            $this->signals->add($signal);
-            $signal->setMember($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSignal(Signal $signal): static
-    {
-        if ($this->signals->removeElement($signal)) {
-            // set the owning side to null (unless already changed)
-            if ($signal->getMember() === $this) {
-                $signal->setMember(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getFacebook(): ?string
     {
         return $this->facebook;
@@ -688,7 +654,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->signalments->contains($signalment)) {
             $this->signalments->add($signalment);
-            $signalment->setUser($this);
+            $signalment->setMember($this);
         }
 
         return $this;
@@ -698,8 +664,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->signalments->removeElement($signalment)) {
             // set the owning side to null (unless already changed)
-            if ($signalment->getUser() === $this) {
-                $signalment->setUser(null);
+            if ($signalment->getMember() === $this) {
+                $signalment->setMember(null);
             }
         }
 

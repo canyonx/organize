@@ -11,16 +11,16 @@ services:
     # volumes:
     #   - database_data:/var/lib/postgresql/data:rw
   database:
-    image: 'mariadb:10.11.7'
+    image: mariadb
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: organize
       MYSQL_USER: user
       MYSQL_PASSWORD: password
     volumes:
-      - data:/var/lib/mysql
+      - database_data:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - "3307:3306"
 
   adminer:
     image: adminer
@@ -29,5 +29,4 @@ services:
       - 8080:8080
 
 volumes:
-  # database_data:
-  data:
+  database_data:
