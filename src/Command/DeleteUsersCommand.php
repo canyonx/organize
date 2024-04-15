@@ -4,6 +4,7 @@ namespace App\Command;
 
 use App\Repository\UserRepository;
 use App\Service\NotificationService;
+use DateInterval;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputOption;
@@ -43,21 +44,24 @@ class DeleteUsersCommand extends Command
 
         foreach ($users as $user) {
 
-            // Send an email of error
-            $this->notificationService->send(
-                $user,
-                [
-                    'title' => 'Email non validé',
-                    'message' => "Bonjour,\r\n
+            if ($user->getCreatedAt()->diff(new \DateTimeImmutable()) > new DateInterval('1 hour')) {
+
+                // Send an email of error
+                $this->notificationService->send(
+                    $user,
+                    [
+                        'title' => 'Email non validé',
+                        'message' => "Bonjour,\r\n
                         Votre email n'a pas été validé, le compte associé à été supprimé.\r\n
                         Vous pouvez dès à présent recommencer votre inscription.\r\n
                         Décrire les problèmes rencontrés contact@organize-app.fr",
-                ]
-            );
+                    ]
+                );
 
-            // Delete User
-            // $this->em->remove($user->getSetting());
-            $this->em->remove($user);
+                // Delete User
+                // $this->em->remove($user->getSetting());
+                $this->em->remove($user);
+            }
         }
 
         $this->em->flush();

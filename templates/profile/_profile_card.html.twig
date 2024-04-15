@@ -34,6 +34,18 @@
 				{{ user.about|raw|nl2br }}
 			</div>
 		{% endif %}
+		<div class="pb-2">
+			{% if user.facebook %}
+				<a href="{{ user.facebook }}" class="btn btn-link rounded-pill">
+					<i class="fa-brands fa-facebook fs-2"></i>
+				</a>
+			{% endif %}
+			{% if user.instagram %}
+				<a href="{{ user.instagram }}" class="btn btn-link rounded-pill">
+					<i class="fa-brands fa-instagram fs-2"></i>
+				</a>
+			{% endif %}
+		</div>
 		{% if user is not same as app.user %}
 			<div class="mb-4 pb-2">
 				<span id="userId" class="visually-hidden">{{ user.id }}</span>
@@ -55,39 +67,27 @@
 				<a href="{{ path('app_logout') }}" class="btn btn-danger rounded-pill">Déconnexion</a>
 			</div>
 		{% endif %}
-		<div class="pb-2">
-			{% if user.facebook %}
-				<a href="{{ user.facebook }}" class="btn btn-link rounded-pill">
-					<i class="fa-brands fa-facebook fs-2"></i>
-				</a>
-			{% endif %}
-			{% if user.instagram %}
-				<a href="{{ user.instagram }}" class="btn btn-link rounded-pill">
-					<i class="fa-brands fa-instagram fs-2"></i>
-				</a>
-			{% endif %}
-		</div>
 	</div>
-	<div class="card-footer bg-light">
-		<div class="d-flex justify-content-around text-center my-2">
-			<div class="px-3">
-				<p class="mb-2 h5">
-					{{ user.trips|length }}
-				</p>
-				<p class="text-muted mb-0">
-					Sorties crées
-				</p>
-			</div>
-			<div class="px-3">
-				<p class="mb-2 h5">
-					{{ user.tripRequests|length - user.trips|length }}
-				</p>
-				<p class="text-muted mb-0">
-					Demandes
-				</p>
-			</div>
-		</div>
-	</div>
+	{# <div class="card-footer bg-light">
+				<div class="d-flex justify-content-around text-center my-2">
+					<div class="px-3">
+						<p class="mb-2 h5">
+							{{ user.trips|length }}
+						</p>
+						<p class="text-muted mb-0">
+							Sorties crées
+						</p>
+					</div>
+					<div class="px-3">
+						<p class="mb-2 h5">
+							{{ user.tripRequests|length - user.trips|length }}
+						</p>
+						<p class="text-muted mb-0">
+							Demandes
+						</p>
+					</div>
+				</div>
+			</div> #}
 </section>
 
 {% if user != app.user %}
