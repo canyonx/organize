@@ -2,13 +2,15 @@
 
 namespace App\Command;
 
-use Symfony\Component\Console\Attribute\AsCommand;
+use App\Repository\TripRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
     name: 'app:demo',
@@ -16,8 +18,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class DemoCommand extends Command
 {
-    public function __construct()
-    {
+    public function __construct(
+        private TripRepository $tripRepository,
+        private EntityManagerInterface $em,
+    ) {
         parent::__construct();
     }
 
@@ -33,21 +37,17 @@ class DemoCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $createdAt = new \DateTimeImmutable('now - 59 minute', new \DateTimeZone("Europe/Paris"));
+        $exemple = $this->tripRepository->find(2);
 
-        $io->section($createdAt->format('Y m d H:i'));
+        $exemple->setDateAt(new \DateTimeImmutable($exemple->getDateAt()->format('Y m d') . ' + 1 day'));
 
-        $now = new \DateTimeImmutable();
-        $oneHour = \DateInterval::createFromDateString('1 hour');
-
-        if ($now->sub($oneHour) > $createdAt) {
-            $result = 'delete user';
-        } else {
-            $result = 'not delete';
+        foreach ($exemple->getTripRequests() as $tr) {
+            $this->em->remove($tr);
         }
 
-        $io->section($result);
+        $this->em->flush();
 
+        $io->section('exemple date : ' . $exemple->getDateAt()->format('d m Y'));
 
         return Command::SUCCESS;
     }
