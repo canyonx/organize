@@ -37,9 +37,9 @@ class DemoCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $exemple = $this->tripRepository->find(2);
+        $exemple = $this->tripRepository->find(30);
 
-        $exemple->setDateAt(new \DateTimeImmutable($exemple->getDateAt()->format('Y m d') . ' + 1 day'));
+        $exemple->setDateAt(new \DateTimeImmutable($exemple->getDateAt()->format('Y-m-d') . ' + 1 day'));
 
         foreach ($exemple->getTripRequests() as $tr) {
             $this->em->remove($tr);
