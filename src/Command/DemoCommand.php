@@ -2,6 +2,8 @@
 
 namespace App\Command;
 
+use App\Entity\Trip;
+use App\Entity\TripRequest;
 use App\Repository\TripRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
@@ -37,12 +39,13 @@ class DemoCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $exemple = $this->tripRepository->find(30);
+        $exemple = $this->tripRepository->find(2);
 
         $exemple->setDateAt(new \DateTimeImmutable($exemple->getDateAt()->format('Y-m-d') . ' + 1 day'));
 
         foreach ($exemple->getTripRequests() as $tr) {
-            $this->em->remove($tr);
+            if ($tr->getStatus() != TripRequest::OWNER)
+                $this->em->remove($tr);
         }
 
         $this->em->flush();
