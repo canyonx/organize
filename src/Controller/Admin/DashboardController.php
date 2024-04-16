@@ -14,7 +14,9 @@ use App\Entity\Message;
 use App\Entity\Signal;
 use App\Entity\Signalment;
 use App\Entity\TripRequest;
+use App\Repository\SignalmentRepository;
 use App\Repository\TripRepository;
+use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -25,7 +27,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 class DashboardController extends AbstractDashboardController
 {
     public function __construct(
-        private TripRepository $tripRepository
+        private TripRepository $tripRepository,
+        private SignalmentRepository $signalmentRepository,
+        private UserRepository $userRepository,
     ) {
     }
 
@@ -65,8 +69,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToRoute('App', 'fa fa-globe', 'app_home');
 
         yield MenuItem::section('Signalments');
-        // yield MenuItem::linkToCrud('Signalments', 'fas fa-triangle-exclamation', Signal::class);
-        yield MenuItem::linkToCrud('Signalments', 'fas fa-triangle-exclamation', Signalment::class);
+        yield MenuItem::linkToCrud('Signalments', 'fas fa-triangle-exclamation', Signalment::class)
+            ->setBadge(count($this->signalmentRepository->findAll()));
 
         yield MenuItem::section('Trips');
         // Événements passés
@@ -86,7 +90,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Messages', 'fas fa-comment', Message::class);
 
         yield MenuItem::section('Users');
-        yield MenuItem::linkToCrud('Users', 'fas fa-user', User::class);
+        yield MenuItem::linkToCrud('Users', 'fas fa-user', User::class)
+            ->setBadge(count($this->userRepository->findAll()));
 
         yield MenuItem::section('Settings');
         yield MenuItem::linkToCrud('Homepage', 'fas fa-house', Homepage::class);

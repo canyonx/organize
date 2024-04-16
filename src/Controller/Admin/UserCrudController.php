@@ -79,7 +79,8 @@ class UserCrudController extends AbstractCrudController
                 ->setBasePath('images/uploads/')
                 ->setUploadDir('public/images/uploads/')
                 ->setUploadedFileNamePattern('bg-[randomhash].[extension]')
-                ->setRequired(false),
+                ->setRequired(false)
+                ->hideOnIndex(),
             UrlField::new('facebook')
                 ->hideOnIndex(),
             UrlField::new('instagram')

@@ -14,12 +14,12 @@
 				<h2 class="text-primary">Activités</h2>
 				<p>
 					{% for activity in activities %}
-						{{ activity.name|capitalize }}
-						&ensp;
+						<button class="btn btn-light rounded-pill disabled">{{ activity.name|capitalize }}</button>
 					{% endfor %}
 				</p>
 				<div class="alert alert-info">
 					Il est possible d'ajouter des activités sur demande !
+					<a href="https://organize-app.fr/foire-aux-questions#contact">Section contact</a>
 				</div>
 			</div>
 
@@ -30,15 +30,19 @@
 				</div>
 			{% endfor %}
 
-			<div class="p-3">
+			<div id="contact" class="p-3">
 				<h2 class="text-primary">Contact</h2>
 				<p>
-					Mattéo Dauchez
+					Mattéo Dauchez - Développeur de l'application
 					<br>
 					<br>
+					<a href="mailto:contact@organize-app.fr" class="btn btn-primary rounded-pill">Email</a>
+					&ensp;
+					<a href="https://www.facebook.com/profile.php?id=61558213830729" class="btn btn-primary rounded-pill">Facebook</a>
+					&ensp;
 					<a href="https://wa.me/33676201257" class="btn btn-primary rounded-pill">Whatsapp</a>
 					&ensp;
-					<a href="https://www.malt.fr/profile/matteodauchez" class="btn btn-primary rounded-pill">malt</a>
+					<a href="https://www.malt.fr/profile/matteodauchez" class="btn btn-primary rounded-pill">Malt</a>
 					&ensp;
 					<a href="https://www.linkedin.com/in/matteo-dauchez-96b4262b5/" class="btn btn-primary rounded-pill">Linkedin</a>
 				</p>
