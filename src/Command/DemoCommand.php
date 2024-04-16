@@ -23,26 +23,31 @@ class DemoCommand extends Command
 
     protected function configure(): void
     {
-        $this
-            ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
-            ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
-        ;
+        // $this
+        //     ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
+        //     ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
+        // ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $arg1 = $input->getArgument('arg1');
 
-        if ($arg1) {
-            $io->note(sprintf('You passed an argument: %s', $arg1));
+        $createdAt = new \DateTimeImmutable('now - 59 minute', new \DateTimeZone("Europe/Paris"));
+
+        $io->section($createdAt->format('Y m d H:i'));
+
+        $now = new \DateTimeImmutable();
+        $oneHour = \DateInterval::createFromDateString('1 hour');
+
+        if ($now->sub($oneHour) > $createdAt) {
+            $result = 'delete user';
+        } else {
+            $result = 'not delete';
         }
 
-        if ($input->getOption('option1')) {
-            // ...
-        }
+        $io->section($result);
 
-        $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
 
         return Command::SUCCESS;
     }

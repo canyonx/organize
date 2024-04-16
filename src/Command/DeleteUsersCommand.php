@@ -42,9 +42,12 @@ class DeleteUsersCommand extends Command
 
         $users = $this->userRepository->findBy(['isVerified' => false]);
 
+        $now = new \DateTimeImmutable();
+        $oneHour = \DateInterval::createFromDateString('1 hour');
+
         foreach ($users as $user) {
 
-            if ($user->getCreatedAt()->diff(new \DateTimeImmutable()) > new DateInterval('1 hour')) {
+            if ($now->sub($oneHour) > $user->getCreatedAt()) {
 
                 // Send an email of error
                 $this->notificationService->send(
@@ -61,6 +64,8 @@ class DeleteUsersCommand extends Command
                 // Delete User
                 // $this->em->remove($user->getSetting());
                 $this->em->remove($user);
+
+                $io->section('Delete : ' . $user->getId());
             }
         }
 
