@@ -41,7 +41,7 @@ class DemoCommand extends Command
 
         $exemple = $this->tripRepository->find(2);
 
-        $exemple->setDateAt(new \DateTimeImmutable($exemple->getDateAt()->format('Y-m-d') . ' + 1 day'));
+        $exemple->setDateAt(new \DateTimeImmutable($exemple->getDateAt()->format('Y-m-d H:i') . ' + 1 day'));
 
         foreach ($exemple->getTripRequests() as $tr) {
             if ($tr->getStatus() != TripRequest::OWNER)

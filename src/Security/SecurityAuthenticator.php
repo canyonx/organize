@@ -70,6 +70,11 @@ class SecurityAuthenticator extends AbstractLoginFormAuthenticator
         $user->setLastConnAt(new \DateTimeImmutable());
         $this->em->flush();
 
+        if ($user->getAge() == 'xx') {
+            $session = $request->getSession();
+            $session->getFlashBag()->add('info', '<i class="fa-solid fa-circle-info fa-xl"></i> Une dernière chose, penser à <a href="' . $this->urlGenerator->generate('app_profile_edit') . '" class="btn btn-primary rounded-pill">Compléter mon profil</a>');
+        }
+
         // Redirect To on login
         return new RedirectResponse($this->urlGenerator->generate('app_planning_index'));
     }
