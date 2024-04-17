@@ -39,13 +39,15 @@ class DemoCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $exemple = $this->tripRepository->find(2);
+        $exemples = $this->tripRepository->findByTitle('Exemple');
 
-        $exemple->setDateAt(new \DateTimeImmutable($exemple->getDateAt()->format('Y-m-d H:i') . ' + 1 day'));
+        foreach ($exemples as $exemple) {
+            $exemple->setDateAt(new \DateTimeImmutable($exemple->getDateAt()->format('Y-m-d H:i') . ' + 1 day'));
 
-        foreach ($exemple->getTripRequests() as $tr) {
-            if ($tr->getStatus() != TripRequest::OWNER)
-                $this->em->remove($tr);
+            foreach ($exemple->getTripRequests() as $tr) {
+                if ($tr->getStatus() != TripRequest::OWNER)
+                    $this->em->remove($tr);
+            }
         }
 
         $this->em->flush();

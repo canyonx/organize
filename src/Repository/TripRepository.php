@@ -137,6 +137,19 @@ class TripRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * Find a trip by content in title
+     * @return Trip[] Returns an array of Trip objects
+     */
+    public function findByTitle(string $value): array
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.title LIKE :val')
+            ->setParameter('val', '%' . $value . '%')
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Trip[] Returns an array of Trip objects
     //     */
